@@ -30,11 +30,11 @@ jobs:
         run: pnpm build
       
       - name: Deploy to GoDaddy via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        uses: pressable/github-action-sftp@v1.0.0
         with:
-          server: ${{ secrets.SSH_HOST }}
+          host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          local_path: './dist/public/*'
-          remote_path: '/home/ppcnwsqxzio0/public_html/'
-          delete: 'true'
+          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+          localPath: './dist/public/'
+          remotePath: '/home/ppcnwsqxzio0/public_html/'
+          deleteRemote: true
