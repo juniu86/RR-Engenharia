@@ -2,7 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /*.json$
-Disallow: /*.xml$
 
 Sitemap: https://rres.com.br/sitemap.xml
 

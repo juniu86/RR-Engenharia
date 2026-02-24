@@ -1,0 +1,17 @@
+{
+  "name": "RR Engenharia - SASC, TEPS e Postos de Combustível",
+  "short_name": "RR Engenharia",
+  "description": "Especialista em SASC, TEPS e construção de postos de combustível com certificação vigente até 2029.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#001c3d",
+  "background_color": "#ffffff",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
