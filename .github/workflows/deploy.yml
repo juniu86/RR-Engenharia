@@ -29,12 +29,12 @@ jobs:
       - name: Build project
         run: pnpm build
       
-      - name: Deploy to GoDaddy via SFTP
-        uses: pressable/github-action-sftp@v1.0.0
+      - name: Deploy to GoDaddy
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
-          localPath: './dist/public/'
-          remotePath: '/home/ppcnwsqxzio0/public_html/'
-          deleteRemote: true
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "dist/public/*"
+          target: "/home/ppcnwsqxzio0/public_html"
+          rm: true
