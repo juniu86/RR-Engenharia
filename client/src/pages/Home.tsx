@@ -77,7 +77,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       {/* Header */}
-      <header className="fixed w-full top-0 z-50 bg-gradient-to-r from-[#0A1628] to-[#0D1F3C] shadow-lg">
+      <header className="fixed w-full top-0 z-50 bg-gradient-to-r from-[#001c3d] to-[#002863] shadow-lg">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/rWKLKroeEkmCJWYv.jpg" alt="RR Engenharia" className="h-14 w-auto" />
@@ -85,12 +85,12 @@ export default function Home() {
           
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#inicio" className="text-white hover:text-orange-400 transition">Início</a>
-            <a href="#servicos" className="text-white hover:text-orange-400 transition">Serviços</a>
-            <a href="#certificacoes" className="text-white hover:text-orange-400 transition">Certificações</a>
-            <a href="#sobre" className="text-white hover:text-orange-400 transition">Sobre</a>
-            <a href="#contato" className="text-white hover:text-orange-400 transition">Contato</a>
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white">Solicitar Orçamento</Button>
+            <a href="#inicio" className="text-white hover:text-[#0963ed] transition">Início</a>
+            <a href="#servicos" className="text-white hover:text-[#0963ed] transition">Serviços</a>
+            <a href="#certificacoes" className="text-white hover:text-[#0963ed] transition">Certificações</a>
+            <a href="#sobre" className="text-white hover:text-[#0963ed] transition">Sobre</a>
+            <a href="#contato" className="text-white hover:text-[#0963ed] transition">Contato</a>
+            <Button className="bg-[#0963ed] hover:bg-[#0752c4] text-white">Solicitar Orçamento</Button>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -102,12 +102,12 @@ export default function Home() {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <nav className="md:hidden bg-[#0D1F3C] border-t border-gray-700 p-4 flex flex-col gap-4">
-            <a href="#inicio" className="text-white hover:text-orange-400">Início</a>
-            <a href="#servicos" className="text-white hover:text-orange-400">Serviços</a>
-            <a href="#certificacoes" className="text-white hover:text-orange-400">Certificações</a>
-            <a href="#sobre" className="text-white hover:text-orange-400">Sobre</a>
-            <a href="#contato" className="text-white hover:text-orange-400">Contato</a>
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white w-full">Solicitar Orçamento</Button>
+            <a href="#inicio" className="text-white hover:text-[#0963ed]">Início</a>
+            <a href="#servicos" className="text-white hover:text-[#0963ed]">Serviços</a>
+            <a href="#certificacoes" className="text-white hover:text-[#0963ed]">Certificações</a>
+            <a href="#sobre" className="text-white hover:text-[#0963ed]">Sobre</a>
+            <a href="#contato" className="text-white hover:text-[#0963ed]">Contato</a>
+            <Button className="bg-[#0963ed] hover:bg-[#0752c4] text-white w-full">Solicitar Orçamento</Button>
           </nav>
         )}
       </header>
@@ -125,13 +125,13 @@ export default function Home() {
         
         <div className="container mx-auto px-4 relative z-10 text-white">
           <div className="max-w-3xl">
-            <div className="inline-block mb-6 px-4 py-2 bg-green-500/20 border border-green-400 rounded-full">
-              <span className="text-green-300 font-semibold">✓ Certificado CTBC até 2029</span>
+            <div className="inline-block mb-6 px-4 py-2 bg-blue-400/20 border border-blue-300 rounded-full">
+              <span className="text-blue-200 font-semibold">✓ Certificado CTBC SASC & TEPS até 02/02/2029</span>
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">Engenharia de Infraestrutura Crítica</h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-200">Obras · Manutenção & Facilities · SASC · TEPS · Automação</p>
             <div className="flex flex-col md:flex-row gap-4">
-              <Button className="bg-orange-500 hover:bg-orange-600 text-white text-lg px-8 py-6">Solicitar Orçamento</Button>
+              <Button className="bg-[#0963ed] hover:bg-[#0752c4] text-white text-lg px-8 py-6">Solicitar Orçamento</Button>
               <Button variant="outline" className="border-white text-white hover:bg-white/10 text-lg px-8 py-6">Saiba Mais</Button>
             </div>
           </div>
@@ -141,14 +141,14 @@ export default function Home() {
       {/* Diferenciais */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 text-[#0A1628]">Por Que Escolher a RR Engenharia</h2>
+          <h2 className="text-4xl font-bold text-center mb-12 text-[#001c3d]">Por Que Escolher a RR Engenharia</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {differentials.map((diff, idx) => {
               const Icon = diff.icon;
               return (
                 <div key={idx} className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition">
-                  <Icon className="w-12 h-12 text-orange-500 mb-4" />
-                  <h3 className="text-xl font-bold mb-3 text-[#0A1628]">{diff.title}</h3>
+                  <Icon className="w-12 h-12 text-[#0963ed] mb-4" />
+                  <h3 className="text-xl font-bold mb-3 text-[#001c3d]">{diff.title}</h3>
                   <p className="text-gray-600">{diff.description}</p>
                 </div>
               );
@@ -160,7 +160,7 @@ export default function Home() {
       {/* Serviços */}
       <section id="servicos" className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-4 text-[#0A1628]">Nossas Verticais de Serviço</h2>
+          <h2 className="text-4xl font-bold text-center mb-4 text-[#001c3d]">Nossas Verticais de Serviço</h2>
           <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Soluções completas em engenharia de infraestrutura com foco em qualidade, conformidade e inovação</p>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -168,8 +168,8 @@ export default function Home() {
               const Icon = service.icon;
               return (
                 <div key={idx} className={`${service.bgColor} border-l-4 ${service.color} p-8 rounded-lg hover:shadow-lg transition transform hover:-translate-y-1`}>
-                  <Icon className="w-10 h-10 text-[#0A1628] mb-4" />
-                  <h3 className="text-xl font-bold mb-3 text-[#0A1628]">{service.title}</h3>
+                  <Icon className="w-10 h-10 text-[#001c3d] mb-4" />
+                  <h3 className="text-xl font-bold mb-3 text-[#001c3d]">{service.title}</h3>
                   <p className="text-gray-700">{service.description}</p>
                 </div>
               );
@@ -181,45 +181,41 @@ export default function Home() {
       {/* Certificações */}
       <section id="certificacoes" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 text-[#0A1628]">Certificações & Conformidade</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg text-center shadow-md">
-              <Award className="w-16 h-16 text-green-500 mx-auto mb-4" />
-              <h3 className="text-lg font-bold mb-2">CTBC</h3>
-              <p className="text-gray-600 mb-2">Certificação Técnica de Combustíveis</p>
-              <p className="text-green-600 font-semibold">Vigente até 02/02/2029</p>
+          <h2 className="text-4xl font-bold text-center mb-12 text-[#001c3d]">Certificações CTBC</h2>
+          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+            <div className="bg-white p-8 rounded-lg text-center shadow-md border-t-4 border-[#0963ed]">
+              <Award className="w-16 h-16 text-[#0963ed] mx-auto mb-4" />
+              <h3 className="text-lg font-bold mb-2 text-[#001c3d]">CTBC SASC</h3>
+              <p className="text-gray-600 mb-2">Sistema de Abastecimento Subterrâneo de Combustíveis</p>
+              <p className="text-[#0963ed] font-semibold">Certificado: CTBC-SASC-001-2025</p>
+              <p className="text-gray-700 mt-2">Vigente até 02/02/2029</p>
             </div>
-            <div className="bg-white p-8 rounded-lg text-center shadow-md">
-              <Award className="w-16 h-16 text-blue-500 mx-auto mb-4" />
-              <h3 className="text-lg font-bold mb-2">ISO 9001</h3>
-              <p className="text-gray-600 mb-2">Gestão da Qualidade</p>
-              <p className="text-blue-600 font-semibold">Vigente até 02/02/2029</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg text-center shadow-md">
-              <Award className="w-16 h-16 text-orange-500 mx-auto mb-4" />
-              <h3 className="text-lg font-bold mb-2">NR-20</h3>
-              <p className="text-gray-600 mb-2">Segurança em Combustíveis</p>
-              <p className="text-orange-600 font-semibold">Vigente até 02/02/2029</p>
+            <div className="bg-white p-8 rounded-lg text-center shadow-md border-t-4 border-[#0963ed]">
+              <Award className="w-16 h-16 text-[#0963ed] mx-auto mb-4" />
+              <h3 className="text-lg font-bold mb-2 text-[#001c3d]">CTBC TEPS</h3>
+              <p className="text-gray-600 mb-2">Ensaio de Estanqueidade em Instalações Subterrâneas</p>
+              <p className="text-[#0963ed] font-semibold">Certificado: CTBC-TEPS-001-2025</p>
+              <p className="text-gray-700 mt-2">Vigente até 02/02/2029</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Números */}
-      <section id="sobre" className="py-20 bg-gradient-to-r from-[#0A1628] to-[#0D1F3C] text-white">
+      <section id="sobre" className="py-20 bg-gradient-to-r from-[#001c3d] to-[#002863] text-white">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">Nossa Experiência</h2>
           <div className="grid md:grid-cols-3 gap-12 text-center">
             <div>
-              <div className="text-5xl font-bold text-orange-400 mb-2">{Math.floor(counters.projects)}+</div>
+              <div className="text-5xl font-bold text-[#0963ed] mb-2">{Math.floor(counters.projects)}+</div>
               <p className="text-xl text-gray-300">Projetos Entregues</p>
             </div>
             <div>
-              <div className="text-5xl font-bold text-green-400 mb-2">{Math.floor(counters.clients)}+</div>
+              <div className="text-5xl font-bold text-blue-300 mb-2">{Math.floor(counters.clients)}+</div>
               <p className="text-xl text-gray-300">Clientes Satisfeitos</p>
             </div>
             <div>
-              <div className="text-5xl font-bold text-blue-400 mb-2">{Math.floor(counters.years)}+</div>
+              <div className="text-5xl font-bold text-blue-200 mb-2">{Math.floor(counters.years)}+</div>
               <p className="text-xl text-gray-300">Anos de Experiência</p>
             </div>
           </div>
@@ -229,15 +225,15 @@ export default function Home() {
       {/* Contato */}
       <section id="contato" className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 text-[#0A1628]">Solicitar Orçamento</h2>
+          <h2 className="text-4xl font-bold text-center mb-12 text-[#001c3d]">Solicitar Orçamento</h2>
           <div className="max-w-2xl mx-auto">
             <form className="space-y-6 bg-gray-50 p-8 rounded-lg">
               <div className="grid md:grid-cols-2 gap-4">
-                <input type="text" placeholder="Seu Nome" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500" />
-                <input type="email" placeholder="Seu Email" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500" />
+                <input type="text" placeholder="Seu Nome" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#0963ed]" />
+                <input type="email" placeholder="Seu Email" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#0963ed]" />
               </div>
-              <input type="tel" placeholder="Seu Telefone" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500" />
-              <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500">
+              <input type="tel" placeholder="Seu Telefone" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#0963ed]" />
+              <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#0963ed]">
                 <option>Selecione o Tipo de Serviço</option>
                 <option>Obras & Infraestrutura</option>
                 <option>SASC Certificado</option>
@@ -245,23 +241,23 @@ export default function Home() {
                 <option>Manutenção & Facilities</option>
                 <option>Automação (RR Engine)</option>
               </select>
-              <input type="text" placeholder="Localização do Projeto" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500" />
-              <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500">
+              <input type="text" placeholder="Localização do Projeto" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#0963ed]" />
+              <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#0963ed]">
                 <option>Urgência</option>
                 <option>Imediato (até 7 dias)</option>
                 <option>Curto Prazo (até 30 dias)</option>
                 <option>Médio Prazo (até 90 dias)</option>
                 <option>Planejamento</option>
               </select>
-              <textarea placeholder="Descreva seu projeto..." rows={4} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500"></textarea>
-              <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white text-lg py-3">Enviar Solicitação</Button>
+              <textarea placeholder="Descreva seu projeto..." rows={4} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#0963ed]"></textarea>
+              <Button className="w-full bg-[#0963ed] hover:bg-[#0752c4] text-white text-lg py-3">Enviar Solicitação</Button>
             </form>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#0A1628] text-white py-12">
+      <footer className="bg-[#001c3d] text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
@@ -270,17 +266,17 @@ export default function Home() {
             </div>
             <div>
               <h3 className="text-lg font-bold mb-4">Contato</h3>
-              <p className="text-gray-400 mb-2">📞 (11) 3000-0000</p>
+              <p className="text-gray-400 mb-2">📞 (21) 995740273</p>
               <p className="text-gray-400 mb-2">📧 contato@rres.com.br</p>
-              <p className="text-gray-400">📍 São Paulo, SP</p>
+              <p className="text-gray-400">📍 Av. das Américas, 4200 - Barra da Tijuca, Rio de Janeiro - RJ, 22640-907</p>
             </div>
             <div>
               <h3 className="text-lg font-bold mb-4">Links Rápidos</h3>
               <ul className="text-gray-400 space-y-2">
-                <li><a href="#" className="hover:text-orange-400">Início</a></li>
-                <li><a href="#" className="hover:text-orange-400">Serviços</a></li>
-                <li><a href="#" className="hover:text-orange-400">Certificações</a></li>
-                <li><a href="#" className="hover:text-orange-400">Contato</a></li>
+                <li><a href="#" className="hover:text-[#0963ed]">Início</a></li>
+                <li><a href="#" className="hover:text-[#0963ed]">Serviços</a></li>
+                <li><a href="#" className="hover:text-[#0963ed]">Certificações</a></li>
+                <li><a href="#" className="hover:text-[#0963ed]">Contato</a></li>
               </ul>
             </div>
           </div>
