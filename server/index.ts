@@ -16,23 +16,10 @@ async function startServer() {
       ? path.resolve(__dirname, "public")
       : path.resolve(__dirname, "..", "dist", "public");
 
-  // Cache static assets (JS, CSS, fonts, images) for 1 year
-  app.use(
-    express.static(staticPath, {
-      maxAge: "1y",
-      immutable: true,
-      setHeaders: (res, filePath) => {
-        // HTML files should not be cached long-term
-        if (filePath.endsWith(".html")) {
-          res.setHeader("Cache-Control", "no-cache");
-        }
-      },
-    })
-  );
+  app.use(express.static(staticPath));
 
   // Handle client-side routing - serve index.html for all routes
   app.get("*", (_req, res) => {
-    res.setHeader("Cache-Control", "no-cache");
     res.sendFile(path.join(staticPath, "index.html"));
   });
 
