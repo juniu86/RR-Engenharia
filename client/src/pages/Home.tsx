@@ -116,7 +116,7 @@ export default function Home() {
       <section id="inicio" className="pt-24 pb-12 relative overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://private-us-east-1.manuscdn.com/sessionFile/Jm9dFcCWkshC1h65gmRwQG/sandbox/IHaIxCpqF952zibzIekmqF-img-1_1771963043000_na1fn_ZnVlbC10YW5rLWNvbnN0cnVjdGlvbg.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvSm05ZEZjQ1drc2hDMWg2NWdtUndRRy9zYW5kYm94L0lIYUl4Q3BxRjk1MnppYnpJZWttcUYtaW1nLTFfMTc3MTk2MzA0MzAwMF9uYTFmbl9abnZsYkMxMFlXNXJMV052Ym5OMGNuVmpkR2x2YmcucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=U6LGFvJRZ74n3rN~3zEzLxA92W5MhUvEy6s7wk-JyAM4qIJIFbY2150mb9RpnUEYHcZaSXpCbz1o6RFZ0K3gYcMHgqFGroESP8T4kwZagMrciJVk0rg8bbtXABndLjuaBNYkC9Xjgy~OiiR5mq3YgGoD9uV-ZrEL-eqVixS-zneczSxGMuI1t4tq5nGQBqvehFhtJ4SUpn~bvbFZ-qwsIuhaDYVL69l3SooQa1MNBKSUYXWu7CMeXizVo4HE31emJdylFlYauRSHJGg-pp0TLmzeZIC4hAevQsKOLmn8KoBiwfNtABm~fjNX7RNVXFx4CLI6QZbxgJsM9cx5V-bx0Q__" 
+            src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/bDafTWxDICGsSZPQ.png" 
             alt="Infraestrutura RR Engenharia" 
             className="w-full h-full object-cover"
           />
