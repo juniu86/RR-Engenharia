@@ -80,7 +80,7 @@ export default function Home() {
       <header className="fixed w-full top-0 z-50 bg-gradient-to-r from-[#001c3d] to-[#002863] shadow-lg">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/rWKLKroeEkmCJWYv.jpg" alt="RR Engenharia" className="h-14 w-auto" />
+            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/yhvTuDKbGiiZptyN.png" alt="RR Engenharia" className="h-20 w-auto" />
           </div>
           
           {/* Desktop Menu */}
@@ -116,20 +116,18 @@ export default function Home() {
       <section id="inicio" className="pt-24 pb-12 relative overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://private-us-east-1.manuscdn.com/sessionFile/Jm9kFcCWkshC1h65gmRwQG/sandbox/ZplNV8NcpBVrCQG4s9IsaX-img-1_1771961361000_na1fn_aGVyby1pbmZyYXN0cnVjdHVyZQ.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvSm05ZEZjQ1drc2hDMWg2NWdtUndRRy9zYW5kYm94L1pwbE5WOE5jcEJWckNRRzRzOUlzYVgtaW1nLTFfMTc3MTk2MTM2MTAwMF9uYTFmbl9hR1Z5YnkxcGJtWnlZWE4wY25WamRIVnlaUS5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=OHjagFUzMwvrMYVBz4wXZfTZGrK8jp4uS28r3cLT~hUoZbz1z0yP8lfESpcOYSRQ79W0QH2lkVKR9-kW3F7J4Hg7sDTtjHy6zhAY-8ZlQvl2CWhSJ1mtx21vIot1M6evNXn9gEJjF1EPQJ-fcxZc2CqljuPXhlpZZ5q67BpmFkeChfObNGVMSWzwVUZnhhJ1TvY0qIOZVrR-yRvuHHJuLHH8wIwIyUL4JU4~rR41qNCDzGlv~5p9b1UNfxZvrCvz2YrB1DSnxVnWyiNKNnFQGSocATEuK8bZPCR2d1~-UBvra1OWiVpVa-qGBJz3on1RhIjqxCD0EnE9VRuAliKTgA__" 
+            src="https://private-us-east-1.manuscdn.com/sessionFile/Jm9dFcCWkshC1h65gmRwQG/sandbox/HZNX7BVUivngyCZpye075j-img-1_1771962683000_na1fn_ZnVlbC1zdGF0aW9uLWhlcm8.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvSm05ZEZjQ1drc2hDMWg2NWdtUndRRy9zYW5kYm94L0haTlg3QlZVaXZuZ3lDWnB5ZTA3NWotaW1nLTFfMTc3MTk2MjY4MzAwMF9uYTFmbl9abnZsYkMxemRHRjBhVzl1TFdobGNtOC5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=s2pEj6W0xJBQl0BN1plDioUGPMVFmGn7C1UtTPmFYtHWAJR7MggZnG6z0G29JT5VAkkzF2sHcTg14aIMrQApTt48NMdFNa9X5qJ0Td461LSFaxJgSbvmD8Jj~UzRAvi5fZMUmsy2YHrqvZBIY3I5Gj5stwfPHN8g5~ofzHYHyOXokccBltzc1UHEexNwMpqNCxVS3nZSdguPw898msGqjvAD1n3GnscU5zNKgxnSGVIalG4bSDvYjYWRKNXI6DkNDvZT-3MQELrpuvQtA9yTeXGZi82n0a92IZRxVeY8CzKHkDYjgmGCw-EFHtuPux2mhN7nDD~28I9mataVgSlDbA__" 
             alt="Infraestrutura RR Engenharia" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0A1628]/90 to-[#0A1628]/70"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#001c3d]/85 to-[#001c3d]/65"></div>
         </div>
         
         <div className="container mx-auto px-4 relative z-10 text-white">
           <div className="max-w-3xl">
-            <div className="inline-block mb-6 px-4 py-2 bg-blue-400/20 border border-blue-300 rounded-full">
-              <span className="text-blue-200 font-semibold">✓ Certificado CTBC SASC & TEPS até 02/02/2029</span>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">Engenharia de Infraestrutura Crítica</h1>
-            <p className="text-xl md:text-2xl mb-8 text-gray-200">Obras · Manutenção & Facilities · SASC · TEPS · Automação</p>
+            <h1 className="text-6xl md:text-7xl font-bold mb-2 leading-tight">RR Engenharia</h1>
+            <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-blue-200">Engenharia de Infraestrutura Crítica</h2>
+            <p className="text-lg md:text-xl mb-8 text-gray-100">Obras · Manutenção & Facilities · SASC · TEPS · Automação</p>
             <div className="flex flex-col md:flex-row gap-4">
               <Button className="bg-[#0963ed] hover:bg-[#0752c4] text-white text-lg px-8 py-6">Solicitar Orçamento</Button>
               <Button variant="outline" className="border-white text-white hover:bg-white/10 text-lg px-8 py-6">Saiba Mais</Button>
@@ -181,27 +179,30 @@ export default function Home() {
       {/* Certificações */}
       <section id="certificacoes" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 text-[#001c3d]">Certificações CTBC</h2>
+          <h2 className="text-4xl font-bold text-center mb-12 text-[#001c3d]">Certificacoes INMETRO</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             <div className="bg-white p-8 rounded-lg text-center shadow-md border-t-4 border-[#0963ed]">
               <Award className="w-16 h-16 text-[#0963ed] mx-auto mb-4" />
-              <h3 className="text-lg font-bold mb-2 text-[#001c3d]">CTBC SASC</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#001c3d]">INMETRO SASC</h3>
               <p className="text-gray-600 mb-2">Sistema de Abastecimento Subterrâneo de Combustíveis</p>
               <p className="text-[#0963ed] font-semibold">Certificado: CTBC-SASC-001-2025</p>
               <p className="text-gray-700 mt-2">Vigente até 02/02/2029</p>
             </div>
             <div className="bg-white p-8 rounded-lg text-center shadow-md border-t-4 border-[#0963ed]">
               <Award className="w-16 h-16 text-[#0963ed] mx-auto mb-4" />
-              <h3 className="text-lg font-bold mb-2 text-[#001c3d]">CTBC TEPS</h3>
+              <h3 className="text-lg font-bold mb-2 text-[#001c3d]">INMETRO TEPS</h3>
               <p className="text-gray-600 mb-2">Ensaio de Estanqueidade em Instalações Subterrâneas</p>
               <p className="text-[#0963ed] font-semibold">Certificado: CTBC-TEPS-001-2025</p>
               <p className="text-gray-700 mt-2">Vigente até 02/02/2029</p>
             </div>
           </div>
+          <div className="flex justify-center mt-12">
+            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/JSTYMJxfSLgEJiXU.jpg" alt="Selo INMETRO" className="h-32 w-auto" />
+          </div>
         </div>
       </section>
 
-      {/* Números */}
+      {/* Numeros */}
       <section id="sobre" className="py-20 bg-gradient-to-r from-[#001c3d] to-[#002863] text-white">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">Nossa Experiência</h2>
