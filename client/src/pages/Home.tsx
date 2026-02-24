@@ -36,11 +36,8 @@ export default function Home() {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#0963ed] to-[#001c3d] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">RR</span>
-            </div>
-            <span className="font-bold text-[#001c3d] text-lg">Engenharia</span>
+          <div className="flex items-center gap-3">
+            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/rWKLKroeEkmCJWYv.jpg" alt="RR Engenharia Logo" className="h-12 w-auto" />
           </div>
           <nav className="hidden md:flex gap-8 text-sm font-medium text-[#001c3d]">
             <a href="#inicio" className="hover:text-[#0963ed] transition">Início</a>
@@ -364,11 +361,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-[#0963ed] to-[#001c3d] rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">RR</span>
-                </div>
-                <span className="font-bold text-white">Engenharia</span>
+              <div className="flex items-center gap-3 mb-4">
+                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/rWKLKroeEkmCJWYv.jpg" alt="RR Engenharia Logo" className="h-10 w-auto" />
               </div>
               <p className="text-sm">Sua parceira em obras e instalações.</p>
             </div>
