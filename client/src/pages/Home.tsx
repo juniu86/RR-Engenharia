@@ -116,19 +116,19 @@ export default function Home() {
       <section id="inicio" className="pt-24 pb-12 relative overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://private-us-east-1.manuscdn.com/sessionFile/Jm9dFcCWkshC1h65gmRwQG/sandbox/HZNX7BVUivngyCZpye075j-img-1_1771962683000_na1fn_ZnVlbC1zdGF0aW9uLWhlcm8.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvSm05ZEZjQ1drc2hDMWg2NWdtUndRRy9zYW5kYm94L0haTlg3QlZVaXZuZ3lDWnB5ZTA3NWotaW1nLTFfMTc3MTk2MjY4MzAwMF9uYTFmbl9abnZsYkMxemRHRjBhVzl1TFdobGNtOC5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=s2pEj6W0xJBQl0BN1plDioUGPMVFmGn7C1UtTPmFYtHWAJR7MggZnG6z0G29JT5VAkkzF2sHcTg14aIMrQApTt48NMdFNa9X5qJ0Td461LSFaxJgSbvmD8Jj~UzRAvi5fZMUmsy2YHrqvZBIY3I5Gj5stwfPHN8g5~ofzHYHyOXokccBltzc1UHEexNwMpqNCxVS3nZSdguPw898msGqjvAD1n3GnscU5zNKgxnSGVIalG4bSDvYjYWRKNXI6DkNDvZT-3MQELrpuvQtA9yTeXGZi82n0a92IZRxVeY8CzKHkDYjgmGCw-EFHtuPux2mhN7nDD~28I9mataVgSlDbA__" 
+            src="https://private-us-east-1.manuscdn.com/sessionFile/Jm9dFcCWkshC1h65gmRwQG/sandbox/IHaIxCpqF952zibzIekmqF-img-1_1771963043000_na1fn_ZnVlbC10YW5rLWNvbnN0cnVjdGlvbg.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvSm05ZEZjQ1drc2hDMWg2NWdtUndRRy9zYW5kYm94L0lIYUl4Q3BxRjk1MnppYnpJZWttcUYtaW1nLTFfMTc3MTk2MzA0MzAwMF9uYTFmbl9abnZsYkMxMFlXNXJMV052Ym5OMGNuVmpkR2x2YmcucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=U6LGFvJRZ74n3rN~3zEzLxA92W5MhUvEy6s7wk-JyAM4qIJIFbY2150mb9RpnUEYHcZaSXpCbz1o6RFZ0K3gYcMHgqFGroESP8T4kwZagMrciJVk0rg8bbtXABndLjuaBNYkC9Xjgy~OiiR5mq3YgGoD9uV-ZrEL-eqVixS-zneczSxGMuI1t4tq5nGQBqvehFhtJ4SUpn~bvbFZ-qwsIuhaDYVL69l3SooQa1MNBKSUYXWu7CMeXizVo4HE31emJdylFlYauRSHJGg-pp0TLmzeZIC4hAevQsKOLmn8KoBiwfNtABm~fjNX7RNVXFx4CLI6QZbxgJsM9cx5V-bx0Q__" 
             alt="Infraestrutura RR Engenharia" 
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#001c3d]/85 to-[#001c3d]/65"></div>
         </div>
         
-        <div className="container mx-auto px-4 relative z-10 text-white">
-          <div className="max-w-3xl">
-            <h1 className="text-6xl md:text-7xl font-bold mb-2 leading-tight">RR Engenharia</h1>
-            <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-blue-200">Engenharia de Infraestrutura Crítica</h2>
-            <p className="text-lg md:text-xl mb-8 text-gray-100">Obras · Manutenção & Facilities · SASC · TEPS · Automação</p>
-            <div className="flex flex-col md:flex-row gap-4">
+        <div className="container mx-auto px-4 relative z-10 text-white flex items-center justify-center min-h-[600px]">
+          <div className="text-center max-w-3xl">
+            <h1 className="text-6xl md:text-7xl font-black mb-2 leading-tight">RR Engenharia</h1>
+            <h2 className="text-3xl md:text-4xl font-medium mb-6 text-blue-200">Engenharia de Infraestrutura Critica</h2>
+            <p className="text-lg md:text-xl mb-8 text-gray-100">Obras · Manutencao & Facilities · SASC · TEPS · Automacao</p>
+            <div className="flex flex-col md:flex-row gap-4 justify-center">
               <Button className="bg-[#0963ed] hover:bg-[#0752c4] text-white text-lg px-8 py-6">Solicitar Orçamento</Button>
               <Button variant="outline" className="border-white text-white hover:bg-white/10 text-lg px-8 py-6">Saiba Mais</Button>
             </div>
