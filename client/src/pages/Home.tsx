@@ -34,12 +34,12 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#001c3d] shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/rWKLKroeEkmCJWYv.jpg" alt="RR Engenharia Logo" className="h-12 w-auto" />
+            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/rWKLKroeEkmCJWYv.jpg" alt="RR Engenharia Logo" className="h-20 w-auto" />
           </div>
-          <nav className="hidden md:flex gap-8 text-sm font-medium text-[#001c3d]">
+          <nav className="hidden md:flex gap-8 text-sm font-medium text-white">
             <a href="#inicio" className="hover:text-[#0963ed] transition">Início</a>
             <a href="#sobre" className="hover:text-[#0963ed] transition">Sobre</a>
             <a href="#servicos" className="hover:text-[#0963ed] transition">Serviços</a>
@@ -53,7 +53,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section id="inicio" className="pt-32 pb-20 bg-gradient-to-br from-[#001c3d] to-[#002863] text-white">
+      <section id="inicio" className="pt-40 pb-20 bg-gradient-to-br from-[#001c3d] to-[#002863] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-5xl md:text-6xl font-bold mb-6" style={{ fontFamily: "Poppins, sans-serif" }}>
@@ -161,8 +161,8 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="bg-gradient-to-br from-[#001c3d] to-[#002863] rounded-lg h-96 flex items-center justify-center text-white">
-              <Building2 className="w-32 h-32 opacity-20" />
+            <div className="rounded-lg overflow-hidden shadow-lg h-96">
+              <img src="https://private-us-east-1.manuscdn.com/sessionFile/Jm9kFcCWkshC1h65gmRwQG/sandbox/O3DmHECnj6eF6HAPQ0Ynzp-img-1_1771956406000_na1fn_c2FzYy1pbnN0YWxsYXRpb24.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvSm05ZEZjQ1drc2hDMWg2NWdtUndRRy9zYW5kYm94L08zRG1IRUNuajZlRjZIQVBRMFluenAtaW1nLTFfMTc3MTk1NjQwNjAwMF9uYTFmbl9jMkZ6WXkxcGJuTjBZV3hzWVhScGIyNC5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=HqwgFj9euMFghOkja92bF9CieKUT9UiT2xVgfjH6Tj92t9CGV~ocniCyhJRoRWnTrDETtmt9-y3AzY8Ub1NA7ZQ-IAyxeEa-AkRyZx1VZ6rCflSYHuMlrPrJyHIIbNbUsSFsE7j~IyR0P0MY5W9BQYITzQTAw-EXHinWtJRT6CEKyCwKaFUVrpGqRI~6sgGwuRl8FtMuQzvilZI7JVERttzaLklTE1jheYPqMYRY~njSGWf93llZ8R-VgrQUoQeEWV6gT6eYv63nInDRJ~D8vKtsGOLfJJHmA2hVK-61ugVHZXf0lY7QYbUHHvx1HdmiRVwyEe5WcagNg-DA1GiMPA__" alt="SASC Installation" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
@@ -174,45 +174,41 @@ export default function Home() {
           <h2 className="text-4xl font-bold text-center text-[#001c3d] mb-16" style={{ fontFamily: "Poppins, sans-serif" }}>
             Soluções Completas em Engenharia
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Building2,
-                title: "Obras e Reformas",
-                description: "Execução de obras de ponta a ponta com governança de custo, prazo e segurança.",
-              },
-              {
-                icon: Droplet,
-                title: "SASC",
-                description: "Serviço certificado de instalação e retirada de sistemas subterrâneos.",
-              },
-              {
-                icon: CheckCircle2,
-                title: "TEPS",
-                description: "Ensaios de estanqueidade em instalações subterrâneas certificados.",
-              },
-              {
-                icon: Fuel,
-                title: "Postos de Combustível",
-                description: "Construção, reforma e adequação de postos com especialização em SASC.",
-              },
-              {
-                icon: Wrench,
-                title: "Manutenção & Facilities",
-                description: "Manutenção estruturada com SLAs e previsibilidade de custo.",
-              },
-              {
-                icon: Zap,
-                title: "Automação (RR Engine)",
-                description: "Padronização de templates e geração de artefatos com rastreabilidade.",
-              },
-            ].map((service, idx) => (
-              <Card key={idx} className="p-8 border-0 shadow-md hover:shadow-lg transition">
-                <service.icon className="w-12 h-12 text-[#0963ed] mb-4" />
-                <h3 className="text-xl font-bold text-[#001c3d] mb-3">{service.title}</h3>
-                <p className="text-gray-600">{service.description}</p>
-              </Card>
-            ))}
+          
+          {/* SASC Section with Image */}
+          <div className="mb-16 grid md:grid-cols-2 gap-8 items-center">
+            <div className="rounded-lg overflow-hidden shadow-lg h-80">
+              <img src="https://private-us-east-1.manuscdn.com/sessionFile/Jm9dFcCWkshC1h65gmRwQG/sandbox/O3DmHECnj6eF6HAPQ0Ynzp-img-1_1771956406000_na1fn_c2FzYy1pbnN0YWxsYXRpb24.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvSm05ZEZjQ1drc2hDMWg2NWdtUndRRy9zYW5kYm94L08zRG1IRUNuajZlRjZIQVBRMFluenAtaW1nLTFfMTc3MTk1NjQwNjAwMF9uYTFmbl9jMkZ6WXkxcGJuTjBZV3hzWVhScGIyNC5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=HqwgFj9euMFghOkja92bF9CieKUT9UiT2xVgfjH6Tj92t9CGV~ocniCyhJRoRWnTrDETtmt9-y3AzY8Ub1NA7ZQ-IAyxeEa-AkRyZx1VZ6rCflSYHuMlrPrJyHIIbNbUsSFsE7j~IyR0P0MY5W9BQYITzQTAw-EXHinWtJRT6CEKyCwKaFUVrpGqRI~6sgGwuRl8FtMuQzvilZI7JVERttzaLklTE1jheYPqMYRY~njSGWf93llZ8R-VgrQUoQeEWV6gT6eYv63nInDRJ~D8vKtsGOLfJJHmA2hVK-61ugVHZXf0lY7QYbUHHvx1HdmiRVwyEe5WcagNg-DA1GiMPA__" alt="SASC Installation" className="w-full h-full object-cover" />
+            </div>
+            <div>
+              <h3 className="text-3xl font-bold text-[#001c3d] mb-4" style={{ fontFamily: "Poppins, sans-serif" }}>SASC Certificado</h3>
+              <p className="text-gray-600 mb-4 text-lg">Instalação e retirada de Sistemas de Armazenamento Subterrâneo de Combustíveis com certificação vigente. Conformidade regulatória e rastreabilidade completa.</p>
+              <p className="text-[#0963ed] font-semibold">Serviço certificado de instalação e retirada de sistemas subterrâneos.</p>
+            </div>
+          </div>
+
+          {/* TEPS Section with Image */}
+          <div className="mb-16 grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h3 className="text-3xl font-bold text-[#001c3d] mb-4" style={{ fontFamily: "Poppins, sans-serif" }}>TEPS - Ensaios de Estanqueidade</h3>
+              <p className="text-gray-600 mb-4 text-lg">Testes certificados de integridade de sistemas subterrâneos. Relatórios técnicos para auditoria e conformidade regulatória.</p>
+              <p className="text-[#0963ed] font-semibold">Ensaios de estanqueidade em instalações subterrâneas certificados.</p>
+            </div>
+            <div className="rounded-lg overflow-hidden shadow-lg h-80">
+              <img src="https://private-us-east-1.manuscdn.com/sessionFile/Jm9dFcCWkshC1h65gmRwQG/sandbox/O3DmHECnj6eF6HAPQ0Ynzp-img-2_1771956414000_na1fn_dGVwcy10ZXN0aW5n.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvSm05ZEZjQ1drc2hDMWg2NWdtUndRRy9zYW5kYm94L08zRG1IRUNuajZlRjZIQVBRMFluenAtaW1nLTJfMTc3MTk1NjQxNDAwMF9uYTFmbl9kR1Z3Y3kxMFpYTjBhVzVuLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=rhhTF5a-JhZAHHFGuzTmLeA9p29RUc0PeHcifofkeGenzZaO1rSP-USAlYhMTKdta2nkfVkU2EscfKj-zY7PnWBfBfnSYtF5cABHF5IzjB9oC-XKSeqXk87vEeQPcG7rkgelbXq8tRGmDzbuZrfFUYyZaytduYS2R3i~KqeZuNUClOAT7rnEgDXOGyy5rhds0n0te7DlZpwLj50vIMb5lRBISq~fcuKpCpr52nnSBtJL7M8R2U2Tp1jY6YLeTToukVHViVAEwyvjOksgg7qzuYNcMWWLArmGTX6R4~g3gFKM8O7yD~U9DS2grDybiIOwm3nG~-49~lq3pybHFbwXqQ__" alt="TEPS Testing" className="w-full h-full object-cover" />
+            </div>
+          </div>
+
+          {/* Fuel Station Section with Image */}
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="rounded-lg overflow-hidden shadow-lg h-80">
+              <img src="https://private-us-east-1.manuscdn.com/sessionFile/Jm9dFcCWkshC1h65gmRwQG/sandbox/O3DmHECnj6eF6HAPQ0Ynzp-img-3_1771956418000_na1fn_ZnVlbC1zdGF0aW9uLWNvbnN0cnVjdGlvbg.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvSm05ZEZjQ1drc2hDMWg2NWdtUndRRy9zYW5kYm94L08zRG1IRUNuajZlRjZIQVBRMFluenAtaW1nLTNfMTc3MTk1NjQxODAwMF9uYTFmbl9ablZsYkMxemRHRjBhVzl1TFdOdmJuTjBjblZqZEdsdmJnLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=QKvle-oy~uAww393AHAw5eZO15YqlVepwLJBlgLK0VyR3esuZPiIk1gC6b~YK3Qoy-pWnODk1b5hdXF~3E70WIgracUTxlEbEVh03YtYl~bJTearEIXINKSu0hc-GugAO1BM8~g4378Q3GKr7GQKEnTUqlOfzWKKBzUvjatLn9KNN3dlws6MatFl8skkO0Tezqu50PX6n6WEMoBnwqJH63ppnXzV6f4uBqtTxktrHW7Ehs4--Axt8ppWatHOUU9236rNbPJCaijHudos5mnxsfJYozedE7-CgfjYATt6VzS1zZ40UIM4BN7TkblcA7XbSvu~10jCPV34yqGs7AyrVA__" alt="Fuel Station Construction" className="w-full h-full object-cover" />
+            </div>
+            <div>
+              <h3 className="text-3xl font-bold text-[#001c3d] mb-4" style={{ fontFamily: "Poppins, sans-serif" }}>Postos de Combustível</h3>
+              <p className="text-gray-600 mb-4 text-lg">Construção, reforma e adequação de postos de abastecimento com governança de custo, prazo e segurança.</p>
+              <p className="text-[#0963ed] font-semibold">Construção, reforma e adequação de postos com especialização em SASC.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -362,7 +358,7 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/rWKLKroeEkmCJWYv.jpg" alt="RR Engenharia Logo" className="h-10 w-auto" />
+                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/rWKLKroeEkmCJWYv.jpg" alt="RR Engenharia Logo" className="h-12 w-auto" />
               </div>
               <p className="text-sm">Sua parceira em obras e instalações.</p>
             </div>
