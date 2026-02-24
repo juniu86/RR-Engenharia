@@ -1,0 +1,40 @@
+name: Build and Deploy to GoDaddy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+      
+      - name: Install dependencies
+        run: pnpm install
+      
+      - name: Build project
+        run: pnpm build
+      
+      - name: Deploy to GoDaddy via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          server: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          local_path: './dist/public/*'
+          remote_path: '/home/ppcnwsqxzio0/public_html/'
+          delete: 'true'
