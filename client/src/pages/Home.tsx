@@ -9,7 +9,7 @@ import { MessageCircle, CheckCircle, Award, Zap, TrendingUp } from 'lucide-react
 
 const CLIENTS = [
   { name: 'Gran Petro', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/YIAWAblrlyQwVjsV.jpg' },
-  { name: 'Matte Leão', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/TsEUoJyUZuoeceLx.png' },
+  { name: 'Matte Leão', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/KCpjARiaVOQpkvZf.png' },
   { name: 'Shell', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/JnyTCLHGwwpnaIgg.png' },
   { name: 'Marinha do Brasil', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/LJoXqslFcNeNEoKo.png' },
   { name: 'Atacadão', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/OBrRyZoIJqvLclUv.jpg' },
