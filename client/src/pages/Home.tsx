@@ -1,3 +1,4 @@
+// Version: 2.0 - Fixed logos, blog routing, and .htaccess
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
