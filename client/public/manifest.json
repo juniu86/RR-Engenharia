@@ -1,0 +1,16 @@
+{
+  "name": "RR Engenharia",
+  "short_name": "RR Eng",
+  "description": "Especialista em SASC, TEPS e postos de combustivel",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#001c3d",
+  "theme_color": "#001c3d",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

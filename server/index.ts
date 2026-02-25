@@ -16,10 +16,30 @@ async function startServer() {
       ? path.resolve(__dirname, "public")
       : path.resolve(__dirname, "..", "dist", "public");
 
-  app.use(express.static(staticPath));
+  // Cache hashed assets (JS, CSS from Vite build) for 1 year
+  app.use(
+    "/assets",
+    express.static(path.join(staticPath, "assets"), {
+      maxAge: "1y",
+      immutable: true,
+    })
+  );
+
+  // Serve other static files with short cache
+  app.use(
+    express.static(staticPath, {
+      maxAge: "1h",
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith(".html")) {
+          res.setHeader("Cache-Control", "no-cache");
+        }
+      },
+    })
+  );
 
   // Handle client-side routing - serve index.html for all routes
   app.get("*", (_req, res) => {
+    res.setHeader("Cache-Control", "no-cache");
     res.sendFile(path.join(staticPath, "index.html"));
   });
 
