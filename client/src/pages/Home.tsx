@@ -5,11 +5,12 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useState } from 'react';
 import { MessageCircle, CheckCircle, Award, Zap, TrendingUp } from 'lucide-react';
 
 const CLIENTS = [
   { name: 'Gran Petro', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/YIAWAblrlyQwVjsV.jpg' },
-  { name: 'Matte Leão', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/TsEUoJyUZuoeceLx.png' },
+  { name: 'Matte Leão', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/QnQwNndobGZmmqSf.png' },
   { name: 'Shell', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/JnyTCLHGwwpnaIgg.png' },
   { name: 'Marinha do Brasil', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/LJoXqslFcNeNEoKo.png' },
   { name: 'Atacadão', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/OBrRyZoIJqvLclUv.jpg' },
@@ -19,6 +20,7 @@ const CLIENTS = [
   { name: 'Guanabara', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/kyLqRBZJxmKTzvlc.png' },
   { name: 'BR Distribuidora', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/KvYkfqOCpmJUfdhy.png' },
   { name: 'Le Canton Hotel', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/IzjdyHvbNPkETflI.png' },
+  { name: 'Gulf', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/kyKGUMAUxFuFvecM.png' },
 ];
 
 const SERVICES = [
@@ -102,9 +104,20 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="fixed w-full top-0 z-50 bg-gradient-to-r from-[#001c3d] to-[#002863] shadow-lg">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-3 hover:opacity-80">
+            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/yhvTuDKbGiiZptyN.png" alt="RR Engenharia" className="h-20 w-auto" />
+          </Link>
+          <Link href="/#contato">
+            <button className="bg-[#0963ed] hover:bg-[#0752c4] text-white px-6 py-2 rounded-lg transition">Solicitar Orçamento</button>
+          </Link>
+        </div>
+      </header>
       {/* Hero Section */}
       <section 
-        className="relative h-[600px] flex items-center justify-center bg-cover bg-center"
+        className="relative h-[600px] flex items-center justify-center bg-cover bg-center pt-24"
         style={{
           backgroundImage: 'url(https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/bDafTWxDICGsSZPQ.png)',
           backgroundAttachment: 'fixed'
