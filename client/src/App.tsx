@@ -6,12 +6,26 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { SEOHead } from "./components/SEO";
 import Home from "./pages/Home";
+import SASC from "./pages/SASC";
+import TEPS from "./pages/TEPS";
+import Obras from "./pages/Obras";
+import Manutencao from "./pages/Manutencao";
+import Automacao from "./pages/Automacao";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/sasc"} component={SASC} />
+      <Route path={"/teps"} component={TEPS} />
+      <Route path={"/obras"} component={Obras} />
+      <Route path={"/manutencao"} component={Manutencao} />
+      <Route path={"/automacao"} component={Automacao} />
+      <Route path={"/blog"} component={Blog} />
+      <Route path={"/blog/:slug"} component={BlogPost} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
