@@ -9,7 +9,7 @@ import { MessageCircle, CheckCircle, Award, Zap, TrendingUp } from 'lucide-react
 
 const CLIENTS = [
   { name: 'Gran Petro', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/YIAWAblrlyQwVjsV.jpg' },
-  { name: 'Matte Leão', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/TsEUoJyUZuoeceLx.png' },
+  { name: 'Matte Leão', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/KCpjARiaVOQpkvZf.png' },
   { name: 'Shell', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/JnyTCLHGwwpnaIgg.png' },
   { name: 'Marinha do Brasil', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/LJoXqslFcNeNEoKo.png' },
   { name: 'Atacadão', logo: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/OBrRyZoIJqvLclUv.jpg' },
@@ -102,6 +102,18 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Header with Logo */}
+      <header className="bg-white shadow-sm sticky top-0 z-40">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+          <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029694742/gvRmmpmuTMCgElem.jpg" alt="RR Engenharia" className="h-12" />
+          <nav className="flex gap-6">
+            <Link href="/#servicos" className="text-gray-700 hover:text-[#0963ed] font-medium">Serviços</Link>
+            <Link href="/blog" className="text-gray-700 hover:text-[#0963ed] font-medium">Blog</Link>
+            <Link href="/#contato" className="text-gray-700 hover:text-[#0963ed] font-medium">Contato</Link>
+          </nav>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section 
         className="relative h-[600px] flex items-center justify-center bg-cover bg-center"
@@ -273,7 +285,7 @@ export default function Home() {
           </div>
           <form 
             onSubmit={handleSubmit}
-            action="https://formspree.io/f/xyzabc"
+            action="https://formspree.io/f/mbjvzwpj"
             method="POST"
             className="space-y-6"
           >
