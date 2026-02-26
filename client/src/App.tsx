@@ -60,3 +60,4 @@ export default App;
 // deployment fix: sync all changes including header with logo
 // FTP root fix
 // Retry deployment with IP address
+// Clean rebuild
