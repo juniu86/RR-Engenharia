@@ -59,3 +59,4 @@ export default App;
 // Build timestamp: Wed Feb 25 14:58:12 EST 2026
 // deployment fix: sync all changes including header with logo
 // FTP root fix
+// Retry deployment with IP address
