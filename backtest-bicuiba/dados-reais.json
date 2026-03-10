@@ -1,0 +1,132 @@
+{
+  "obra": {
+    "nome": "Reforma Bicuiba",
+    "tipo": "reforma",
+    "descricao": "Posto de combustíveis em Saquarema/RJ",
+    "localizacao": {
+      "cidade": "Saquarema",
+      "estado": "RJ",
+      "tipo_localidade": "interior"
+    }
+  },
+  "receita": {
+    "contrato_base": 68425,
+    "aditivo_piso": 24839,
+    "aditivo_eletrica": 16951,
+    "total": 110214
+  },
+  "custo_real": {
+    "total": 51231,
+    "por_categoria": {
+      "piso_porcelanato": {
+        "area_m2": 100,
+        "custo_unitario": 89.50,
+        "custo_total": 8950,
+        "descricao": "Fornecimento e assentamento de porcelanato"
+      },
+      "piso_ceramica": {
+        "area_m2": 30,
+        "custo_unitario": 65.00,
+        "custo_total": 1950,
+        "descricao": "Fornecimento e assentamento de cerâmica"
+      },
+      "pintura_acrilica": {
+        "area_m2": 250,
+        "custo_unitario": 19.28,
+        "custo_total": 4820,
+        "descricao": "Pintura acrílica em paredes"
+      },
+      "drywall": {
+        "area_m2": 14,
+        "custo_total": 2700,
+        "descricao": "Drywall placa RU 14m² + 1 porta",
+        "sub_itens": {
+          "placa_drywall": {
+            "area_m2": 14,
+            "custo_total": 1632
+          },
+          "porta_drywall": {
+            "unidades": 1,
+            "custo_total": 1068
+          }
+        }
+      },
+      "portas_aluminio": {
+        "unidades": 2,
+        "custo_unitario": 315,
+        "custo_total": 630,
+        "descricao": "Porta de alumínio"
+      },
+      "instalacao_eletrica": {
+        "custo_total": 16951,
+        "descricao": "Instalação elétrica completa"
+      },
+      "contrapiso": {
+        "area_m2": 0,
+        "custo_total": 0,
+        "descricao": "Não aplicável - reforma sobre piso existente"
+      },
+      "demolicao": {
+        "custo_total": 3200,
+        "descricao": "Demolição de piso existente"
+      },
+      "impermeabilizacao": {
+        "area_m2": 45,
+        "custo_total": 2700,
+        "descricao": "Impermeabilização"
+      },
+      "forro_pvc": {
+        "area_m2": 60,
+        "custo_total": 3600,
+        "descricao": "Forro PVC"
+      },
+      "esquadrias": {
+        "custo_total": 1800,
+        "descricao": "Esquadrias diversas"
+      },
+      "logistica": {
+        "custo_total": 3931,
+        "descricao": "Transporte, hospedagem e deslocamento",
+        "sub_itens": {
+          "transporte": 1200,
+          "hospedagem": 2250,
+          "deslocamento_local": 481
+        },
+        "observacao": "NÃO inclui alimentação ou andaime"
+      }
+    }
+  },
+  "impostos": {
+    "total": 14328,
+    "percentual_receita": 13.0
+  },
+  "margem_liquida": {
+    "valor": 44655,
+    "percentual": 40.5
+  },
+  "metricas_validacao": {
+    "preco_venda_min": 90000,
+    "preco_venda_max": 130000,
+    "custo_base_min": 45000,
+    "custo_base_max": 70000,
+    "duplicados_max": 0,
+    "itens_inventados_max": 0
+  },
+  "precos_reais_unitarios": {
+    "pintura_acrilica_m2": 19.28,
+    "porcelanato_m2": 89.50,
+    "ceramica_m2": 65.00,
+    "porta_aluminio_un": 315,
+    "drywall_m2": 116.57,
+    "porta_drywall_un": 1068,
+    "forro_pvc_m2": 60.00,
+    "impermeabilizacao_m2": 60.00,
+    "demolicao_piso_m2": 32.00
+  },
+  "equipe": {
+    "profissionais": 3,
+    "semanas": 3,
+    "dias_uteis_semana": 5,
+    "diarias_total": 45
+  }
+}

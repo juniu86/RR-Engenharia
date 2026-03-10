@@ -229,7 +229,7 @@ importers:
         specifier: ^0.0.57
         version: 0.0.57
       vitest:
-        specifier: ^2.1.4
+        specifier: ^2.1.9
         version: 2.1.9(@types/node@24.10.13)(lightningcss@1.31.1)
 
 packages:
