@@ -65,136 +65,116 @@ export default function PropostaForm({ onGerar }: PropostaFormProps) {
   }
 
   function handleValorChange(e: React.ChangeEvent<HTMLInputElement>) {
-    // Permite apenas dígitos, ponto e vírgula
     const raw = e.target.value.replace(/[^\d.,]/g, '');
     setValorStr(raw);
   }
 
   return (
-    <form onSubmit={handleSubmit} className="no-print max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8 mb-8">
-      <h2 className="text-2xl font-bold text-rr-dark mb-6">Dados da Proposta</h2>
+    <form onSubmit={handleSubmit} className="no-print form-container">
+      <h2 className="form-title">Dados da Proposta</h2>
 
       {/* Número */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Número da Proposta
-        </label>
+      <div className="form-field">
+        <label className="form-label">Número da Proposta</label>
         <input
           type="text"
           value={numero}
           onChange={(e) => setNumero(e.target.value)}
           placeholder="Ex: 6029"
-          className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rr-primary"
+          className="form-input"
           required
         />
       </div>
 
       {/* CNPJ com busca */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          CNPJ do Cliente
-        </label>
-        <div className="flex gap-2">
+      <div className="form-field">
+        <label className="form-label">CNPJ do Cliente</label>
+        <div className="flex gap-3">
           <input
             type="text"
             value={cnpjInput}
             onChange={(e) => setCnpjInput(e.target.value)}
             placeholder="00.000.000/0000-00"
-            className="flex-1 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rr-primary"
+            className="form-input flex-1"
             maxLength={18}
           />
           <button
             type="button"
             onClick={handleBuscarCNPJ}
             disabled={buscandoCNPJ}
-            className="bg-rr-primary text-white px-4 py-2 rounded text-sm font-medium hover:bg-blue-700 disabled:opacity-50 whitespace-nowrap"
+            className="form-btn-buscar"
           >
             {buscandoCNPJ ? 'Buscando...' : 'Buscar CNPJ'}
           </button>
         </div>
-        {erroCNPJ && (
-          <p className="text-red-600 text-xs mt-1">{erroCNPJ}</p>
-        )}
+        {erroCNPJ && <p className="form-error">{erroCNPJ}</p>}
       </div>
 
       {/* Razão Social */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Razão Social do Cliente
-        </label>
+      <div className="form-field">
+        <label className="form-label">Razão Social do Cliente</label>
         <input
           type="text"
           value={razaoSocial}
           onChange={(e) => setRazaoSocial(e.target.value)}
           placeholder="Razão Social"
-          className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rr-primary"
+          className="form-input"
           required
         />
       </div>
 
       {/* Endereço */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Endereço do Cliente
-        </label>
+      <div className="form-field">
+        <label className="form-label">Endereço do Cliente</label>
         <input
           type="text"
           value={endereco}
           onChange={(e) => setEndereco(e.target.value)}
           placeholder="Endereço completo"
-          className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rr-primary"
+          className="form-input"
           required
         />
       </div>
 
       {/* Escopo */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Escopo dos Serviços
-        </label>
+      <div className="form-field">
+        <label className="form-label">Escopo dos Serviços</label>
         <textarea
           value={escopo}
           onChange={(e) => setEscopo(e.target.value)}
           placeholder="Descreva o escopo dos serviços..."
           rows={5}
-          className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rr-primary resize-y"
+          className="form-input form-textarea"
           required
         />
       </div>
 
       {/* Valor */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Valor dos Serviços (R$)
-        </label>
+      <div className="form-field">
+        <label className="form-label">Valor dos Serviços (R$)</label>
         <input
           type="text"
           value={valorStr}
           onChange={handleValorChange}
           placeholder="Ex: 9470,00"
-          className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rr-primary"
+          className="form-input"
           required
         />
       </div>
 
       {/* Condições de Pagamento */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Condições de Pagamento
-        </label>
+      <div className="form-field">
+        <label className="form-label">Condições de Pagamento</label>
         <textarea
           value={condicoesPagamento}
           onChange={(e) => setCondicoesPagamento(e.target.value)}
           rows={3}
-          className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rr-primary resize-y"
+          className="form-input form-textarea"
         />
       </div>
 
       {/* Botão */}
-      <button
-        type="submit"
-        className="w-full bg-rr-dark text-white py-3 rounded font-bold text-sm hover:bg-rr-secondary transition-colors"
-      >
+      <button type="submit" className="form-btn-submit">
         Gerar Proposta
       </button>
     </form>

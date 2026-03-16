@@ -16,145 +16,200 @@ export default function PropostaDoc({ dados }: PropostaDocProps) {
   const nomeCliente = dados.cliente.razao_social || '[NOME DO CLIENTE]';
 
   return (
-    <div id="proposta-documento" className="max-w-[210mm] mx-auto bg-white shadow-lg print:shadow-none print:max-w-none">
-      {/* ── Página 1 ── */}
-      <div className="p-12 print:p-0">
-        {/* Cabeçalho */}
-        <Cabecalho />
+    <div id="proposta-documento" className="proposta-wrapper">
+      {/* Barra lateral azul decorativa */}
+      <div className="proposta-accent-bar" />
 
-        {/* Dados da Empresa */}
-        <div className="mt-4 text-sm leading-relaxed">
-          <p>
-            <strong>Razão Social: {EMPRESA.razao_social}</strong>
-          </p>
-          <p>
-            <strong>Endereço: {EMPRESA.endereco}</strong>
-          </p>
-          <p>
-            <strong>CNPJ: {EMPRESA.cnpj}</strong>
-          </p>
-        </div>
-
-        {/* Dados do Cliente */}
-        <div className="mt-4 text-sm leading-relaxed">
-          <p>
-            Tomador de serviço: <strong>{nomeCliente}</strong> pessoa jurídica de direito privado,
-            devidamente inscrita perante a Receita Federal do Brasil no CNPJ: {dados.cliente.cnpj || '[CNPJ]'},
-            situada na <strong>{dados.cliente.endereco || '[ENDEREÇO]'}</strong>.
-          </p>
-        </div>
-
-        {/* Número da Proposta */}
-        <p className="text-right font-bold mt-6 text-sm">
-          Proposta {dados.numero || '[NÚMERO]'}
-        </p>
-
-        {/* Texto Introdutório */}
-        <p className="mt-4 text-sm leading-relaxed">
-          <strong>Prezados,</strong> em atenção à sua solicitação, apresentamos nossa proposta para os serviços de{' '}
-          <strong>Contratação de obra Civil</strong>, com base nas diretrizes fornecidas.
-        </p>
-
-        {/* 1. ESCOPO DOS SERVIÇOS */}
-        <h3 className="font-bold mt-6 mb-2 text-sm">
-          1. ESCOPO DOS SERVIÇOS
-        </h3>
-        <div className="border border-gray-400">
-          <div className="bg-rr-dark text-white text-center py-2 font-bold text-sm">
-            Descrição da Atividade
+      <div className="proposta-content">
+        {/* ── Cabeçalho Premium ── */}
+        <header className="proposta-header">
+          <div className="proposta-header-left">
+            <img
+              src={EMPRESA.logo}
+              alt="RR Engenharia"
+              className="proposta-logo"
+            />
+            <div>
+              <h1 className="proposta-empresa-nome">RR ENGENHARIA</h1>
+              <p className="proposta-slogan">{EMPRESA.slogan}</p>
+            </div>
           </div>
-          <div className="p-3 text-sm font-bold uppercase leading-relaxed whitespace-pre-line">
-            {dados.escopo || '[DESCRIÇÃO DO ESCOPO]'}
+          <div className="proposta-header-right">
+            <span className="proposta-numero-label">PROPOSTA</span>
+            <span className="proposta-numero-valor">Nº {dados.numero || '—'}</span>
           </div>
-        </div>
+        </header>
 
-        {/* Obrigações das Partes */}
-        <h3 className="font-bold mt-8 mb-2 text-sm">
-          Obrigações das Partes
-        </h3>
+        <div className="proposta-divider" />
 
-        <h4 className="font-bold mt-4 mb-2 text-sm">
-          2.1 RR Engenharia:
-        </h4>
-        <ul className="list-disc pl-8 text-sm space-y-1.5 leading-relaxed">
-          {OBRIGACOES_RR.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
+        {/* ── Dados da Empresa ── */}
+        <section className="proposta-section">
+          <div className="proposta-dados-grid">
+            <div>
+              <span className="proposta-label">Razão Social</span>
+              <span className="proposta-valor">{EMPRESA.razao_social}</span>
+            </div>
+            <div>
+              <span className="proposta-label">CNPJ</span>
+              <span className="proposta-valor">{EMPRESA.cnpj}</span>
+            </div>
+          </div>
+          <div className="mt-2">
+            <span className="proposta-label">Endereço</span>
+            <span className="proposta-valor">{EMPRESA.endereco}</span>
+          </div>
+        </section>
 
-        <h4 className="font-bold mt-6 mb-2 text-sm">
-          2.2 {nomeCliente.toUpperCase()}:
-        </h4>
-        <ul className="list-disc pl-8 text-sm space-y-1.5 leading-relaxed">
-          {OBRIGACOES_CLIENTE.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
+        {/* ── Dados do Cliente ── */}
+        <section className="proposta-section proposta-cliente-box">
+          <h2 className="proposta-section-title">TOMADOR DO SERVIÇO</h2>
+          <div className="proposta-dados-grid">
+            <div>
+              <span className="proposta-label">Razão Social</span>
+              <span className="proposta-valor font-semibold">{nomeCliente}</span>
+            </div>
+            <div>
+              <span className="proposta-label">CNPJ</span>
+              <span className="proposta-valor">{dados.cliente.cnpj || '[CNPJ]'}</span>
+            </div>
+          </div>
+          <div className="mt-2">
+            <span className="proposta-label">Endereço</span>
+            <span className="proposta-valor">{dados.cliente.endereco || '[ENDEREÇO]'}</span>
+          </div>
+        </section>
 
-        {/* 3.0 Valor dos Serviços */}
-        <h3 className="font-bold mt-8 mb-2 text-sm">
-          3.0 – Valor dos serviços
-        </h3>
-        <p className="text-sm leading-relaxed">
-          Nosso preço para execução dos serviços ofertados é:
-        </p>
-        <p className="text-sm mt-2">
-          <strong>- {formatBRL(dados.valor)}</strong>
-          ({valorPorExtenso(dados.valor)})
-        </p>
+        {/* ── Texto Introdutório ── */}
+        <section className="proposta-section">
+          <p className="proposta-texto">
+            <strong>Prezados,</strong> em atenção à sua solicitação, apresentamos nossa proposta
+            para os serviços de <strong>Contratação de Obra Civil</strong>, com base nas diretrizes
+            fornecidas.
+          </p>
+        </section>
 
-        {/* 4.0 Condições de Pagamento */}
-        <h3 className="font-bold mt-8 mb-2 text-sm">
-          40 - Condições de Pagamento
-        </h3>
-        <p className="text-sm leading-relaxed">
-          {dados.condicoes_pagamento}
-        </p>
+        {/* ── 1. ESCOPO DOS SERVIÇOS ── */}
+        <section className="proposta-section">
+          <h2 className="proposta-section-title">
+            <span className="proposta-section-num">01</span>
+            ESCOPO DOS SERVIÇOS
+          </h2>
+          <div className="proposta-escopo-box">
+            <div className="proposta-escopo-header">
+              Descrição da Atividade
+            </div>
+            <div className="proposta-escopo-body">
+              {dados.escopo || '[DESCRIÇÃO DO ESCOPO]'}
+            </div>
+          </div>
+        </section>
 
-        {/* 5.0 Condições Gerais */}
-        <h3 className="font-bold mt-8 mb-2 text-sm">
-          5.0 – Condições Gerais
-        </h3>
-        <ul className="list-disc pl-8 text-sm space-y-2 leading-relaxed">
-          {CONDICOES_GERAIS.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
+        {/* ── 2. Obrigações das Partes ── */}
+        <section className="proposta-section">
+          <h2 className="proposta-section-title">
+            <span className="proposta-section-num">02</span>
+            OBRIGAÇÕES DAS PARTES
+          </h2>
 
-        {/* 6.0 Validade */}
-        <h3 className="font-bold mt-8 mb-1 text-sm">
-          6.0 – Validade da proposta
-        </h3>
-        <p className="text-sm leading-relaxed">
-          {VALIDADE}
-        </p>
+          <h3 className="proposta-subsection-title">2.1 RR Engenharia</h3>
+          <ul className="proposta-lista">
+            {OBRIGACOES_RR.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
 
-        {/* Encerramento */}
-        <div className="mt-12 text-right text-sm">
-          <p className="font-bold">Atenciosamente</p>
-          <p className="font-bold mt-2">RR ENGENHARIA</p>
-        </div>
+          <h3 className="proposta-subsection-title mt-6">2.2 {nomeCliente}</h3>
+          <ul className="proposta-lista">
+            {OBRIGACOES_CLIENTE.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+        </section>
 
-        {/* Data de Emissão */}
-        <p className="mt-8 text-xs text-gray-500 text-center">
-          Proposta emitida em {formatDate(dados.data_emissao)}
-        </p>
+        {/* ── 3. Valor dos Serviços ── */}
+        <section className="proposta-section">
+          <h2 className="proposta-section-title">
+            <span className="proposta-section-num">03</span>
+            VALOR DOS SERVIÇOS
+          </h2>
+          <p className="proposta-texto">
+            Nosso preço para execução dos serviços ofertados é:
+          </p>
+          <div className="proposta-valor-destaque">
+            <span className="proposta-valor-moeda">{formatBRL(dados.valor)}</span>
+            <span className="proposta-valor-extenso">
+              ({valorPorExtenso(dados.valor)})
+            </span>
+          </div>
+        </section>
+
+        {/* ── 4. Condições de Pagamento ── */}
+        <section className="proposta-section">
+          <h2 className="proposta-section-title">
+            <span className="proposta-section-num">04</span>
+            CONDIÇÕES DE PAGAMENTO
+          </h2>
+          <p className="proposta-texto">
+            {dados.condicoes_pagamento}
+          </p>
+        </section>
+
+        {/* ── 5. Condições Gerais ── */}
+        <section className="proposta-section">
+          <h2 className="proposta-section-title">
+            <span className="proposta-section-num">05</span>
+            CONDIÇÕES GERAIS
+          </h2>
+          <ul className="proposta-lista">
+            {CONDICOES_GERAIS.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+        </section>
+
+        {/* ── 6. Validade ── */}
+        <section className="proposta-section">
+          <h2 className="proposta-section-title">
+            <span className="proposta-section-num">06</span>
+            VALIDADE DA PROPOSTA
+          </h2>
+          <p className="proposta-texto">{VALIDADE}</p>
+        </section>
+
+        {/* ── Assinatura ── */}
+        <section className="proposta-assinatura">
+          <div className="proposta-divider" />
+
+          <div className="proposta-assinatura-content">
+            <p className="proposta-assinatura-atenciosamente">Atenciosamente,</p>
+
+            <div className="proposta-assinatura-linha" />
+
+            <div className="proposta-assinatura-info">
+              <img
+                src={EMPRESA.logo}
+                alt="RR Engenharia"
+                className="proposta-assinatura-logo"
+              />
+              <div>
+                <p className="proposta-assinatura-nome">RR ENGENHARIA E SOLUÇÕES LTDA.</p>
+                <p className="proposta-assinatura-cnpj">CNPJ: {EMPRESA.cnpj}</p>
+              </div>
+            </div>
+          </div>
+
+          <p className="proposta-data-emissao">
+            Proposta emitida em {formatDate(dados.data_emissao)}
+          </p>
+        </section>
+
+        {/* ── Rodapé ── */}
+        <footer className="proposta-footer">
+          <div className="proposta-footer-bar" />
+          <p>{EMPRESA.endereco}</p>
+          <p>CNPJ: {EMPRESA.cnpj}</p>
+        </footer>
       </div>
-    </div>
-  );
-}
-
-function Cabecalho() {
-  return (
-    <div className="flex items-end gap-4">
-      <img
-        src={EMPRESA.logo}
-        alt="RR Engenharia"
-        className="h-24 w-auto"
-      />
-      <p className="text-rr-primary font-bold text-lg pb-1">
-        {EMPRESA.slogan}
-      </p>
     </div>
   );
 }
