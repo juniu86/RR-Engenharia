@@ -600,7 +600,11 @@ body {
 
   @page {
     size: A4;
-    margin: 12mm 15mm;
+    margin: 0;
+  }
+
+  html {
+    background: white !important;
   }
 
   body {
@@ -612,11 +616,14 @@ body {
   .proposta-wrapper {
     max-width: none !important;
     box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
     margin: 0;
+    background: white !important;
   }
 
   .proposta-content {
-    padding: 24px 32px 24px 38px !important;
+    padding: 12mm 15mm !important;
   }
 
   .proposta-accent-bar {
