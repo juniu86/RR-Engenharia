@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --rr-dark: #001c3d;
+  --rr-primary: #0963ed;
+  --rr-secondary: #002863;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Print Styles ── */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 15mm 20mm;
+  }
+
+  body {
+    background: white !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  #proposta-documento {
+    max-width: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  #proposta-documento > div {
+    padding: 0 !important;
+  }
+
+  * {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  /* Evitar quebras dentro de seções */
+  h3, h4 {
+    break-after: avoid;
+  }
+
+  ul, ol {
+    break-inside: avoid;
+  }
+}
