@@ -1,7 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /assets/
-Disallow: /__manus__/
 
 Sitemap: https://rres.com.br/sitemap.xml
 
