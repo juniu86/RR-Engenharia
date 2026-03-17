@@ -1,0 +1,20 @@
+{
+  "name": "RR Engenharia",
+  "short_name": "RR Engenharia",
+  "description": "Engenharia de Infraestrutura Crítica — SASC, TEPS, Postos de Combustível",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#001c3d",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["business", "services"]
+}

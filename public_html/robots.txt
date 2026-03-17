@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Disallow: /assets/
+Disallow: /__manus__/
+
+Sitemap: https://rres.com.br/sitemap.xml
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Crawl-delay: 1
