@@ -26,6 +26,7 @@ export interface ProposalData {
     localExecucao: string;
   };
   itens: LineItem[];
+  valorGlobal?: number;
   prazoExecucao: string;
   condicoesPagamento: string;
   observacoes: string;
@@ -40,11 +41,21 @@ export interface SavedProposal {
   updatedAt: string;
   data: ProposalData;
   showLinePrices: boolean;
+  revisao?: number;
+  parentId?: string;
 }
 
 type AppView = 'list' | 'form' | 'document';
 
 const STORAGE_KEY = 'rr-proposals';
+
+// Initialize proposal sequence counter (ensures we start at >= 40 for current year)
+(function initSeq() {
+  const year = new Date().getFullYear();
+  const key = `rr-seq-${year}`;
+  const cur = parseInt(localStorage.getItem(key) || '0', 10);
+  if (cur < 39) localStorage.setItem(key, '39');
+})();
 
 function loadProposals(): SavedProposal[] {
   try {
@@ -88,7 +99,9 @@ function App() {
   const [viewingProposal, setViewingProposal] = useState<SavedProposal | null>(null);
 
   function handleSave(data: ProposalData, showLinePrices: boolean, existingId?: string) {
-    const total = data.itens.reduce((s, i) => s + i.quantidade * i.valorUnitario, 0);
+    const total = showLinePrices
+      ? data.itens.reduce((s, i) => s + i.quantidade * i.valorUnitario, 0)
+      : (data.valorGlobal ?? 0);
     const now = new Date().toISOString();
     let updated: SavedProposal[];
     let saved: SavedProposal;
@@ -112,6 +125,8 @@ function App() {
         updatedAt: now,
         data,
         showLinePrices,
+        revisao: editingProposal?.revisao,
+        parentId: editingProposal?.parentId,
       };
       updated = [saved, ...proposals];
     }
@@ -131,6 +146,24 @@ function App() {
 
   function handleEdit(proposal: SavedProposal) {
     setEditingProposal(proposal);
+    setViewingProposal(null);
+    setView('form');
+  }
+
+  function handleRevision(proposal: SavedProposal) {
+    const parentId = proposal.parentId || proposal.id;
+    const baseNumero = proposal.numero.replace(/-REV\d+$/i, '');
+    const allRelated = proposals.filter(p => p.parentId === parentId || p.id === parentId);
+    const maxRev = allRelated.reduce((mx, p) => Math.max(mx, p.revisao ?? 0), 0);
+    const nextRev = maxRev + 1;
+    const revTemplate: SavedProposal = {
+      ...proposal,
+      id: '',
+      numero: `${baseNumero}-REV${String(nextRev).padStart(2, '0')}`,
+      revisao: nextRev,
+      parentId,
+    };
+    setEditingProposal(revTemplate);
     setViewingProposal(null);
     setView('form');
   }
@@ -180,6 +213,9 @@ function App() {
           )}
           {view === 'document' && viewingProposal && (
             <>
+              <button onClick={() => handleRevision(viewingProposal)} className="btn-secondary-header">
+                ↪ Criar Revisão
+              </button>
               <button onClick={() => handleEdit(viewingProposal)} className="btn-secondary-header">
                 ✎ Editar
               </button>
@@ -210,12 +246,14 @@ function App() {
             onView={handleView}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            onRevise={handleRevision}
           />
         )}
         {view === 'form' && (
           <FormPage
             initialProposal={editingProposal}
             onSave={handleSave}
+            revisionMode={!!(editingProposal && !editingProposal.id)}
           />
         )}
         {view === 'document' && viewingProposal && (

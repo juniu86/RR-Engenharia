@@ -42,10 +42,11 @@ function newItem(): LineItem {
 interface Props {
   initialProposal: SavedProposal | null;
   onSave: (data: ProposalData, showLinePrices: boolean, existingId?: string) => void;
+  revisionMode?: boolean;
 }
 
-export default function FormPage({ initialProposal, onSave }: Props) {
-  const isEditing = !!initialProposal;
+export default function FormPage({ initialProposal, onSave, revisionMode }: Props) {
+  const isEditing = !!initialProposal && !!initialProposal.id && !revisionMode;
   const initial = initialProposal?.data;
 
   // Track if user manually edited the number field
@@ -72,7 +73,8 @@ export default function FormPage({ initialProposal, onSave }: Props) {
   const [condicoesPagamento, setCondicoesPagamento] = useState(initial?.condicoesPagamento ?? DEFAULT_CONDICOES);
   const [observacoes, setObservacoes] = useState(initial?.observacoes ?? '');
   const [validadeDias, setValidadeDias] = useState(initial?.validadeDias ?? DEFAULT_VALIDADE);
-  const [showLinePrices, setShowLinePrices] = useState(initialProposal?.showLinePrices ?? true);
+  const [showLinePrices, setShowLinePrices] = useState(initialProposal ? (initialProposal.showLinePrices ?? true) : true);
+  const [valorGlobal, setValorGlobal] = useState(initial?.valorGlobal ?? 0);
 
   // Auto-update proposal number when razaoSocial changes (new proposals only)
   useEffect(() => {
@@ -116,45 +118,53 @@ export default function FormPage({ initialProposal, onSave }: Props) {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!razaoSocial.trim()) { alert('Informe a razão social do cliente'); return; }
-    if (total <= 0) { alert('Informe os valores dos itens da proposta'); return; }
+    if (showLinePrices && total <= 0) { alert('Informe os valores dos itens da proposta'); return; }
+    if (!showLinePrices && valorGlobal <= 0) { alert('Informe o valor total dos serviços'); return; }
 
-    // For new proposals, consume the sequential number if auto-generated
+    // For new proposals (including revisions), consume the sequential number if auto-generated
     let finalNumero = numero.trim();
-    if (!isEditing && numberAutoRef.current) {
+    if (!isEditing && !revisionMode && numberAutoRef.current) {
       finalNumero = consumeNextNumber(razaoSocial);
-    } else if (!isEditing && !finalNumero) {
+    } else if (!isEditing && !revisionMode && !finalNumero) {
       finalNumero = consumeNextNumber(razaoSocial);
+    } else if (revisionMode) {
+      // Revision keeps the pre-set numero (with REV suffix), no counter consumed
+      finalNumero = finalNumero || initialProposal!.numero;
     }
 
     const data: ProposalData = {
       numero: finalNumero,
-      dataEmissao: isEditing ? (initial!.dataEmissao) : new Date(),
+      dataEmissao: (isEditing || revisionMode) ? (initial!.dataEmissao) : new Date(),
       validadeDias,
       cliente: { razaoSocial, cnpj, endereco, contato, telefone, email, localExecucao },
       itens: itens.filter(i => i.descricao.trim()),
+      valorGlobal: showLinePrices ? undefined : valorGlobal,
       prazoExecucao,
       condicoesPagamento,
       observacoes,
     };
 
-    onSave(data, showLinePrices, initialProposal?.id);
+    onSave(data, showLinePrices, isEditing ? initialProposal?.id : undefined);
   }
 
   return (
     <form onSubmit={handleSubmit} style={{ maxWidth: 760, margin: '0 auto' }}>
 
-      {isEditing && (
+      {(isEditing || revisionMode) && (
         <div style={{
-          background: '#fffbeb',
-          border: '1.5px solid #fde68a',
+          background: revisionMode ? '#f0f7ff' : '#fffbeb',
+          border: `1.5px solid ${revisionMode ? '#bdd9f7' : '#fde68a'}`,
           borderRadius: 10,
           padding: '12px 18px',
           marginBottom: 20,
           fontSize: 12,
-          color: '#92400e',
+          color: revisionMode ? '#0963ed' : '#92400e',
           fontWeight: 600,
         }}>
-          ✎ Editando proposta <strong>{initialProposal.numero}</strong> — as alterações substituirão a versão salva.
+          {revisionMode
+            ? <>↪ Criando revisão — será salva como <strong>{initialProposal!.numero}</strong>.</>
+            : <>✎ Editando proposta <strong>{initialProposal!.numero}</strong> — as alterações substituirão a versão salva.</>
+          }
         </div>
       )}
 
@@ -168,7 +178,7 @@ export default function FormPage({ initialProposal, onSave }: Props) {
               onChange={e => handleNumeroChange(e.target.value)}
               placeholder={razaoSocial ? peekNextNumber(razaoSocial) : 'Preencha o cliente para gerar automaticamente'}
             />
-            {!isEditing && (
+            {!isEditing && !revisionMode && (
               <p style={{ fontSize: 10, color: '#999', margin: '4px 0 0' }}>
                 Gerado automaticamente ao salvar. Formato: CLIENTE-ANO-SEQ (reinicia todo ano).
               </p>
@@ -185,54 +195,6 @@ export default function FormPage({ initialProposal, onSave }: Props) {
           </Field>
         </div>
 
-        {/* showLinePrices toggle */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 12,
-          padding: '14px 16px',
-          background: '#f8f9fb',
-          borderRadius: 10,
-          border: '1.5px solid #e5e7eb',
-          marginTop: 4,
-        }}>
-          <label style={{ position: 'relative', display: 'inline-block', width: 42, height: 24, flexShrink: 0, cursor: 'pointer' }}>
-            <input
-              type="checkbox"
-              checked={showLinePrices}
-              onChange={e => setShowLinePrices(e.target.checked)}
-              style={{ opacity: 0, width: 0, height: 0, position: 'absolute' }}
-            />
-            <span style={{
-              position: 'absolute',
-              inset: 0,
-              background: showLinePrices ? '#0963ed' : '#d1d5db',
-              borderRadius: 12,
-              transition: 'background 0.2s',
-            }} />
-            <span style={{
-              position: 'absolute',
-              top: 3,
-              left: showLinePrices ? 21 : 3,
-              width: 18,
-              height: 18,
-              background: 'white',
-              borderRadius: '50%',
-              transition: 'left 0.2s',
-              boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
-            }} />
-          </label>
-          <div>
-            <div style={{ fontSize: 12, fontWeight: 700, color: '#001c3d' }}>
-              {showLinePrices ? 'Exibir preço por linha na proposta' : 'Exibir apenas o valor total'}
-            </div>
-            <div style={{ fontSize: 11, color: '#999', marginTop: 2 }}>
-              {showLinePrices
-                ? 'A proposta mostrará valor unitário e total de cada item do escopo.'
-                : 'A proposta mostrará somente o valor global dos serviços, sem detalhar por item.'}
-            </div>
-          </div>
-        </div>
       </Card>
 
       {/* Client */}
@@ -285,17 +247,24 @@ export default function FormPage({ initialProposal, onSave }: Props) {
 
       {/* Services / Items */}
       <Card title="Escopo e Precificação">
-        <p style={{ fontSize: 12, color: '#666', marginBottom: 14 }}>
-          Adicione os itens do escopo com quantidades e valores unitários.
-        </p>
+        <Field label="Abertura de Custos na Proposta">
+          <select
+            className="form-input"
+            value={showLinePrices ? 'detalhado' : 'global'}
+            onChange={e => setShowLinePrices(e.target.value === 'detalhado')}
+          >
+            <option value="detalhado">Detalhado por item — exibe valor unitário e total de cada linha</option>
+            <option value="global">Valor Global — exibe apenas o valor total dos serviços</option>
+          </select>
+        </Field>
 
         <div className="items-table">
           <div className="items-header">
             <span style={{ flex: '2 1 0' }}>Descrição</span>
             <span style={{ width: 70, textAlign: 'center' }}>Un.</span>
             <span style={{ width: 80, textAlign: 'center' }}>Qtd</span>
-            <span style={{ width: 120, textAlign: 'right' }}>Vlr. Unit.</span>
-            <span style={{ width: 120, textAlign: 'right' }}>Total</span>
+            {showLinePrices && <span style={{ width: 120, textAlign: 'right' }}>Vlr. Unit.</span>}
+            {showLinePrices && <span style={{ width: 120, textAlign: 'right' }}>Total</span>}
             <span style={{ width: 36 }}></span>
           </div>
 
@@ -326,20 +295,24 @@ export default function FormPage({ initialProposal, onSave }: Props) {
                   onChange={e => updateItem(item.id, 'quantidade', Number(e.target.value))}
                 />
               </div>
-              <div style={{ width: 120 }}>
-                <input
-                  className="item-input text-right"
-                  type="number"
-                  min={0}
-                  step={0.01}
-                  value={item.valorUnitario || ''}
-                  placeholder="0,00"
-                  onChange={e => updateItem(item.id, 'valorUnitario', Number(e.target.value))}
-                />
-              </div>
-              <div style={{ width: 120, textAlign: 'right', padding: '0 8px', fontSize: 13, fontWeight: 600, color: '#0963ed', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                {formatCurrency(item.quantidade * item.valorUnitario)}
-              </div>
+              {showLinePrices && (
+                <div style={{ width: 120 }}>
+                  <input
+                    className="item-input text-right"
+                    type="number"
+                    min={0}
+                    step={0.01}
+                    value={item.valorUnitario || ''}
+                    placeholder="0,00"
+                    onChange={e => updateItem(item.id, 'valorUnitario', Number(e.target.value))}
+                  />
+                </div>
+              )}
+              {showLinePrices && (
+                <div style={{ width: 120, textAlign: 'right', padding: '0 8px', fontSize: 13, fontWeight: 600, color: '#0963ed', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                  {formatCurrency(item.quantidade * item.valorUnitario)}
+                </div>
+              )}
               <div style={{ width: 36, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <button
                   type="button"
@@ -354,15 +327,37 @@ export default function FormPage({ initialProposal, onSave }: Props) {
             </div>
           ))}
 
-          <div className="items-total-row">
-            <span style={{ flex: 1 }}>TOTAL GERAL</span>
-            <span style={{ fontWeight: 800, fontSize: 16, color: '#001c3d' }}>{formatCurrency(total)}</span>
-          </div>
+          {showLinePrices && (
+            <div className="items-total-row">
+              <span style={{ flex: 1 }}>TOTAL GERAL</span>
+              <span style={{ fontWeight: 800, fontSize: 16, color: '#001c3d' }}>{formatCurrency(total)}</span>
+            </div>
+          )}
         </div>
 
         <button type="button" onClick={addItem} className="btn-add-item">
           + Adicionar item
         </button>
+
+        {!showLinePrices && (
+          <div style={{ marginTop: 18 }}>
+            <Field label="Valor Total dos Serviços *">
+              <input
+                className="form-input"
+                type="number"
+                min={0}
+                step={0.01}
+                value={valorGlobal || ''}
+                placeholder="0,00"
+                onChange={e => setValorGlobal(Number(e.target.value))}
+                style={{ fontSize: 16, fontWeight: 700 }}
+              />
+              <p style={{ fontSize: 11, color: '#666', marginTop: 4 }}>
+                Valor único exibido na proposta — os itens acima definem o escopo sem abertura de preços.
+              </p>
+            </Field>
+          </div>
+        )}
       </Card>
 
       {/* Conditions */}
@@ -396,7 +391,7 @@ export default function FormPage({ initialProposal, onSave }: Props) {
 
       <div style={{ textAlign: 'center', marginTop: 8 }}>
         <button type="submit" className="btn-gerar">
-          {isEditing ? '✓ Salvar Alterações' : 'Gerar Proposta →'}
+          {revisionMode ? '↪ Salvar Revisão →' : isEditing ? '✓ Salvar Alterações' : 'Gerar Proposta →'}
         </button>
       </div>
 

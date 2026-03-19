@@ -84,7 +84,9 @@ interface Props {
 }
 
 export default function ProposalDocument({ data, showLinePrices }: Props) {
-  const total = data.itens.reduce((s, i) => s + i.quantidade * i.valorUnitario, 0);
+  const total = (!showLinePrices && data.valorGlobal !== undefined)
+    ? data.valorGlobal
+    : data.itens.reduce((s, i) => s + i.quantidade * i.valorUnitario, 0);
   const validadeDate = new Date(data.dataEmissao);
   validadeDate.setDate(validadeDate.getDate() + data.validadeDias);
 

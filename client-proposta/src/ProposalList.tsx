@@ -14,9 +14,10 @@ interface Props {
   onView: (p: SavedProposal) => void;
   onEdit: (p: SavedProposal) => void;
   onDelete: (id: string) => void;
+  onRevise?: (p: SavedProposal) => void;
 }
 
-export default function ProposalList({ proposals, onNew, onView, onEdit, onDelete }: Props) {
+export default function ProposalList({ proposals, onNew, onView, onEdit, onDelete, onRevise }: Props) {
   function handleDelete(id: string, numero: string) {
     if (window.confirm(`Excluir a proposta ${numero}? Esta ação não pode ser desfeita.`)) {
       onDelete(id);
@@ -100,7 +101,7 @@ export default function ProposalList({ proposals, onNew, onView, onEdit, onDelet
             >
               {/* Number badge */}
               <div style={{
-                background: '#001c3d',
+                background: p.revisao ? '#0963ed' : '#001c3d',
                 color: 'white',
                 borderRadius: 8,
                 padding: '8px 14px',
@@ -108,7 +109,9 @@ export default function ProposalList({ proposals, onNew, onView, onEdit, onDelet
                 minWidth: 130,
                 flexShrink: 0,
               }}>
-                <div style={{ fontSize: 9, fontWeight: 700, opacity: 0.55, letterSpacing: 1, textTransform: 'uppercase' }}>Proposta</div>
+                <div style={{ fontSize: 9, fontWeight: 700, opacity: 0.65, letterSpacing: 1, textTransform: 'uppercase' }}>
+                  {p.revisao ? `Revisão ${String(p.revisao).padStart(2, '0')}` : 'Proposta'}
+                </div>
                 <div style={{ fontSize: 12, fontWeight: 800, marginTop: 3, letterSpacing: 0.5 }}>{p.numero}</div>
               </div>
 
