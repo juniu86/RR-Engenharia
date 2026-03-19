@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+:root {
+  --rr-dark: #001c3d;
+  --rr-primary: #0963ed;
+  --rr-secondary: #002863;
+  font-family: 'Montserrat', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #f0f4f8;
+  color: #001c3d;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  body {
+    background: white;
+  }
+  .proposal-preview {
+    box-shadow: none !important;
+    border: none !important;
+  }
+}
