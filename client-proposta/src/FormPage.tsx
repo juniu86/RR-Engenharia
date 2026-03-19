@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import type { ProposalData, LineItem } from './App';
+import { useState, useEffect, useRef } from 'react';
+import type { ProposalData, LineItem, SavedProposal } from './App';
+import { peekNextNumber, consumeNextNumber } from './App';
 
-const RR_CNPJ = '46.887.631/0001-75';
 const DEFAULT_CONDICOES = 'Sinal de 40%, e medições semanais de acordo com os descritivos da planilha com o cronograma.';
 const DEFAULT_VALIDADE = 30;
 
@@ -39,26 +39,47 @@ function newItem(): LineItem {
   return { id: nextId++, descricao: '', unidade: 'un', quantidade: 1, valorUnitario: 0 };
 }
 
-export default function FormPage({ onGerar }: { onGerar: (d: ProposalData) => void }) {
-  const today = new Date().toISOString().split('T')[0];
-  const year = new Date().getFullYear();
-  const month = String(new Date().getMonth() + 1).padStart(2, '0');
+interface Props {
+  initialProposal: SavedProposal | null;
+  onSave: (data: ProposalData, showLinePrices: boolean, existingId?: string) => void;
+}
 
-  const [numero, setNumero] = useState(`${year}${month}-001`);
-  const [cnpj, setCnpj] = useState('');
-  const [razaoSocial, setRazaoSocial] = useState('');
-  const [endereco, setEndereco] = useState('');
-  const [contato, setContato] = useState('');
-  const [telefone, setTelefone] = useState('');
-  const [email, setEmail] = useState('');
-  const [localExecucao, setLocalExecucao] = useState('');
+export default function FormPage({ initialProposal, onSave }: Props) {
+  const isEditing = !!initialProposal;
+  const initial = initialProposal?.data;
+
+  // Track if user manually edited the number field
+  const numberAutoRef = useRef(!isEditing);
+
+  const [numero, setNumero] = useState(() => {
+    if (initial) return initial.numero;
+    return '';
+  });
+  const [cnpj, setCnpj] = useState(initial?.cliente.cnpj ?? '');
+  const [razaoSocial, setRazaoSocial] = useState(initial?.cliente.razaoSocial ?? '');
+  const [endereco, setEndereco] = useState(initial?.cliente.endereco ?? '');
+  const [contato, setContato] = useState(initial?.cliente.contato ?? '');
+  const [telefone, setTelefone] = useState(initial?.cliente.telefone ?? '');
+  const [email, setEmail] = useState(initial?.cliente.email ?? '');
+  const [localExecucao, setLocalExecucao] = useState(initial?.cliente.localExecucao ?? '');
   const [cnpjLoading, setCnpjLoading] = useState(false);
   const [cnpjError, setCnpjError] = useState('');
-  const [itens, setItens] = useState<LineItem[]>([newItem()]);
-  const [prazoExecucao, setPrazoExecucao] = useState('');
-  const [condicoesPagamento, setCondicoesPagamento] = useState(DEFAULT_CONDICOES);
-  const [observacoes, setObservacoes] = useState('');
-  const [validadeDias, setValidadeDias] = useState(DEFAULT_VALIDADE);
+  const [itens, setItens] = useState<LineItem[]>(() => {
+    if (initial?.itens.length) return initial.itens.map(i => ({ ...i }));
+    return [newItem()];
+  });
+  const [prazoExecucao, setPrazoExecucao] = useState(initial?.prazoExecucao ?? '');
+  const [condicoesPagamento, setCondicoesPagamento] = useState(initial?.condicoesPagamento ?? DEFAULT_CONDICOES);
+  const [observacoes, setObservacoes] = useState(initial?.observacoes ?? '');
+  const [validadeDias, setValidadeDias] = useState(initial?.validadeDias ?? DEFAULT_VALIDADE);
+  const [showLinePrices, setShowLinePrices] = useState(initialProposal?.showLinePrices ?? true);
+
+  // Auto-update proposal number when razaoSocial changes (new proposals only)
+  useEffect(() => {
+    if (!isEditing && numberAutoRef.current && razaoSocial.trim()) {
+      setNumero(peekNextNumber(razaoSocial));
+    }
+  }, [razaoSocial, isEditing]);
 
   async function handleBuscarCNPJ() {
     setCnpjLoading(true);
@@ -79,7 +100,11 @@ export default function FormPage({ onGerar }: { onGerar: (d: ProposalData) => vo
     setCnpjError('');
   }
 
-  // Items management
+  function handleNumeroChange(v: string) {
+    numberAutoRef.current = false;
+    setNumero(v);
+  }
+
   function addItem() { setItens(prev => [...prev, newItem()]); }
   function removeItem(id: number) { setItens(prev => prev.filter(i => i.id !== id)); }
   function updateItem(id: number, field: keyof LineItem, value: string | number) {
@@ -92,30 +117,121 @@ export default function FormPage({ onGerar }: { onGerar: (d: ProposalData) => vo
     e.preventDefault();
     if (!razaoSocial.trim()) { alert('Informe a razão social do cliente'); return; }
     if (total <= 0) { alert('Informe os valores dos itens da proposta'); return; }
-    onGerar({
-      numero,
-      dataEmissao: new Date(),
+
+    // For new proposals, consume the sequential number if auto-generated
+    let finalNumero = numero.trim();
+    if (!isEditing && numberAutoRef.current) {
+      finalNumero = consumeNextNumber(razaoSocial);
+    } else if (!isEditing && !finalNumero) {
+      finalNumero = consumeNextNumber(razaoSocial);
+    }
+
+    const data: ProposalData = {
+      numero: finalNumero,
+      dataEmissao: isEditing ? (initial!.dataEmissao) : new Date(),
       validadeDias,
       cliente: { razaoSocial, cnpj, endereco, contato, telefone, email, localExecucao },
       itens: itens.filter(i => i.descricao.trim()),
       prazoExecucao,
       condicoesPagamento,
       observacoes,
-    });
+    };
+
+    onSave(data, showLinePrices, initialProposal?.id);
   }
 
   return (
     <form onSubmit={handleSubmit} style={{ maxWidth: 760, margin: '0 auto' }}>
 
+      {isEditing && (
+        <div style={{
+          background: '#fffbeb',
+          border: '1.5px solid #fde68a',
+          borderRadius: 10,
+          padding: '12px 18px',
+          marginBottom: 20,
+          fontSize: 12,
+          color: '#92400e',
+          fontWeight: 600,
+        }}>
+          ✎ Editando proposta <strong>{initialProposal.numero}</strong> — as alterações substituirão a versão salva.
+        </div>
+      )}
+
       {/* Identification */}
       <Card title="Identificação da Proposta">
         <div className="form-grid-2">
           <Field label="Número da Proposta">
-            <input className="form-input" value={numero} onChange={e => setNumero(e.target.value)} placeholder="Ex: 202601-001" />
+            <input
+              className="form-input"
+              value={numero}
+              onChange={e => handleNumeroChange(e.target.value)}
+              placeholder={razaoSocial ? peekNextNumber(razaoSocial) : 'Preencha o cliente para gerar automaticamente'}
+            />
+            {!isEditing && (
+              <p style={{ fontSize: 10, color: '#999', margin: '4px 0 0' }}>
+                Gerado automaticamente ao salvar. Formato: CLIENTE-ANO-SEQ (reinicia todo ano).
+              </p>
+            )}
           </Field>
           <Field label="Validade (dias)">
-            <input className="form-input" type="number" min={1} value={validadeDias} onChange={e => setValidadeDias(Number(e.target.value))} />
+            <input
+              className="form-input"
+              type="number"
+              min={1}
+              value={validadeDias}
+              onChange={e => setValidadeDias(Number(e.target.value))}
+            />
           </Field>
+        </div>
+
+        {/* showLinePrices toggle */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+          padding: '14px 16px',
+          background: '#f8f9fb',
+          borderRadius: 10,
+          border: '1.5px solid #e5e7eb',
+          marginTop: 4,
+        }}>
+          <label style={{ position: 'relative', display: 'inline-block', width: 42, height: 24, flexShrink: 0, cursor: 'pointer' }}>
+            <input
+              type="checkbox"
+              checked={showLinePrices}
+              onChange={e => setShowLinePrices(e.target.checked)}
+              style={{ opacity: 0, width: 0, height: 0, position: 'absolute' }}
+            />
+            <span style={{
+              position: 'absolute',
+              inset: 0,
+              background: showLinePrices ? '#0963ed' : '#d1d5db',
+              borderRadius: 12,
+              transition: 'background 0.2s',
+            }} />
+            <span style={{
+              position: 'absolute',
+              top: 3,
+              left: showLinePrices ? 21 : 3,
+              width: 18,
+              height: 18,
+              background: 'white',
+              borderRadius: '50%',
+              transition: 'left 0.2s',
+              boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
+            }} />
+          </label>
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: '#001c3d' }}>
+              {showLinePrices ? 'Exibir preço por linha na proposta' : 'Exibir apenas o valor total'}
+            </div>
+            <div style={{ fontSize: 11, color: '#999', marginTop: 2 }}>
+              {showLinePrices
+                ? 'A proposta mostrará valor unitário e total de cada item do escopo.'
+                : 'A proposta mostrará somente o valor global dos serviços, sem detalhar por item.'}
+            </div>
+          </div>
         </div>
       </Card>
 
@@ -139,7 +255,13 @@ export default function FormPage({ onGerar }: { onGerar: (d: ProposalData) => vo
         </Field>
         <div className="form-grid-2">
           <Field label="Razão Social *">
-            <input className="form-input" value={razaoSocial} onChange={e => setRazaoSocial(e.target.value)} placeholder="Razão social do cliente" required />
+            <input
+              className="form-input"
+              value={razaoSocial}
+              onChange={e => setRazaoSocial(e.target.value)}
+              placeholder="Razão social do cliente"
+              required
+            />
           </Field>
           <Field label="Contato / Responsável">
             <input className="form-input" value={contato} onChange={e => setContato(e.target.value)} placeholder="Nome do responsável" />
@@ -167,7 +289,6 @@ export default function FormPage({ onGerar }: { onGerar: (d: ProposalData) => vo
           Adicione os itens do escopo com quantidades e valores unitários.
         </p>
 
-        {/* Table header */}
         <div className="items-table">
           <div className="items-header">
             <span style={{ flex: '2 1 0' }}>Descrição</span>
@@ -233,7 +354,6 @@ export default function FormPage({ onGerar }: { onGerar: (d: ProposalData) => vo
             </div>
           ))}
 
-          {/* Total row */}
           <div className="items-total-row">
             <span style={{ flex: 1 }}>TOTAL GERAL</span>
             <span style={{ fontWeight: 800, fontSize: 16, color: '#001c3d' }}>{formatCurrency(total)}</span>
@@ -276,7 +396,7 @@ export default function FormPage({ onGerar }: { onGerar: (d: ProposalData) => vo
 
       <div style={{ textAlign: 'center', marginTop: 8 }}>
         <button type="submit" className="btn-gerar">
-          Gerar Proposta →
+          {isEditing ? '✓ Salvar Alterações' : 'Gerar Proposta →'}
         </button>
       </div>
 
@@ -294,6 +414,7 @@ export default function FormPage({ onGerar }: { onGerar: (d: ProposalData) => vo
           transition: border-color 0.15s;
           color: #001c3d;
           background: white;
+          box-sizing: border-box;
         }
         .form-input:focus { border-color: #0963ed; box-shadow: 0 0 0 3px rgba(9,99,237,0.1); }
         .form-error { color: #ef4444; font-size: 11px; margin: 4px 0 0; }

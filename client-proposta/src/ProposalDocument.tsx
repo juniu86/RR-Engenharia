@@ -80,9 +80,10 @@ function numberToWords(n: number): string {
 
 interface Props {
   data: ProposalData;
+  showLinePrices: boolean;
 }
 
-export default function ProposalDocument({ data }: Props) {
+export default function ProposalDocument({ data, showLinePrices }: Props) {
   const total = data.itens.reduce((s, i) => s + i.quantidade * i.valorUnitario, 0);
   const validadeDate = new Date(data.dataEmissao);
   validadeDate.setDate(validadeDate.getDate() + data.validadeDias);
@@ -214,8 +215,8 @@ export default function ProposalDocument({ data }: Props) {
                 <th style={{ width: 32, textAlign: 'center' }}>Nº</th>
                 <th>Descrição da Atividade</th>
                 <th style={{ width: 110, textAlign: 'center' }}>Quantidade</th>
-                <th style={{ width: 120, textAlign: 'right' }}>Vlr. Unit.</th>
-                <th style={{ width: 130, textAlign: 'right' }}>Total</th>
+                {showLinePrices && <th style={{ width: 120, textAlign: 'right' }}>Vlr. Unit.</th>}
+                {showLinePrices && <th style={{ width: 130, textAlign: 'right' }}>Total</th>}
               </tr>
             </thead>
             <tbody>
@@ -226,17 +227,19 @@ export default function ProposalDocument({ data }: Props) {
                   <td style={{ textAlign: 'center' }}>
                     {item.quantidade.toLocaleString('pt-BR')} {item.unidade}
                   </td>
-                  <td style={{ textAlign: 'right' }}>{formatCurrency(item.valorUnitario)}</td>
-                  <td style={{ textAlign: 'right', fontWeight: 700 }}>{formatCurrency(item.quantidade * item.valorUnitario)}</td>
+                  {showLinePrices && <td style={{ textAlign: 'right' }}>{formatCurrency(item.valorUnitario)}</td>}
+                  {showLinePrices && <td style={{ textAlign: 'right', fontWeight: 700 }}>{formatCurrency(item.quantidade * item.valorUnitario)}</td>}
                 </tr>
               ))}
             </tbody>
-            <tfoot>
-              <tr className="proposta-table-total">
-                <td colSpan={4} style={{ textAlign: 'right', paddingRight: 16 }}>TOTAL GERAL</td>
-                <td style={{ textAlign: 'right' }}>{formatCurrency(total)}</td>
-              </tr>
-            </tfoot>
+            {showLinePrices && (
+              <tfoot>
+                <tr className="proposta-table-total">
+                  <td colSpan={4} style={{ textAlign: 'right', paddingRight: 16 }}>TOTAL GERAL</td>
+                  <td style={{ textAlign: 'right' }}>{formatCurrency(total)}</td>
+                </tr>
+              </tfoot>
+            )}
           </table>
         </section>
 

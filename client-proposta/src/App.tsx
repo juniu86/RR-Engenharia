@@ -2,6 +2,7 @@ import { useState } from 'react';
 import LoginPage from './LoginPage';
 import FormPage from './FormPage';
 import ProposalDocument from './ProposalDocument';
+import ProposalList from './ProposalList';
 
 export interface LineItem {
   id: number;
@@ -30,9 +31,126 @@ export interface ProposalData {
   observacoes: string;
 }
 
+export interface SavedProposal {
+  id: string;
+  numero: string;
+  clienteNome: string;
+  total: number;
+  createdAt: string;
+  updatedAt: string;
+  data: ProposalData;
+  showLinePrices: boolean;
+}
+
+type AppView = 'list' | 'form' | 'document';
+
+const STORAGE_KEY = 'rr-proposals';
+
+function loadProposals(): SavedProposal[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as SavedProposal[];
+    return parsed.map(p => ({
+      ...p,
+      data: { ...p.data, dataEmissao: new Date(p.data.dataEmissao) },
+    }));
+  } catch {
+    return [];
+  }
+}
+
+function persistProposals(proposals: SavedProposal[]) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(proposals));
+}
+
+export function peekNextNumber(razaoSocial: string): string {
+  const year = new Date().getFullYear();
+  const clientAbbr = razaoSocial.trim().split(/\s+/)[0].toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8) || 'CLI';
+  const current = parseInt(localStorage.getItem(`rr-seq-${year}`) || '0', 10);
+  return `${clientAbbr}-${year}-${String(current + 1).padStart(3, '0')}`;
+}
+
+export function consumeNextNumber(razaoSocial: string): string {
+  const year = new Date().getFullYear();
+  const clientAbbr = razaoSocial.trim().split(/\s+/)[0].toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8) || 'CLI';
+  const current = parseInt(localStorage.getItem(`rr-seq-${year}`) || '0', 10);
+  const next = current + 1;
+  localStorage.setItem(`rr-seq-${year}`, String(next));
+  return `${clientAbbr}-${year}-${String(next).padStart(3, '0')}`;
+}
+
 function App() {
   const [authed, setAuthed] = useState(() => sessionStorage.getItem('rr-auth') === '1');
-  const [proposal, setProposal] = useState<ProposalData | null>(null);
+  const [view, setView] = useState<AppView>('list');
+  const [proposals, setProposals] = useState<SavedProposal[]>(loadProposals);
+  const [editingProposal, setEditingProposal] = useState<SavedProposal | null>(null);
+  const [viewingProposal, setViewingProposal] = useState<SavedProposal | null>(null);
+
+  function handleSave(data: ProposalData, showLinePrices: boolean, existingId?: string) {
+    const total = data.itens.reduce((s, i) => s + i.quantidade * i.valorUnitario, 0);
+    const now = new Date().toISOString();
+    let updated: SavedProposal[];
+    let saved: SavedProposal;
+
+    if (existingId) {
+      updated = proposals.map(p => {
+        if (p.id === existingId) {
+          saved = { ...p, data, showLinePrices, total, clienteNome: data.cliente.razaoSocial, numero: data.numero, updatedAt: now };
+          return saved;
+        }
+        return p;
+      });
+      saved = updated.find(p => p.id === existingId)!;
+    } else {
+      saved = {
+        id: crypto.randomUUID(),
+        numero: data.numero,
+        clienteNome: data.cliente.razaoSocial,
+        total,
+        createdAt: now,
+        updatedAt: now,
+        data,
+        showLinePrices,
+      };
+      updated = [saved, ...proposals];
+    }
+
+    setProposals(updated);
+    persistProposals(updated);
+    setViewingProposal(saved);
+    setEditingProposal(null);
+    setView('document');
+  }
+
+  function handleDelete(id: string) {
+    const updated = proposals.filter(p => p.id !== id);
+    setProposals(updated);
+    persistProposals(updated);
+  }
+
+  function handleEdit(proposal: SavedProposal) {
+    setEditingProposal(proposal);
+    setViewingProposal(null);
+    setView('form');
+  }
+
+  function handleView(proposal: SavedProposal) {
+    setViewingProposal(proposal);
+    setView('document');
+  }
+
+  function handleNewProposal() {
+    setEditingProposal(null);
+    setViewingProposal(null);
+    setView('form');
+  }
+
+  function handleBackToList() {
+    setView('list');
+    setEditingProposal(null);
+    setViewingProposal(null);
+  }
 
   if (!authed) {
     return <LoginPage onAuth={() => setAuthed(true)} />;
@@ -40,7 +158,6 @@ function App() {
 
   return (
     <div className="min-h-screen" style={{ background: '#f3f5f8', fontFamily: "'Montserrat', sans-serif" }}>
-      {/* Header */}
       <header className="no-print" style={{
         background: 'linear-gradient(135deg, #001c3d 0%, #002863 100%)',
         padding: '14px 24px',
@@ -56,18 +173,17 @@ function App() {
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          {proposal && (
+          {view !== 'list' && (
+            <button onClick={handleBackToList} className="btn-secondary-header">
+              ← Propostas
+            </button>
+          )}
+          {view === 'document' && viewingProposal && (
             <>
-              <button
-                onClick={() => setProposal(null)}
-                className="btn-secondary-header"
-              >
-                ← Nova proposta
+              <button onClick={() => handleEdit(viewingProposal)} className="btn-secondary-header">
+                ✎ Editar
               </button>
-              <button
-                onClick={() => window.print()}
-                className="btn-primary-header"
-              >
+              <button onClick={() => window.print()} className="btn-primary-header">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline', marginRight: 6, verticalAlign: 'middle' }}>
                   <polyline points="6 9 6 2 18 2 18 9"/>
                   <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
@@ -78,7 +194,7 @@ function App() {
             </>
           )}
           <button
-            onClick={() => { sessionStorage.removeItem('rr-auth'); setAuthed(false); setProposal(null); }}
+            onClick={() => { sessionStorage.removeItem('rr-auth'); setAuthed(false); setView('list'); }}
             style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, background: 'none', border: 'none', cursor: 'pointer', padding: '8px 12px' }}
           >
             Sair
@@ -87,10 +203,27 @@ function App() {
       </header>
 
       <main style={{ padding: '32px 16px' }}>
-        {proposal
-          ? <ProposalDocument data={proposal} />
-          : <FormPage onGerar={setProposal} />
-        }
+        {view === 'list' && (
+          <ProposalList
+            proposals={proposals}
+            onNew={handleNewProposal}
+            onView={handleView}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        )}
+        {view === 'form' && (
+          <FormPage
+            initialProposal={editingProposal}
+            onSave={handleSave}
+          />
+        )}
+        {view === 'document' && viewingProposal && (
+          <ProposalDocument
+            data={viewingProposal.data}
+            showLinePrices={viewingProposal.showLinePrices}
+          />
+        )}
       </main>
 
       <style>{`
