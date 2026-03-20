@@ -43,7 +43,7 @@ function newItem(): LineItem {
 
 interface Props {
   initialProposal: SavedProposal | null;
-  onSave: (data: ProposalData, showLinePrices: boolean, existingId?: string) => void;
+  onSave: (data: ProposalData, showLinePrices: boolean, existingId?: string) => Promise<void>;
   revisionMode?: boolean;
 }
 
@@ -151,12 +151,14 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
   }
 
   const total = itens.reduce((s, i) => s + i.quantidade * i.valorUnitario, 0);
+  const [saving, setSaving] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!razaoSocial.trim()) { alert('Informe a razão social do cliente'); return; }
     if (showLinePrices && total <= 0) { alert('Informe os valores dos itens da proposta'); return; }
     if (!showLinePrices && valorGlobal <= 0) { alert('Informe o valor total dos serviços'); return; }
+    setSaving(true);
 
     // For new proposals (including revisions), consume the sequential number if auto-generated
     let finalNumero = numero.trim();
@@ -181,8 +183,15 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
       observacoes,
     };
 
-    clearDraft();
-    onSave(data, showLinePrices, isEditing ? initialProposal?.id : undefined);
+    try {
+      await onSave(data, showLinePrices, isEditing ? initialProposal?.id : undefined);
+      clearDraft();
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      alert('Erro ao salvar proposta. Seus dados estão preservados no formulário.\n\n' + msg);
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -449,8 +458,8 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
       </Card>
 
       <div style={{ textAlign: 'center', marginTop: 8 }}>
-        <button type="submit" className="btn-gerar">
-          {revisionMode ? '↪ Salvar Revisão →' : isEditing ? '✓ Salvar Alterações' : 'Gerar Proposta →'}
+        <button type="submit" className="btn-gerar" disabled={saving}>
+          {saving ? 'Salvando...' : revisionMode ? '↪ Salvar Revisão →' : isEditing ? '✓ Salvar Alterações' : 'Gerar Proposta →'}
         </button>
       </div>
 

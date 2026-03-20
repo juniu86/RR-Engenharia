@@ -81,7 +81,7 @@ function App() {
     }
   }, [authed]);
 
-  async function handleSave(data: ProposalData, showLinePrices: boolean, existingId?: string) {
+  async function handleSave(data: ProposalData, showLinePrices: boolean, existingId?: string): Promise<void> {
     const total = showLinePrices
       ? data.itens.reduce((s, i) => s + i.quantidade * i.valorUnitario, 0)
       : (data.valorGlobal ?? 0);
@@ -106,15 +106,12 @@ function App() {
       };
     }
 
-    try {
-      await apiSaveProposal(saved);
-      setProposals(await apiLoadProposals());
-      setViewingProposal(saved);
-      setEditingProposal(null);
-      setView('document');
-    } catch (e: unknown) {
-      alert('Erro ao salvar proposta. Tente novamente.\n\n' + (e instanceof Error ? e.message : String(e)));
-    }
+    await apiSaveProposal(saved);
+    const updated = await apiLoadProposals();
+    setProposals(updated);
+    setViewingProposal(saved);
+    setEditingProposal(null);
+    setView('document');
   }
 
   async function handleDelete(id: string) {
@@ -165,6 +162,7 @@ function App() {
     setView('list');
     setEditingProposal(null);
     setViewingProposal(null);
+    apiLoadProposals().then(setProposals).catch(() => {});
   }
 
   if (!authed) {
