@@ -33,11 +33,12 @@ export function AddObraModal({ open, onClose, onCreated }: AddObraModalProps) {
     try {
       const obra = await createObra({ ...form })
       // Add creator as admin
-      await supabase.from('obra_users').insert({
+      const { error: ouError } = await supabase.from('obra_users').insert({
         obra_id: obra.id,
         user_id: user.id,
         role: 'admin',
       })
+      if (ouError) throw ouError
       toast.success('Obra criada com sucesso!')
       onCreated()
       onClose()
