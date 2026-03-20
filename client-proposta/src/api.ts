@@ -18,6 +18,8 @@ export async function apiLoadProposals(): Promise<SavedProposal[]> {
     updatedAt:      row.updated_at,
     data:           { ...row.data, dataEmissao: new Date(row.data.dataEmissao) },
     showLinePrices: row.show_line_prices,
+    status:         row.status ?? 'rascunho',
+    motivoPerda:    row.motivo_perda ?? undefined,
     revisao:        row.revisao ?? undefined,
     parentId:       row.parent_id ?? undefined,
   }));
@@ -35,6 +37,8 @@ export async function apiSaveProposal(proposal: SavedProposal): Promise<void> {
       updated_at:       proposal.updatedAt,
       data:             proposal.data,
       show_line_prices: proposal.showLinePrices,
+      status:           proposal.status ?? 'rascunho',
+      motivo_perda:     proposal.motivoPerda ?? null,
       revisao:          proposal.revisao ?? null,
       parent_id:        proposal.parentId ?? null,
     });

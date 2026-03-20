@@ -34,6 +34,8 @@ export interface ProposalData {
   observacoes: string;
 }
 
+export type ProposalStatus = 'rascunho' | 'enviada' | 'em_negociacao' | 'ganha' | 'perdida' | 'cancelada';
+
 export interface SavedProposal {
   id: string;
   numero: string;
@@ -43,6 +45,8 @@ export interface SavedProposal {
   updatedAt: string;
   data: ProposalData;
   showLinePrices: boolean;
+  status: ProposalStatus;
+  motivoPerda?: string;
   revisao?: number;
   parentId?: string;
 }
@@ -123,6 +127,7 @@ function App() {
         updatedAt: now,
         data,
         showLinePrices,
+        status: 'rascunho',
         revisao: editingProposal?.revisao,
         parentId: editingProposal?.parentId,
       };
@@ -133,6 +138,18 @@ function App() {
     setEditingProposal(null);
     setView('document');
     apiLoadProposals().then(setProposals).catch(() => {});
+  }
+
+  async function handleStatusChange(id: string, status: ProposalStatus, motivoPerda?: string) {
+    const proposal = proposals.find(p => p.id === id);
+    if (!proposal) return;
+    const updated: SavedProposal = { ...proposal, status, motivoPerda, updatedAt: new Date().toISOString() };
+    try {
+      await apiSaveProposal(updated);
+      setProposals(prev => prev.map(p => p.id === id ? updated : p));
+    } catch {
+      alert('Erro ao atualizar status. Tente novamente.');
+    }
   }
 
   async function handleDelete(id: string) {
@@ -253,6 +270,7 @@ function App() {
             onEdit={handleEdit}
             onDelete={handleDelete}
             onRevise={handleRevision}
+            onStatusChange={handleStatusChange}
           />
         )}
         {!loading && view === 'form' && (
