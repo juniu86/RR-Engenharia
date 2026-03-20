@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LoginPage from './LoginPage';
 import FormPage from './FormPage';
 import ProposalDocument from './ProposalDocument';
 import ProposalList from './ProposalList';
+import { apiLoadProposals, apiSaveProposal, apiDeleteProposal, apiPeekSeq, apiConsumeSeq } from './api';
 
 export interface LineItem {
   id: number;
@@ -47,74 +48,49 @@ export interface SavedProposal {
 
 type AppView = 'list' | 'form' | 'document';
 
-const STORAGE_KEY = 'rr-proposals';
-
-// Initialize proposal sequence counter (ensures we start at >= 40 for current year)
-(function initSeq() {
-  const year = new Date().getFullYear();
-  const key = `rr-seq-${year}`;
-  const cur = parseInt(localStorage.getItem(key) || '0', 10);
-  if (cur < 39) localStorage.setItem(key, '39');
-})();
-
-function loadProposals(): SavedProposal[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw) as SavedProposal[];
-    return parsed.map(p => ({
-      ...p,
-      data: { ...p.data, dataEmissao: new Date(p.data.dataEmissao) },
-    }));
-  } catch {
-    return [];
-  }
+function clientAbbr(razaoSocial: string): string {
+  return razaoSocial.trim().split(/\s+/)[0].toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8) || 'CLI';
 }
 
-function persistProposals(proposals: SavedProposal[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(proposals));
+export async function peekNextNumber(razaoSocial: string): Promise<string> {
+  const year = new Date().getFullYear();
+  const next = await apiPeekSeq(year);
+  return `${clientAbbr(razaoSocial)}-${year}-${String(next).padStart(3, '0')}`;
 }
 
-export function peekNextNumber(razaoSocial: string): string {
+export async function consumeNextNumber(razaoSocial: string): Promise<string> {
   const year = new Date().getFullYear();
-  const clientAbbr = razaoSocial.trim().split(/\s+/)[0].toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8) || 'CLI';
-  const current = parseInt(localStorage.getItem(`rr-seq-${year}`) || '0', 10);
-  return `${clientAbbr}-${year}-${String(current + 1).padStart(3, '0')}`;
-}
-
-export function consumeNextNumber(razaoSocial: string): string {
-  const year = new Date().getFullYear();
-  const clientAbbr = razaoSocial.trim().split(/\s+/)[0].toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8) || 'CLI';
-  const current = parseInt(localStorage.getItem(`rr-seq-${year}`) || '0', 10);
-  const next = current + 1;
-  localStorage.setItem(`rr-seq-${year}`, String(next));
-  return `${clientAbbr}-${year}-${String(next).padStart(3, '0')}`;
+  const consumed = await apiConsumeSeq(year);
+  return `${clientAbbr(razaoSocial)}-${year}-${String(consumed).padStart(3, '0')}`;
 }
 
 function App() {
   const [authed, setAuthed] = useState(() => sessionStorage.getItem('rr-auth') === '1');
   const [view, setView] = useState<AppView>('list');
-  const [proposals, setProposals] = useState<SavedProposal[]>(loadProposals);
+  const [proposals, setProposals] = useState<SavedProposal[]>([]);
+  const [loading, setLoading] = useState(true);
   const [editingProposal, setEditingProposal] = useState<SavedProposal | null>(null);
   const [viewingProposal, setViewingProposal] = useState<SavedProposal | null>(null);
 
-  function handleSave(data: ProposalData, showLinePrices: boolean, existingId?: string) {
+  useEffect(() => {
+    if (authed) {
+      apiLoadProposals()
+        .then(setProposals)
+        .catch(() => alert('Erro ao carregar propostas. Verifique a conexão.'))
+        .finally(() => setLoading(false));
+    }
+  }, [authed]);
+
+  async function handleSave(data: ProposalData, showLinePrices: boolean, existingId?: string) {
     const total = showLinePrices
       ? data.itens.reduce((s, i) => s + i.quantidade * i.valorUnitario, 0)
       : (data.valorGlobal ?? 0);
     const now = new Date().toISOString();
-    let updated: SavedProposal[];
     let saved: SavedProposal;
 
     if (existingId) {
-      updated = proposals.map(p => {
-        if (p.id === existingId) {
-          saved = { ...p, data, showLinePrices, total, clienteNome: data.cliente.razaoSocial, numero: data.numero, updatedAt: now };
-          return saved;
-        }
-        return p;
-      });
-      saved = updated.find(p => p.id === existingId)!;
+      const existing = proposals.find(p => p.id === existingId)!;
+      saved = { ...existing, data, showLinePrices, total, clienteNome: data.cliente.razaoSocial, numero: data.numero, updatedAt: now };
     } else {
       saved = {
         id: crypto.randomUUID(),
@@ -128,20 +104,26 @@ function App() {
         revisao: editingProposal?.revisao,
         parentId: editingProposal?.parentId,
       };
-      updated = [saved, ...proposals];
     }
 
-    setProposals(updated);
-    persistProposals(updated);
-    setViewingProposal(saved);
-    setEditingProposal(null);
-    setView('document');
+    try {
+      await apiSaveProposal(saved);
+      setProposals(await apiLoadProposals());
+      setViewingProposal(saved);
+      setEditingProposal(null);
+      setView('document');
+    } catch {
+      alert('Erro ao salvar proposta. Tente novamente.');
+    }
   }
 
-  function handleDelete(id: string) {
-    const updated = proposals.filter(p => p.id !== id);
-    setProposals(updated);
-    persistProposals(updated);
+  async function handleDelete(id: string) {
+    try {
+      await apiDeleteProposal(id);
+      setProposals(prev => prev.filter(p => p.id !== id));
+    } catch {
+      alert('Erro ao excluir proposta. Tente novamente.');
+    }
   }
 
   function handleEdit(proposal: SavedProposal) {
@@ -239,7 +221,12 @@ function App() {
       </header>
 
       <main style={{ padding: '32px 16px' }}>
-        {view === 'list' && (
+        {loading && view === 'list' && (
+          <div style={{ textAlign: 'center', padding: '60px 0', color: '#666', fontSize: 14 }}>
+            Carregando propostas...
+          </div>
+        )}
+        {!loading && view === 'list' && (
           <ProposalList
             proposals={proposals}
             onNew={handleNewProposal}
@@ -249,14 +236,14 @@ function App() {
             onRevise={handleRevision}
           />
         )}
-        {view === 'form' && (
+        {!loading && view === 'form' && (
           <FormPage
             initialProposal={editingProposal}
             onSave={handleSave}
             revisionMode={!!(editingProposal && !editingProposal.id)}
           />
         )}
-        {view === 'document' && viewingProposal && (
+        {!loading && view === 'document' && viewingProposal && (
           <ProposalDocument
             data={viewingProposal.data}
             showLinePrices={viewingProposal.showLinePrices}

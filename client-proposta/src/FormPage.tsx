@@ -58,6 +58,7 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
     if (initial) return initial.numero;
     return '';
   });
+  const [seqPreview, setSeqPreview] = useState<string>('');
   const [cnpj, setCnpj] = useState(initial?.cliente.cnpj ?? '');
   const [razaoSocial, setRazaoSocial] = useState(initial?.cliente.razaoSocial ?? '');
   const [endereco, setEndereco] = useState(initial?.cliente.endereco ?? '');
@@ -81,7 +82,10 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
   // Auto-update proposal number when razaoSocial changes (new proposals only)
   useEffect(() => {
     if (!isEditing && numberAutoRef.current && razaoSocial.trim()) {
-      setNumero(peekNextNumber(razaoSocial));
+      peekNextNumber(razaoSocial).then(num => {
+        setNumero(num);
+        setSeqPreview(num);
+      }).catch(() => {});
     }
   }, [razaoSocial, isEditing]);
 
@@ -117,7 +121,7 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
 
   const total = itens.reduce((s, i) => s + i.quantidade * i.valorUnitario, 0);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!razaoSocial.trim()) { alert('Informe a razão social do cliente'); return; }
     if (showLinePrices && total <= 0) { alert('Informe os valores dos itens da proposta'); return; }
@@ -126,9 +130,9 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
     // For new proposals (including revisions), consume the sequential number if auto-generated
     let finalNumero = numero.trim();
     if (!isEditing && !revisionMode && numberAutoRef.current) {
-      finalNumero = consumeNextNumber(razaoSocial);
+      finalNumero = await consumeNextNumber(razaoSocial);
     } else if (!isEditing && !revisionMode && !finalNumero) {
-      finalNumero = consumeNextNumber(razaoSocial);
+      finalNumero = await consumeNextNumber(razaoSocial);
     } else if (revisionMode) {
       // Revision keeps the pre-set numero (with REV suffix), no counter consumed
       finalNumero = finalNumero || initialProposal!.numero;
@@ -178,7 +182,7 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
               className="form-input"
               value={numero}
               onChange={e => handleNumeroChange(e.target.value)}
-              placeholder={razaoSocial ? peekNextNumber(razaoSocial) : 'Preencha o cliente para gerar automaticamente'}
+              placeholder={razaoSocial ? (seqPreview || 'Aguardando...') : 'Preencha o cliente para gerar automaticamente'}
             />
             {!isEditing && !revisionMode && (
               <p style={{ fontSize: 10, color: '#999', margin: '4px 0 0' }}>
