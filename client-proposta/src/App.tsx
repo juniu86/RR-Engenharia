@@ -49,8 +49,27 @@ export interface SavedProposal {
 
 type AppView = 'list' | 'form' | 'document';
 
+// Tipos jurídicos a ignorar
+const SUFFIXES = new Set([
+  'LTDA', 'LTDA.', 'SA', 'S/A', 'S.A', 'S.A.', 'EI', 'SLU', 'MEI', 'ME',
+  'EPP', 'SS', 'EIRELI', 'EIRL', 'LLC', 'INC', 'CORP', 'CIA', 'CIA.',
+]);
+// Preposições/artigos a ignorar
+const STOPWORDS = new Set([
+  'DE', 'DA', 'DO', 'DAS', 'DOS', 'E', 'EM', 'COM', 'A', 'O', 'AS', 'OS', 'NO', 'NA',
+]);
+
 function clientAbbr(razaoSocial: string): string {
-  return razaoSocial.trim().split(/\s+/)[0].toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8) || 'CLI';
+  const words = razaoSocial
+    .trim()
+    .toUpperCase()
+    .split(/\s+/)
+    .map(w => w.replace(/[^A-Z0-9]/g, ''))
+    .filter(w => w.length > 0 && !SUFFIXES.has(w) && !STOPWORDS.has(w));
+
+  if (words.length === 0) return 'CLI';
+  // Até 3 palavras relevantes, cada uma limitada a 8 chars
+  return words.slice(0, 3).map(w => w.slice(0, 8)).join('-');
 }
 
 export async function peekNextNumber(razaoSocial: string): Promise<string> {
