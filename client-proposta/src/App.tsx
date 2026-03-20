@@ -83,9 +83,11 @@ function App() {
   }, [authed]);
 
   async function handleSave(data: ProposalData, showLinePrices: boolean, existingId?: string): Promise<void> {
-    const total = showLinePrices
-      ? data.itens.reduce((s, i) => s + i.quantidade * i.valorUnitario, 0)
-      : (data.valorGlobal ?? 0);
+    const total = data.escopoTexto
+      ? (data.valorGlobal ?? 0)
+      : showLinePrices
+        ? data.itens.reduce((s, i) => s + i.quantidade * i.valorUnitario, 0)
+        : (data.valorGlobal ?? 0);
     const now = new Date().toISOString();
     let saved: SavedProposal;
 

@@ -159,6 +159,7 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
     e.preventDefault();
     if (!razaoSocial.trim()) { alert('Informe a razão social do cliente'); return; }
     if (escopoMode === 'texto' && !escopoTexto.trim()) { alert('Informe a descrição do escopo'); return; }
+    if (escopoMode === 'texto' && valorGlobal <= 0) { alert('Informe o valor total dos serviços'); return; }
     if (escopoMode === 'itens' && showLinePrices && total <= 0) { alert('Informe os valores dos itens da proposta'); return; }
     if (escopoMode === 'itens' && !showLinePrices && valorGlobal <= 0) { alert('Informe o valor total dos serviços'); return; }
     setSaving(true);
@@ -179,9 +180,9 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
       dataEmissao: isEditing ? initial!.dataEmissao : new Date(),
       validadeDias,
       cliente: { razaoSocial, cnpj, endereco, contato, telefone, email, localExecucao },
-      itens: escopoMode === 'itens' ? itens.filter(i => i.descricao.trim()) : itens.filter(i => i.descricao.trim()),
+      itens: escopoMode === 'itens' ? itens.filter(i => i.descricao.trim()) : [],
       escopoTexto: escopoMode === 'texto' ? escopoTexto : undefined,
-      valorGlobal: showLinePrices ? undefined : valorGlobal,
+      valorGlobal: (escopoMode === 'texto' || !showLinePrices) ? valorGlobal : undefined,
       prazoExecucao,
       condicoesPagamento,
       observacoes,
@@ -354,16 +355,30 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
         </Field>
 
         {escopoMode === 'texto' ? (
-          <Field label="Descrição do Escopo">
-            <textarea
-              className="form-input"
-              rows={8}
-              value={escopoTexto}
-              onChange={e => setEscopoTexto(e.target.value)}
-              placeholder="Descreva livremente os serviços a serem executados..."
-              style={{ resize: 'vertical' }}
-            />
-          </Field>
+          <>
+            <Field label="Descrição do Escopo">
+              <textarea
+                className="form-input"
+                rows={8}
+                value={escopoTexto}
+                onChange={e => setEscopoTexto(e.target.value)}
+                placeholder="Descreva livremente os serviços a serem executados..."
+                style={{ resize: 'vertical' }}
+              />
+            </Field>
+            <Field label="Valor Total dos Serviços *">
+              <input
+                className="form-input"
+                type="number"
+                min={0}
+                step={0.01}
+                value={valorGlobal || ''}
+                placeholder="0,00"
+                onChange={e => setValorGlobal(Number(e.target.value))}
+                style={{ fontSize: 16, fontWeight: 700 }}
+              />
+            </Field>
+          </>
         ) : (
           <>
             <Field label="Abertura de Custos na Proposta">
