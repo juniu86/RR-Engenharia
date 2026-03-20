@@ -53,6 +53,8 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
   const numberAutoRef = useRef(!isEditing);
 
   const [numero, setNumero] = useState(() => {
+    // For revisions, use the REV-suffixed number from the template (not the original data.numero)
+    if (revisionMode && initialProposal) return initialProposal.numero;
     if (initial) return initial.numero;
     return '';
   });
@@ -134,7 +136,7 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
 
     const data: ProposalData = {
       numero: finalNumero,
-      dataEmissao: (isEditing || revisionMode) ? (initial!.dataEmissao) : new Date(),
+      dataEmissao: isEditing ? initial!.dataEmissao : new Date(),
       validadeDias,
       cliente: { razaoSocial, cnpj, endereco, contato, telefone, email, localExecucao },
       itens: itens.filter(i => i.descricao.trim()),
