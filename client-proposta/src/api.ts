@@ -1,64 +1,71 @@
+import { supabase } from './supabase';
 import type { SavedProposal } from './App';
 
-const API_BASE = '/api.php';
-
-function authHeaders(): Record<string, string> {
-  return {
-    'Content-Type': 'application/json',
-    'X-Auth-Token': 'rr2024',
-  };
-}
-
 export async function apiLoadProposals(): Promise<SavedProposal[]> {
-  const res = await fetch(`${API_BASE}?action=list`, { headers: authHeaders() });
-  if (!res.ok) {
-    let detail = '';
-    try { const j = await res.json(); detail = j.error ?? ''; } catch { /* ignore */ }
-    throw new Error(`Falha ao carregar propostas (HTTP ${res.status}${detail ? ': ' + detail : ''})`);
-  }
-  const data = await res.json() as SavedProposal[];
-  return data.map(p => ({
-    ...p,
-    data: { ...p.data, dataEmissao: new Date(p.data.dataEmissao) },
+  const { data, error } = await supabase
+    .from('proposals')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) throw new Error('Falha ao carregar propostas: ' + error.message);
+
+  return (data ?? []).map(row => ({
+    id:             row.id,
+    numero:         row.numero,
+    clienteNome:    row.cliente_nome,
+    total:          row.total,
+    createdAt:      row.created_at,
+    updatedAt:      row.updated_at,
+    data:           { ...row.data, dataEmissao: new Date(row.data.dataEmissao) },
+    showLinePrices: row.show_line_prices,
+    revisao:        row.revisao ?? undefined,
+    parentId:       row.parent_id ?? undefined,
   }));
 }
 
 export async function apiSaveProposal(proposal: SavedProposal): Promise<void> {
-  const res = await fetch(`${API_BASE}?action=save`, {
-    method: 'POST',
-    headers: authHeaders(),
-    body: JSON.stringify(proposal),
-  });
-  if (!res.ok) {
-    let detail = '';
-    try { const j = await res.json(); detail = j.error ?? ''; } catch { /* ignore */ }
-    throw new Error(`Falha ao salvar proposta (HTTP ${res.status}${detail ? ': ' + detail : ''})`);
-  }
+  const { error } = await supabase
+    .from('proposals')
+    .upsert({
+      id:               proposal.id,
+      numero:           proposal.numero,
+      cliente_nome:     proposal.clienteNome,
+      total:            proposal.total,
+      created_at:       proposal.createdAt,
+      updated_at:       proposal.updatedAt,
+      data:             proposal.data,
+      show_line_prices: proposal.showLinePrices,
+      revisao:          proposal.revisao ?? null,
+      parent_id:        proposal.parentId ?? null,
+    });
+
+  if (error) throw new Error('Falha ao salvar proposta: ' + error.message);
 }
 
 export async function apiDeleteProposal(id: string): Promise<void> {
-  const res = await fetch(`${API_BASE}?action=delete`, {
-    method: 'POST',
-    headers: authHeaders(),
-    body: JSON.stringify({ id }),
-  });
-  if (!res.ok) throw new Error('Falha ao excluir proposta');
+  const { error } = await supabase
+    .from('proposals')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw new Error('Falha ao excluir proposta: ' + error.message);
 }
 
 export async function apiPeekSeq(year: number): Promise<number> {
-  const res = await fetch(`${API_BASE}?action=peek_seq&year=${year}`, { headers: authHeaders() });
-  if (!res.ok) throw new Error('Falha ao consultar sequência');
-  const data = await res.json() as { next: number };
-  return data.next;
+  const { data, error } = await supabase
+    .from('seq_counters')
+    .select('value')
+    .eq('year', year)
+    .maybeSingle();
+
+  if (error) throw new Error('Falha ao consultar sequência: ' + error.message);
+  return (data?.value ?? 39) + 1;
 }
 
 export async function apiConsumeSeq(year: number): Promise<number> {
-  const res = await fetch(`${API_BASE}?action=consume_seq`, {
-    method: 'POST',
-    headers: authHeaders(),
-    body: JSON.stringify({ year }),
-  });
-  if (!res.ok) throw new Error('Falha ao consumir sequência');
-  const data = await res.json() as { consumed: number };
-  return data.consumed;
+  const { data, error } = await supabase
+    .rpc('consume_seq', { p_year: year });
+
+  if (error) throw new Error('Falha ao consumir sequência: ' + error.message);
+  return data as number;
 }
