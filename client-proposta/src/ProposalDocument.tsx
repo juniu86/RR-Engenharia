@@ -224,7 +224,7 @@ export default function ProposalDocument({ data, showLinePrices }: Props) {
             <tbody>
               {data.itens.map((item, idx) => (
                 <tr key={item.id}>
-                  <td style={{ textAlign: 'center', color: '#666', fontSize: 11 }}>{idx + 1}</td>
+                  <td style={{ textAlign: 'center', color: '#666', fontSize: 11 }}>{idx + 40}</td>
                   <td>{item.descricao}</td>
                   <td style={{ textAlign: 'center' }}>
                     {item.quantidade.toLocaleString('pt-BR')} {item.unidade}

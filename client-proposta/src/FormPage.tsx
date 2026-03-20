@@ -275,7 +275,7 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
                   className="item-input"
                   value={item.descricao}
                   onChange={e => updateItem(item.id, 'descricao', e.target.value)}
-                  placeholder={`Item ${idx + 1}`}
+                  placeholder={`Item ${idx + 40}`}
                 />
               </div>
               <div style={{ width: 70 }}>
