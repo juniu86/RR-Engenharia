@@ -107,11 +107,10 @@ function App() {
     }
 
     await apiSaveProposal(saved);
-    const updated = await apiLoadProposals();
-    setProposals(updated);
     setViewingProposal(saved);
     setEditingProposal(null);
     setView('document');
+    apiLoadProposals().then(setProposals).catch(() => {});
   }
 
   async function handleDelete(id: string) {

@@ -9,6 +9,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
+// Diagnóstico público (sem auth) — acessível via browser
+if (($_GET['action'] ?? '') === 'diag' && ($_GET['token'] ?? '') === 'rr2024') {
+    $dataDir = __DIR__ . '/data';
+    $dbFile  = $dataDir . '/proposals.db';
+    $info = [
+        'php_version'    => PHP_VERSION,
+        'sqlite_version' => null,
+        'dir'            => $dataDir,
+        'dir_exists'     => is_dir($dataDir),
+        'dir_writable'   => is_writable($dataDir),
+        'db_exists'      => file_exists($dbFile),
+        'db_size_bytes'  => file_exists($dbFile) ? filesize($dbFile) : 0,
+        'proposals_count'=> null,
+        'seq_counters'   => null,
+        'last_proposals' => [],
+        'error'          => null,
+    ];
+    try {
+        if (!is_dir($dataDir)) mkdir($dataDir, 0755, true);
+        $db = new PDO('sqlite:' . $dbFile);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $info['sqlite_version'] = $db->query('SELECT sqlite_version()')->fetchColumn();
+        $db->exec("CREATE TABLE IF NOT EXISTS proposals (id TEXT PRIMARY KEY, numero TEXT, cliente_nome TEXT, total REAL, created_at TEXT, updated_at TEXT, data TEXT, show_line_prices INTEGER DEFAULT 1, revisao INTEGER, parent_id TEXT);
+                   CREATE TABLE IF NOT EXISTS seq_counters (year INTEGER PRIMARY KEY, value INTEGER DEFAULT 39);");
+        $info['proposals_count'] = (int) $db->query('SELECT COUNT(*) FROM proposals')->fetchColumn();
+        $info['seq_counters']    = $db->query('SELECT * FROM seq_counters')->fetchAll(PDO::FETCH_ASSOC);
+        $info['last_proposals']  = $db->query('SELECT id, numero, cliente_nome, created_at FROM proposals ORDER BY created_at DESC LIMIT 5')->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        $info['error'] = $e->getMessage();
+    }
+    echo json_encode($info, JSON_PRETTY_PRINT);
+    exit;
+}
+
 // Auth
 $token = $_SERVER['HTTP_X_AUTH_TOKEN'] ?? '';
 if ($token !== 'rr2024') {
