@@ -97,13 +97,15 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
   const [validadeDias, setValidadeDias] = useState(draft?.validadeDias ?? initial?.validadeDias ?? DEFAULT_VALIDADE);
   const [showLinePrices, setShowLinePrices] = useState(draft ? (draft.showLinePrices ?? true) : initialProposal ? (initialProposal.showLinePrices ?? true) : true);
   const [valorGlobal, setValorGlobal] = useState(draft?.valorGlobal ?? initial?.valorGlobal ?? 0);
+  const [escopoMode, setEscopoMode] = useState<'itens' | 'texto'>(draft?.escopoMode ?? (initial?.escopoTexto ? 'texto' : 'itens'));
+  const [escopoTexto, setEscopoTexto] = useState(draft?.escopoTexto ?? initial?.escopoTexto ?? '');
 
   // Auto-save draft to localStorage (new proposals only, not edits)
   const saveDraft = useCallback(() => {
     if (isEditing || revisionMode) return;
-    const draft = { numero, cnpj, razaoSocial, endereco, contato, telefone, email, localExecucao, itens, prazoExecucao, condicoesPagamento, observacoes, validadeDias, showLinePrices, valorGlobal, savedAt: new Date().toISOString() };
+    const draft = { numero, cnpj, razaoSocial, endereco, contato, telefone, email, localExecucao, itens, prazoExecucao, condicoesPagamento, observacoes, validadeDias, showLinePrices, valorGlobal, escopoMode, escopoTexto, savedAt: new Date().toISOString() };
     localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-  }, [isEditing, revisionMode, numero, cnpj, razaoSocial, endereco, contato, telefone, email, localExecucao, itens, prazoExecucao, condicoesPagamento, observacoes, validadeDias, showLinePrices, valorGlobal]);
+  }, [isEditing, revisionMode, numero, cnpj, razaoSocial, endereco, contato, telefone, email, localExecucao, itens, prazoExecucao, condicoesPagamento, observacoes, validadeDias, showLinePrices, valorGlobal, escopoMode, escopoTexto]);
 
   useEffect(() => {
     const t = setTimeout(saveDraft, 800);
@@ -156,8 +158,9 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!razaoSocial.trim()) { alert('Informe a razão social do cliente'); return; }
-    if (showLinePrices && total <= 0) { alert('Informe os valores dos itens da proposta'); return; }
-    if (!showLinePrices && valorGlobal <= 0) { alert('Informe o valor total dos serviços'); return; }
+    if (escopoMode === 'texto' && !escopoTexto.trim()) { alert('Informe a descrição do escopo'); return; }
+    if (escopoMode === 'itens' && showLinePrices && total <= 0) { alert('Informe os valores dos itens da proposta'); return; }
+    if (escopoMode === 'itens' && !showLinePrices && valorGlobal <= 0) { alert('Informe o valor total dos serviços'); return; }
     setSaving(true);
 
     // For new proposals (including revisions), consume the sequential number if auto-generated
@@ -176,7 +179,8 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
       dataEmissao: isEditing ? initial!.dataEmissao : new Date(),
       validadeDias,
       cliente: { razaoSocial, cnpj, endereco, contato, telefone, email, localExecucao },
-      itens: itens.filter(i => i.descricao.trim()),
+      itens: escopoMode === 'itens' ? itens.filter(i => i.descricao.trim()) : itens.filter(i => i.descricao.trim()),
+      escopoTexto: escopoMode === 'texto' ? escopoTexto : undefined,
       valorGlobal: showLinePrices ? undefined : valorGlobal,
       prazoExecucao,
       condicoesPagamento,
@@ -315,116 +319,167 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
 
       {/* Services / Items */}
       <Card title="Escopo e Precificação">
-        <Field label="Abertura de Custos na Proposta">
-          <select
-            className="form-input"
-            value={showLinePrices ? 'detalhado' : 'global'}
-            onChange={e => setShowLinePrices(e.target.value === 'detalhado')}
-          >
-            <option value="detalhado">Detalhado por item — exibe valor unitário e total de cada linha</option>
-            <option value="global">Valor Global — exibe apenas o valor total dos serviços</option>
-          </select>
+        {/* Scope mode toggle */}
+        <Field label="Formato da Declaração de Escopo">
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button
+              type="button"
+              onClick={() => setEscopoMode('itens')}
+              style={{
+                flex: 1, padding: '9px 14px', border: '1.5px solid',
+                borderColor: escopoMode === 'itens' ? '#0963ed' : '#e5e7eb',
+                borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer',
+                background: escopoMode === 'itens' ? '#f0f7ff' : 'white',
+                color: escopoMode === 'itens' ? '#0963ed' : '#666',
+                fontFamily: "'Montserrat', sans-serif",
+              }}
+            >
+              ☰ Linha a linha (tabela)
+            </button>
+            <button
+              type="button"
+              onClick={() => setEscopoMode('texto')}
+              style={{
+                flex: 1, padding: '9px 14px', border: '1.5px solid',
+                borderColor: escopoMode === 'texto' ? '#0963ed' : '#e5e7eb',
+                borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer',
+                background: escopoMode === 'texto' ? '#f0f7ff' : 'white',
+                color: escopoMode === 'texto' ? '#0963ed' : '#666',
+                fontFamily: "'Montserrat', sans-serif",
+              }}
+            >
+              ✍ Redação livre
+            </button>
+          </div>
         </Field>
 
-        <div className="items-table">
-          <div className="items-header">
-            <span style={{ flex: '2 1 0' }}>Descrição</span>
-            <span style={{ width: 70, textAlign: 'center' }}>Un.</span>
-            <span style={{ width: 80, textAlign: 'center' }}>Qtd</span>
-            {showLinePrices && <span style={{ width: 120, textAlign: 'right' }}>Vlr. Unit.</span>}
-            {showLinePrices && <span style={{ width: 120, textAlign: 'right' }}>Total</span>}
-            <span style={{ width: 36 }}></span>
-          </div>
+        {escopoMode === 'texto' ? (
+          <Field label="Descrição do Escopo">
+            <textarea
+              className="form-input"
+              rows={8}
+              value={escopoTexto}
+              onChange={e => setEscopoTexto(e.target.value)}
+              placeholder="Descreva livremente os serviços a serem executados..."
+              style={{ resize: 'vertical' }}
+            />
+          </Field>
+        ) : (
+          <>
+            <Field label="Abertura de Custos na Proposta">
+              <select
+                className="form-input"
+                value={showLinePrices ? 'detalhado' : 'global'}
+                onChange={e => setShowLinePrices(e.target.value === 'detalhado')}
+              >
+                <option value="detalhado">Detalhado por item — exibe valor unitário e total de cada linha</option>
+                <option value="global">Valor Global — exibe apenas o valor total dos serviços</option>
+              </select>
+            </Field>
 
-          {itens.map((item, idx) => (
-            <div key={item.id} className="items-row">
-              <div style={{ flex: '2 1 0', minWidth: 0 }}>
-                <input
-                  className="item-input"
-                  value={item.descricao}
-                  onChange={e => updateItem(item.id, 'descricao', e.target.value)}
-                  placeholder={`Item ${idx + 40}`}
-                />
+            <div className="items-table">
+              <div className="items-header">
+                <span style={{ width: 32, textAlign: 'center' }}>Nº</span>
+                <span style={{ flex: '2 1 0' }}>Descrição</span>
+                <span style={{ width: 70, textAlign: 'center' }}>Un.</span>
+                <span style={{ width: 80, textAlign: 'center' }}>Qtd</span>
+                {showLinePrices && <span style={{ width: 120, textAlign: 'right' }}>Vlr. Unit.</span>}
+                {showLinePrices && <span style={{ width: 120, textAlign: 'right' }}>Total</span>}
+                <span style={{ width: 36 }}></span>
               </div>
-              <div style={{ width: 70 }}>
-                <input
-                  className="item-input text-center"
-                  value={item.unidade}
-                  onChange={e => updateItem(item.id, 'unidade', e.target.value)}
-                />
-              </div>
-              <div style={{ width: 80 }}>
-                <input
-                  className="item-input text-center"
-                  type="number"
-                  min={0}
-                  step={0.01}
-                  value={item.quantidade}
-                  onChange={e => updateItem(item.id, 'quantidade', Number(e.target.value))}
-                />
-              </div>
+
+              {itens.map((item, idx) => (
+                <div key={item.id} className="items-row">
+                  <div style={{ width: 32, textAlign: 'center', fontSize: 11, color: '#999', fontWeight: 700 }}>{idx + 1}</div>
+                  <div style={{ flex: '2 1 0', minWidth: 0 }}>
+                    <input
+                      className="item-input"
+                      value={item.descricao}
+                      onChange={e => updateItem(item.id, 'descricao', e.target.value)}
+                      placeholder={`Item ${idx + 1}`}
+                    />
+                  </div>
+                  <div style={{ width: 70 }}>
+                    <input
+                      className="item-input text-center"
+                      value={item.unidade}
+                      onChange={e => updateItem(item.id, 'unidade', e.target.value)}
+                    />
+                  </div>
+                  <div style={{ width: 80 }}>
+                    <input
+                      className="item-input text-center"
+                      type="number"
+                      min={0}
+                      step={0.01}
+                      value={item.quantidade}
+                      onChange={e => updateItem(item.id, 'quantidade', Number(e.target.value))}
+                    />
+                  </div>
+                  {showLinePrices && (
+                    <div style={{ width: 120 }}>
+                      <input
+                        className="item-input text-right"
+                        type="number"
+                        min={0}
+                        step={0.01}
+                        value={item.valorUnitario || ''}
+                        placeholder="0,00"
+                        onChange={e => updateItem(item.id, 'valorUnitario', Number(e.target.value))}
+                      />
+                    </div>
+                  )}
+                  {showLinePrices && (
+                    <div style={{ width: 120, textAlign: 'right', padding: '0 8px', fontSize: 13, fontWeight: 600, color: '#0963ed', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                      {formatCurrency(item.quantidade * item.valorUnitario)}
+                    </div>
+                  )}
+                  <div style={{ width: 36, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <button
+                      type="button"
+                      onClick={() => removeItem(item.id)}
+                      disabled={itens.length === 1}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ef4444', padding: 4, borderRadius: 4, opacity: itens.length === 1 ? 0.3 : 1 }}
+                      title="Remover item"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </div>
+              ))}
+
               {showLinePrices && (
-                <div style={{ width: 120 }}>
+                <div className="items-total-row">
+                  <span style={{ flex: 1 }}>TOTAL GERAL</span>
+                  <span style={{ fontWeight: 800, fontSize: 16, color: '#001c3d' }}>{formatCurrency(total)}</span>
+                </div>
+              )}
+            </div>
+
+            <button type="button" onClick={addItem} className="btn-add-item">
+              + Adicionar item
+            </button>
+
+            {!showLinePrices && (
+              <div style={{ marginTop: 18 }}>
+                <Field label="Valor Total dos Serviços *">
                   <input
-                    className="item-input text-right"
+                    className="form-input"
                     type="number"
                     min={0}
                     step={0.01}
-                    value={item.valorUnitario || ''}
+                    value={valorGlobal || ''}
                     placeholder="0,00"
-                    onChange={e => updateItem(item.id, 'valorUnitario', Number(e.target.value))}
+                    onChange={e => setValorGlobal(Number(e.target.value))}
+                    style={{ fontSize: 16, fontWeight: 700 }}
                   />
-                </div>
-              )}
-              {showLinePrices && (
-                <div style={{ width: 120, textAlign: 'right', padding: '0 8px', fontSize: 13, fontWeight: 600, color: '#0963ed', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                  {formatCurrency(item.quantidade * item.valorUnitario)}
-                </div>
-              )}
-              <div style={{ width: 36, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <button
-                  type="button"
-                  onClick={() => removeItem(item.id)}
-                  disabled={itens.length === 1}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ef4444', padding: 4, borderRadius: 4, opacity: itens.length === 1 ? 0.3 : 1 }}
-                  title="Remover item"
-                >
-                  ✕
-                </button>
+                  <p style={{ fontSize: 11, color: '#666', marginTop: 4 }}>
+                    Valor único exibido na proposta — os itens acima definem o escopo sem abertura de preços.
+                  </p>
+                </Field>
               </div>
-            </div>
-          ))}
-
-          {showLinePrices && (
-            <div className="items-total-row">
-              <span style={{ flex: 1 }}>TOTAL GERAL</span>
-              <span style={{ fontWeight: 800, fontSize: 16, color: '#001c3d' }}>{formatCurrency(total)}</span>
-            </div>
-          )}
-        </div>
-
-        <button type="button" onClick={addItem} className="btn-add-item">
-          + Adicionar item
-        </button>
-
-        {!showLinePrices && (
-          <div style={{ marginTop: 18 }}>
-            <Field label="Valor Total dos Serviços *">
-              <input
-                className="form-input"
-                type="number"
-                min={0}
-                step={0.01}
-                value={valorGlobal || ''}
-                placeholder="0,00"
-                onChange={e => setValorGlobal(Number(e.target.value))}
-                style={{ fontSize: 16, fontWeight: 700 }}
-              />
-              <p style={{ fontSize: 11, color: '#666', marginTop: 4 }}>
-                Valor único exibido na proposta — os itens acima definem o escopo sem abertura de preços.
-              </p>
-            </Field>
-          </div>
+            )}
+          </>
         )}
       </Card>
 

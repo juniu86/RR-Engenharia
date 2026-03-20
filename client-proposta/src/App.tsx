@@ -27,6 +27,7 @@ export interface ProposalData {
     localExecucao: string;
   };
   itens: LineItem[];
+  escopoTexto?: string;
   valorGlobal?: number;
   prazoExecucao: string;
   condicoesPagamento: string;

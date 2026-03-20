@@ -3,7 +3,7 @@ import type { ProposalData } from './App';
 const RR = {
   razaoSocial: 'RR ENGENHARIA E SOLUÇÕES LTDA.',
   cnpj: '46.887.631/0001-75',
-  endereco: 'Sócio Geneve, Centro Empresarial Barrashopping, Barra da Tijuca, Rio de Janeiro/RJ CEP 22640-102',
+  endereco: 'Av. das Américas nº 4.200, Sala 106 do bloco 08, Edifício Geneve, Centro Empresarial Barrashopping, Barra da Tijuca, Rio de Janeiro/RJ CEP 22640-102',
   site: 'www.rres.com.br',
   email: 'contato@rres.com.br',
   slogan: 'Sua parceira em obras e instalações',
@@ -204,45 +204,49 @@ export default function ProposalDocument({ data, showLinePrices }: Props) {
           </p>
         </section>
 
-        {/* Scope — itemized table */}
+        {/* Scope */}
         <section className="proposta-section">
           <h2 className="proposta-section-title">
             <span className="proposta-section-num">01</span>
             ESCOPO DOS SERVIÇOS
           </h2>
 
-          <table className="proposta-table">
-            <thead>
-              <tr>
-                <th style={{ width: 32, textAlign: 'center' }}>Nº</th>
-                <th>Descrição da Atividade</th>
-                <th style={{ width: 110, textAlign: 'center' }}>Quantidade</th>
-                {showLinePrices && <th style={{ width: 120, textAlign: 'right' }}>Vlr. Unit.</th>}
-                {showLinePrices && <th style={{ width: 130, textAlign: 'right' }}>Total</th>}
-              </tr>
-            </thead>
-            <tbody>
-              {data.itens.map((item, idx) => (
-                <tr key={item.id}>
-                  <td style={{ textAlign: 'center', color: '#666', fontSize: 11 }}>{idx + 40}</td>
-                  <td>{item.descricao}</td>
-                  <td style={{ textAlign: 'center' }}>
-                    {item.quantidade.toLocaleString('pt-BR')} {item.unidade}
-                  </td>
-                  {showLinePrices && <td style={{ textAlign: 'right' }}>{formatCurrency(item.valorUnitario)}</td>}
-                  {showLinePrices && <td style={{ textAlign: 'right', fontWeight: 700 }}>{formatCurrency(item.quantidade * item.valorUnitario)}</td>}
+          {data.escopoTexto ? (
+            <p className="proposta-texto" style={{ whiteSpace: 'pre-wrap' }}>{data.escopoTexto}</p>
+          ) : (
+            <table className="proposta-table">
+              <thead>
+                <tr>
+                  <th style={{ width: 32, textAlign: 'center' }}>Nº</th>
+                  <th>Descrição da Atividade</th>
+                  <th style={{ width: 110, textAlign: 'center' }}>Quantidade</th>
+                  {showLinePrices && <th style={{ width: 120, textAlign: 'right' }}>Vlr. Unit.</th>}
+                  {showLinePrices && <th style={{ width: 130, textAlign: 'right' }}>Total</th>}
                 </tr>
-              ))}
-            </tbody>
-            {showLinePrices && (
-              <tfoot>
-                <tr className="proposta-table-total">
-                  <td colSpan={4} style={{ textAlign: 'right', paddingRight: 16 }}>TOTAL GERAL</td>
-                  <td style={{ textAlign: 'right' }}>{formatCurrency(total)}</td>
-                </tr>
-              </tfoot>
-            )}
-          </table>
+              </thead>
+              <tbody>
+                {data.itens.map((item, idx) => (
+                  <tr key={item.id}>
+                    <td style={{ textAlign: 'center', color: '#666', fontSize: 11 }}>{idx + 1}</td>
+                    <td>{item.descricao}</td>
+                    <td style={{ textAlign: 'center' }}>
+                      {item.quantidade.toLocaleString('pt-BR')} {item.unidade}
+                    </td>
+                    {showLinePrices && <td style={{ textAlign: 'right' }}>{formatCurrency(item.valorUnitario)}</td>}
+                    {showLinePrices && <td style={{ textAlign: 'right', fontWeight: 700 }}>{formatCurrency(item.quantidade * item.valorUnitario)}</td>}
+                  </tr>
+                ))}
+              </tbody>
+              {showLinePrices && (
+                <tfoot>
+                  <tr className="proposta-table-total">
+                    <td colSpan={4} style={{ textAlign: 'right', paddingRight: 16 }}>TOTAL GERAL</td>
+                    <td style={{ textAlign: 'right' }}>{formatCurrency(total)}</td>
+                  </tr>
+                </tfoot>
+              )}
+            </table>
+          )}
         </section>
 
         {/* Obligations */}
@@ -340,12 +344,12 @@ export default function ProposalDocument({ data, showLinePrices }: Props) {
                 </div>
               </div>
             </div>
-            <div style={{ textAlign: 'right' }}>
-              <p style={{ fontSize: 10, color: '#999', marginBottom: 6 }}>Ciente e de acordo:</p>
-              <div style={{ width: 200, borderBottom: '2px solid #001c3d', marginBottom: 8 }} />
-              <p style={{ fontSize: 11, color: '#666' }}>{data.cliente.razaoSocial}</p>
-              {data.cliente.contato && <p style={{ fontSize: 11, color: '#999' }}>{data.cliente.contato}</p>}
-              <p style={{ fontSize: 10, color: '#aaa', marginTop: 8 }}>Data: ___/___/______</p>
+            <div style={{ minWidth: 260, textAlign: 'center' }}>
+              <p style={{ fontSize: 10, color: '#999', marginBottom: 40, textAlign: 'right' }}>Ciente e de acordo:</p>
+              <div style={{ borderBottom: '2px solid #001c3d', marginBottom: 10 }} />
+              <p style={{ fontSize: 11, fontWeight: 700, color: '#001c3d' }}>{data.cliente.razaoSocial}</p>
+              {data.cliente.contato && <p style={{ fontSize: 11, color: '#666', marginTop: 2 }}>{data.cliente.contato}</p>}
+              <p style={{ fontSize: 10, color: '#aaa', marginTop: 10 }}>Data: ___/___/______</p>
             </div>
           </div>
           <p style={{ marginTop: 24, fontSize: 10, color: '#999', textAlign: 'center' }}>
