@@ -11,7 +11,11 @@ function authHeaders(): Record<string, string> {
 
 export async function apiLoadProposals(): Promise<SavedProposal[]> {
   const res = await fetch(`${API_BASE}?action=list`, { headers: authHeaders() });
-  if (!res.ok) throw new Error('Falha ao carregar propostas');
+  if (!res.ok) {
+    let detail = '';
+    try { const j = await res.json(); detail = j.error ?? ''; } catch { /* ignore */ }
+    throw new Error(`Falha ao carregar propostas (HTTP ${res.status}${detail ? ': ' + detail : ''})`);
+  }
   const data = await res.json() as SavedProposal[];
   return data.map(p => ({
     ...p,
@@ -25,7 +29,11 @@ export async function apiSaveProposal(proposal: SavedProposal): Promise<void> {
     headers: authHeaders(),
     body: JSON.stringify(proposal),
   });
-  if (!res.ok) throw new Error('Falha ao salvar proposta');
+  if (!res.ok) {
+    let detail = '';
+    try { const j = await res.json(); detail = j.error ?? ''; } catch { /* ignore */ }
+    throw new Error(`Falha ao salvar proposta (HTTP ${res.status}${detail ? ': ' + detail : ''})`);
+  }
 }
 
 export async function apiDeleteProposal(id: string): Promise<void> {

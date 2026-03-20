@@ -1,6 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import type { ProposalData, LineItem, SavedProposal } from './App';
 import { peekNextNumber, consumeNextNumber } from './App';
+
+const DRAFT_KEY = 'rr-proposal-draft';
 
 const DEFAULT_CONDICOES = 'Sinal de 40%, e medições semanais de acordo com os descritivos da planilha com o cronograma.';
 const DEFAULT_VALIDADE = 30;
@@ -45,9 +47,25 @@ interface Props {
   revisionMode?: boolean;
 }
 
+export function clearDraft() {
+  localStorage.removeItem(DRAFT_KEY);
+}
+
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch { return null; }
+}
+
 export default function FormPage({ initialProposal, onSave, revisionMode }: Props) {
   const isEditing = !!initialProposal && !!initialProposal.id && !revisionMode;
   const initial = initialProposal?.data;
+
+  // Load draft only for new proposals (not edit/revision)
+  const draft = (!isEditing && !revisionMode && !initialProposal) ? loadDraft() : null;
+  const [draftBanner, setDraftBanner] = useState(!!draft);
 
   // Track if user manually edited the number field
   const numberAutoRef = useRef(!isEditing);
@@ -56,28 +74,41 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
     // For revisions, use the REV-suffixed number from the template (not the original data.numero)
     if (revisionMode && initialProposal) return initialProposal.numero;
     if (initial) return initial.numero;
-    return '';
+    return draft?.numero ?? '';
   });
   const [seqPreview, setSeqPreview] = useState<string>('');
-  const [cnpj, setCnpj] = useState(initial?.cliente.cnpj ?? '');
-  const [razaoSocial, setRazaoSocial] = useState(initial?.cliente.razaoSocial ?? '');
-  const [endereco, setEndereco] = useState(initial?.cliente.endereco ?? '');
-  const [contato, setContato] = useState(initial?.cliente.contato ?? '');
-  const [telefone, setTelefone] = useState(initial?.cliente.telefone ?? '');
-  const [email, setEmail] = useState(initial?.cliente.email ?? '');
-  const [localExecucao, setLocalExecucao] = useState(initial?.cliente.localExecucao ?? '');
+  const [cnpj, setCnpj] = useState(draft?.cnpj ?? initial?.cliente.cnpj ?? '');
+  const [razaoSocial, setRazaoSocial] = useState(draft?.razaoSocial ?? initial?.cliente.razaoSocial ?? '');
+  const [endereco, setEndereco] = useState(draft?.endereco ?? initial?.cliente.endereco ?? '');
+  const [contato, setContato] = useState(draft?.contato ?? initial?.cliente.contato ?? '');
+  const [telefone, setTelefone] = useState(draft?.telefone ?? initial?.cliente.telefone ?? '');
+  const [email, setEmail] = useState(draft?.email ?? initial?.cliente.email ?? '');
+  const [localExecucao, setLocalExecucao] = useState(draft?.localExecucao ?? initial?.cliente.localExecucao ?? '');
   const [cnpjLoading, setCnpjLoading] = useState(false);
   const [cnpjError, setCnpjError] = useState('');
   const [itens, setItens] = useState<LineItem[]>(() => {
+    if (draft?.itens?.length) return draft.itens.map((i: LineItem) => ({ ...i }));
     if (initial?.itens.length) return initial.itens.map(i => ({ ...i }));
     return [newItem()];
   });
-  const [prazoExecucao, setPrazoExecucao] = useState(initial?.prazoExecucao ?? '');
-  const [condicoesPagamento, setCondicoesPagamento] = useState(initial?.condicoesPagamento ?? DEFAULT_CONDICOES);
-  const [observacoes, setObservacoes] = useState(initial?.observacoes ?? '');
-  const [validadeDias, setValidadeDias] = useState(initial?.validadeDias ?? DEFAULT_VALIDADE);
-  const [showLinePrices, setShowLinePrices] = useState(initialProposal ? (initialProposal.showLinePrices ?? true) : true);
-  const [valorGlobal, setValorGlobal] = useState(initial?.valorGlobal ?? 0);
+  const [prazoExecucao, setPrazoExecucao] = useState(draft?.prazoExecucao ?? initial?.prazoExecucao ?? '');
+  const [condicoesPagamento, setCondicoesPagamento] = useState(draft?.condicoesPagamento ?? initial?.condicoesPagamento ?? DEFAULT_CONDICOES);
+  const [observacoes, setObservacoes] = useState(draft?.observacoes ?? initial?.observacoes ?? '');
+  const [validadeDias, setValidadeDias] = useState(draft?.validadeDias ?? initial?.validadeDias ?? DEFAULT_VALIDADE);
+  const [showLinePrices, setShowLinePrices] = useState(draft ? (draft.showLinePrices ?? true) : initialProposal ? (initialProposal.showLinePrices ?? true) : true);
+  const [valorGlobal, setValorGlobal] = useState(draft?.valorGlobal ?? initial?.valorGlobal ?? 0);
+
+  // Auto-save draft to localStorage (new proposals only, not edits)
+  const saveDraft = useCallback(() => {
+    if (isEditing || revisionMode) return;
+    const draft = { numero, cnpj, razaoSocial, endereco, contato, telefone, email, localExecucao, itens, prazoExecucao, condicoesPagamento, observacoes, validadeDias, showLinePrices, valorGlobal, savedAt: new Date().toISOString() };
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  }, [isEditing, revisionMode, numero, cnpj, razaoSocial, endereco, contato, telefone, email, localExecucao, itens, prazoExecucao, condicoesPagamento, observacoes, validadeDias, showLinePrices, valorGlobal]);
+
+  useEffect(() => {
+    const t = setTimeout(saveDraft, 800);
+    return () => clearTimeout(t);
+  }, [saveDraft]);
 
   // Auto-update proposal number when razaoSocial changes (new proposals only)
   useEffect(() => {
@@ -150,11 +181,33 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
       observacoes,
     };
 
+    clearDraft();
     onSave(data, showLinePrices, isEditing ? initialProposal?.id : undefined);
   }
 
   return (
     <form onSubmit={handleSubmit} style={{ maxWidth: 760, margin: '0 auto' }}>
+
+      {draftBanner && (
+        <div style={{
+          background: '#fef9ec',
+          border: '1.5px solid #f59e0b',
+          borderRadius: 10,
+          padding: '12px 18px',
+          marginBottom: 16,
+          fontSize: 12,
+          color: '#92400e',
+          fontWeight: 600,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+          <span>⚠ Rascunho recuperado de uma sessão anterior ({draft?.savedAt ? new Date(draft.savedAt).toLocaleString('pt-BR') : ''}).</span>
+          <button type="button" onClick={() => { clearDraft(); window.location.reload(); }} style={{ background: 'none', border: 'none', color: '#92400e', cursor: 'pointer', textDecoration: 'underline', fontSize: 11, fontWeight: 700, padding: 0, marginLeft: 12 }}>
+            Descartar
+          </button>
+        </div>
+      )}
 
       {(isEditing || revisionMode) && (
         <div style={{

@@ -76,7 +76,7 @@ function App() {
     if (authed) {
       apiLoadProposals()
         .then(setProposals)
-        .catch(() => alert('Erro ao carregar propostas. Verifique a conexão.'))
+        .catch((e: unknown) => alert('Erro ao carregar propostas. Verifique a conexão.\n\n' + (e instanceof Error ? e.message : String(e))))
         .finally(() => setLoading(false));
     }
   }, [authed]);
@@ -112,8 +112,8 @@ function App() {
       setViewingProposal(saved);
       setEditingProposal(null);
       setView('document');
-    } catch {
-      alert('Erro ao salvar proposta. Tente novamente.');
+    } catch (e: unknown) {
+      alert('Erro ao salvar proposta. Tente novamente.\n\n' + (e instanceof Error ? e.message : String(e)));
     }
   }
 
