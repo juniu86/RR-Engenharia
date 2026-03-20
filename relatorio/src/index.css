@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .label {
+    @apply block text-xs font-medium text-gray-600 mb-1;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  header,
+  aside {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+  }
+}
