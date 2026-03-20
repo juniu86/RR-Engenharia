@@ -1,6 +1,6 @@
 import type { SavedProposal } from './App';
 
-const API_BASE = '/proposta/api.php';
+const API_BASE = '/api.php';
 
 function authHeaders(): Record<string, string> {
   return {
