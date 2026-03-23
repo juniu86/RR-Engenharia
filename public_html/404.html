@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página não encontrada | RR Engenharia</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#001c3d">
+  <link rel="icon" type="image/jpeg" href="/assets/logo-rr.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.min.css">
+  <style>
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .error-page::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(9,99,237,0.2) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 20% 80%, rgba(26,74,122,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .error-content { position: relative; z-index: 1; max-width: 560px; }
+    .error-code {
+      font-size: clamp(6rem, 15vw, 10rem);
+      font-weight: 900;
+      color: var(--blue);
+      line-height: 1;
+      margin-bottom: 16px;
+      opacity: 0.9;
+    }
+    .error-content h1 {
+      color: var(--white);
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      margin-bottom: 16px;
+    }
+    .error-content p {
+      color: rgba(255,255,255,0.6);
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      line-height: 1.8;
+    }
+    .error-links {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="error-page">
+    <div class="error-content">
+      <div class="error-code">404</div>
+      <h1>Essa obra ainda nao comecou</h1>
+      <p>A pagina que voce procura nao existe ou foi movida. Mas estamos aqui para ajudar — volte para o inicio ou entre em contato conosco.</p>
+      <div class="error-links">
+        <a href="/" class="btn btn-primary">Voltar ao Inicio</a>
+        <a href="https://wa.me/5521995740273?text=Olá! Tentei acessar uma página que não existe no site." class="btn btn-whatsapp" target="_blank" rel="noopener">
+          Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
