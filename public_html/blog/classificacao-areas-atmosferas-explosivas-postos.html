@@ -111,16 +111,43 @@
       <li><strong>Documentação:</strong> o resultado é um desenho técnico (planta de classificação de áreas) com as zonas delimitadas, acompanhado de memorial descritivo e ART do engenheiro responsável.</li>
     </ol>
 
-    <h2>Equipamentos Ex: o que significam as marcações</h2>
-    <p>Equipamentos certificados para uso em atmosferas explosivas recebem a marcação "Ex" seguida de letras que indicam o tipo de proteção:</p>
+    <h2>Grupo de gás e classe de temperatura</h2>
+    <p>Além da classificação em zonas, a norma IEC 60079 define parâmetros adicionais que afetam diretamente a seleção de equipamentos:</p>
+    <h3>Grupo de gás</h3>
+    <p>Os gases e vapores inflamáveis são classificados conforme suas características de explosividade:</p>
     <ul>
-      <li><strong>Ex d</strong> — À prova de explosão: o invólucro contém a explosão interna sem propagá-la para o exterior.</li>
-      <li><strong>Ex e</strong> — Segurança aumentada: medidas adicionais são aplicadas para evitar arcos, faíscas e temperaturas excessivas.</li>
-      <li><strong>Ex ia / Ex ib</strong> — Segurança intrínseca: a energia do circuito é limitada a níveis que não podem causar ignição.</li>
-      <li><strong>Ex p</strong> — Pressurização: o interior do invólucro é mantido sob pressão positiva com gás inerte ou ar limpo.</li>
-      <li><strong>Ex n</strong> — Não acendível: equipamento que não produz arcos ou faíscas em operação normal (aceito apenas em Zona 2).</li>
+      <li><strong>Grupo IIA:</strong> gases como propano, butano e vapores de diesel e gasolina. Menor energia de ignição necessária entre os grupos.</li>
+      <li><strong>Grupo IIB:</strong> gases como etileno e vapores de etanol. Energia de ignição intermediária — mais restritivo que o IIA.</li>
+      <li><strong>Grupo IIC:</strong> gases como hidrogênio e acetileno. Maior risco — menor energia de ignição e maior velocidade de propagação da chama.</li>
     </ul>
-    <p>A seleção do equipamento correto depende da zona em que será instalado, do grupo do gás (IIA para gasolina, IIA para diesel) e da classe de temperatura.</p>
+    <p>Em postos que comercializam gasolina (Grupo IIA) e etanol (Grupo IIB), os equipamentos devem ser selecionados para o grupo mais restritivo: IIB. Esse é um erro comum em projetos que consideram apenas a gasolina.</p>
+
+    <h3>Classe de temperatura</h3>
+    <p>A classe de temperatura define a temperatura máxima de superfície admissível para o equipamento. As classes vão de T1 (450°C) a T6 (85°C). A gasolina tem temperatura de autoignição de aproximadamente 280°C, exigindo equipamentos com classe T3 (200°C) ou inferior. Na prática, a classe T3 é adotada como padrão para postos de combustível.</p>
+
+    <h2>Equipamentos Ex: tipos de proteção e seleção</h2>
+    <p>Equipamentos certificados para uso em atmosferas explosivas recebem a marcação "Ex" seguida de letras que indicam o tipo de proteção. A seleção deve considerar a zona, o grupo de gás e a classe de temperatura:</p>
+    <ul>
+      <li><strong>Ex d — À prova de explosão:</strong> o invólucro robusto contém a explosão interna sem propagá-la para o exterior. Utilizado para motores, luminárias e caixas de junção em Zonas 1 e 2. Custo elevado, mas alta confiabilidade.</li>
+      <li><strong>Ex e — Segurança aumentada:</strong> medidas adicionais são aplicadas para evitar arcos, faíscas e temperaturas excessivas durante operação normal e em condições anormais. Comum em caixas de terminais e luminárias em Zonas 1 e 2.</li>
+      <li><strong>Ex ia / Ex ib — Segurança intrínseca:</strong> a energia do circuito é limitada a níveis que não podem causar ignição. Nível "ia" é o único aceito em Zona 0. Utilizado em sensores, instrumentação e sistemas de monitoramento de tanques.</li>
+      <li><strong>Ex p — Pressurização:</strong> o interior do invólucro é mantido sob pressão positiva com gás inerte ou ar limpo, impedindo a entrada de atmosfera explosiva. Aplicado em painéis elétricos e salas de controle.</li>
+      <li><strong>Ex n — Não acendível:</strong> equipamento que não produz arcos ou faíscas em operação normal. Aceito apenas em Zona 2, com custo significativamente menor que as demais proteções.</li>
+    </ul>
+    <p>A marcação completa de um equipamento Ex inclui todas essas informações. Por exemplo: "Ex d IIB T3" indica um equipamento à prova de explosão, certificado para gases do Grupo IIB, com classe de temperatura T3. A verificação da compatibilidade entre a marcação do equipamento e a classificação da área onde será instalado é uma etapa crítica do projeto elétrico.</p>
+
+    <h2>Documentação e requisitos do laudo</h2>
+    <p>O documento de classificação de áreas deve conter, no mínimo:</p>
+    <ol>
+      <li>Identificação completa da instalação e do responsável técnico.</li>
+      <li>Descrição dos produtos manuseados com suas propriedades físico-químicas (ponto de fulgor, LIE, LSE, temperatura de autoignição, densidade de vapor).</li>
+      <li>Identificação e classificação de todas as fontes de liberação.</li>
+      <li>Avaliação da ventilação natural e forçada.</li>
+      <li>Desenhos técnicos em planta e corte com a demarcação das zonas.</li>
+      <li>Lista de todos os equipamentos elétricos nas áreas classificadas com verificação de compatibilidade.</li>
+      <li>Recomendações de adequação para equipamentos não conformes.</li>
+      <li>ART do engenheiro responsável.</li>
+    </ol>
 
     <h2>Erros comuns encontrados em campo</h2>
     <p>Na experiência da RR Engenharia, os problemas mais frequentes em classificação de áreas são:</p>
@@ -133,8 +160,26 @@
     </ul>
 
     <h2>Relação com a NR-20</h2>
-    <p>A NR-20 exige explicitamente que toda instalação que armazene inflamáveis tenha a classificação de áreas documentada no prontuário da instalação. Para postos de Classe II (a maioria dos postos revendedores), a classificação é um dos itens verificados em fiscalizações do Ministério do Trabalho.</p>
-    <p>A ausência ou desatualização da classificação de áreas é uma das não conformidades mais graves que pode ser encontrada em uma auditoria, pois compromete toda a estratégia de proteção contra explosões da instalação.</p>
+    <p>A Norma Regulamentadora nº 20 (Segurança e Saúde no Trabalho com Inflamáveis e Combustíveis) exige explicitamente que toda instalação que armazene inflamáveis tenha a classificação de áreas documentada no prontuário da instalação. Para postos de Classe II (a maioria dos postos revendedores), a classificação é um dos itens verificados em fiscalizações do Ministério do Trabalho.</p>
+    <p>As exigências da NR-20 em relação à classificação de áreas incluem:</p>
+    <ul>
+      <li>O documento deve ser parte integrante do prontuário da instalação, disponível para consulta de trabalhadores e fiscais.</li>
+      <li>Os equipamentos elétricos nas áreas classificadas devem ser compatíveis com a zona, o grupo de gás e a classe de temperatura.</li>
+      <li>Trabalhadores que atuam nas áreas classificadas devem receber treinamento específico sobre os riscos de atmosferas explosivas.</li>
+      <li>Serviços a quente (soldagem, corte, esmerilhamento) em áreas classificadas só podem ser executados com Permissão de Trabalho (PT) e após verificação da atmosfera com explosímetro calibrado.</li>
+      <li>O Plano de Resposta a Emergências deve considerar os cenários de explosão e incêndio associados às áreas classificadas.</li>
+    </ul>
+    <p>A ausência ou desatualização da classificação de áreas é uma das não conformidades mais graves que pode ser encontrada em uma auditoria, pois compromete toda a estratégia de proteção contra explosões da instalação. As multas por descumprimento da NR-20 variam conforme o porte do estabelecimento e podem ultrapassar R$ 100.000 por infração.</p>
+
+    <h2>Consequências de uma classificação inadequada</h2>
+    <p>Uma classificação de áreas incorreta ou desatualizada pode ter consequências graves:</p>
+    <ul>
+      <li><strong>Risco de explosão:</strong> equipamentos não certificados instalados em áreas classificadas podem gerar faíscas e provocar explosões com potencial de destruição total da instalação e vítimas fatais.</li>
+      <li><strong>Responsabilidade civil e criminal:</strong> em caso de acidente, a ausência de classificação de áreas adequada caracteriza negligência, resultando em responsabilização do proprietário e do responsável técnico.</li>
+      <li><strong>Impedimento de licenciamento:</strong> o laudo de classificação de áreas é pré-requisito para a obtenção e renovação da Licença de Operação junto ao órgão ambiental.</li>
+      <li><strong>Reprovação em inspeção SASC:</strong> durante a inspeção do sistema SASC pelo INMETRO, a classificação de áreas é verificada como parte da avaliação de conformidade.</li>
+      <li><strong>Problemas com seguro:</strong> seguradoras podem negar indenização em caso de sinistro se ficar comprovado que a classificação de áreas estava incorreta ou desatualizada.</li>
+    </ul>
 
     <h2>Como a RR Engenharia pode ajudar</h2>
     <p>A RR Engenharia realiza classificação de áreas completa para postos de combustível: levantamento em campo, análise das fontes de liberação, definição das zonas, elaboração dos desenhos técnicos e memorial descritivo com ART. Também avaliamos os equipamentos existentes e recomendamos adequações quando necessário.</p>
