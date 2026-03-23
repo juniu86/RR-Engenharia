@@ -4,11 +4,10 @@ export function SEOHead() {
     "@type": "Organization",
     "name": "RR Engenharia",
     "url": "https://rres.com.br",
-    "logo": "https://rres.com.br/logo.png",
+    "logo": "https://rres.com.br/logo.svg",
     "description": "Especialista em SASC, TEPS e construção de postos de combustível com certificação vigente até 2029",
     "sameAs": [
-      "https://www.facebook.com/rr-engenharia",
-      "https://www.linkedin.com/company/rr-engenharia"
+      "https://www.linkedin.com/company/rresengenharia"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
@@ -30,7 +29,7 @@ export function SEOHead() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "RR Engenharia",
-    "image": "https://rres.com.br/logo.png",
+    "image": "https://rres.com.br/logo.svg",
     "description": "Especialista em SASC, TEPS e construção de postos de combustível",
     "address": {
       "@type": "PostalAddress",
