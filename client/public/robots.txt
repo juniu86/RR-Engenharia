@@ -1,18 +1,13 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Disallow: /*.json$
-Disallow: /*.xml$
 
 Sitemap: https://rres.com.br/sitemap.xml
 
-# Google
 User-agent: Googlebot
 Allow: /
 
-# Bing
 User-agent: Bingbot
 Allow: /
 
-# Crawl delay
 Crawl-delay: 1
