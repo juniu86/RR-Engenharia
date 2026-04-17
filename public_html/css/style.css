@@ -1176,6 +1176,345 @@ p { font-weight: 400; color: var(--gray-700); }
   color: var(--gray-700);
 }
 
+/* ============================================
+   IDENTIDADE INDUSTRIAL-TÉCNICA (Fase 2)
+   Acentos para transmitir autoridade regulatória
+   ============================================ */
+
+/* Monospace accent for technical codes (NBR, ANP, acreditação) */
+.mono {
+  font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Norm tags (NBR 13786, ANP 41/2013, NR-13 etc.) */
+.norm-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--gray-200);
+}
+
+.norm-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--blue-light);
+  color: var(--blue-dark);
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+}
+
+.norm-tag::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  background: var(--blue);
+  border-radius: 50%;
+}
+
+/* ============================================
+   CLIENTS STRIP — prova social
+   ============================================ */
+.clients-section {
+  padding: 72px 0 56px;
+  background: var(--white);
+  border-top: 1px solid var(--gray-100);
+  border-bottom: 1px solid var(--gray-100);
+  overflow: hidden;
+}
+
+.clients-title {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.clients-title .section-label {
+  padding-left: 0;
+}
+.clients-title .section-label::before { display: none; }
+
+.clients-title p {
+  font-size: 1rem;
+  color: var(--gray-500);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+.clients-marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+.clients-track {
+  display: flex;
+  width: max-content;
+  gap: 56px;
+  animation: marquee 40s linear infinite;
+}
+
+.clients-marquee:hover .clients-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.client-logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 28px;
+  min-width: 160px;
+  height: 72px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  background: var(--white);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--gray-500);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: var(--transition);
+  filter: grayscale(1);
+}
+
+.client-logo:hover {
+  filter: grayscale(0);
+  color: var(--navy);
+  border-color: var(--blue);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.client-logo img {
+  max-height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ============================================
+   EXPANDED KPIS (industrial stats block)
+   ============================================ */
+.hero-stats.expanded {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.stat-card .stat-unit {
+  display: block;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.35);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-top: 2px;
+  font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+}
+
+/* ============================================
+   CREDENTIAL BADGE — INMETRO em destaque
+   ============================================ */
+.credential-hero {
+  max-width: 960px;
+  margin: 0 auto 48px;
+  padding: 36px 44px;
+  background: linear-gradient(135deg, rgba(9,99,237,0.08) 0%, rgba(9,99,237,0.02) 100%);
+  border: 1px solid rgba(9,99,237,0.18);
+  border-radius: var(--radius-lg);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.credential-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--blue);
+}
+
+.credential-shield {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(9,99,237,0.2);
+  color: var(--blue);
+  flex-shrink: 0;
+}
+
+.credential-body h3 {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+  color: var(--white);
+}
+
+.credential-body .credential-number {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.65);
+  font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+  letter-spacing: 0.04em;
+}
+
+.credential-body .credential-number strong {
+  color: var(--white);
+  font-weight: 700;
+}
+
+.credential-validity {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.credential-validity .validity-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 2px;
+}
+
+.credential-validity .validity-value {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--blue);
+  font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+  line-height: 1;
+}
+
+/* Industrial accent for cert-badge */
+.cert-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+}
+
+.cert-badge::before {
+  content: '●';
+  color: #22c55e;
+  font-size: 0.6rem;
+}
+
+/* ============================================
+   BLUEPRINT GRID — fundo sutil sobre hero
+   ============================================ */
+.hero-blueprint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.4;
+  background-image:
+    linear-gradient(rgba(9,99,237,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(9,99,237,0.08) 1px, transparent 1px),
+    linear-gradient(rgba(9,99,237,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(9,99,237,0.03) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+}
+
+/* Technical spec strip below hero (certifications inline) */
+.spec-strip {
+  position: relative;
+  z-index: 3;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 56px;
+  justify-content: space-between;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.spec-item .spec-label {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+}
+
+.spec-item .spec-value {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+}
+
+/* ============================================
+   SERVICE CARD — industrial refinement
+   ============================================ */
+.service-card h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.service-card h3 .service-code {
+  font-size: 0.65rem;
+  color: var(--blue);
+  background: var(--blue-light);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* Responsive for new elements */
+@media (max-width: 1024px) {
+  .hero-stats.expanded { grid-template-columns: repeat(3, 1fr); }
+  .credential-hero { grid-template-columns: 1fr; text-align: left; gap: 16px; }
+  .credential-validity { text-align: left; }
+  .spec-strip { gap: 20px 32px; }
+}
+
+@media (max-width: 768px) {
+  .hero-stats.expanded { grid-template-columns: repeat(2, 1fr); }
+  .clients-section { padding: 48px 0 32px; }
+  .client-logo { min-width: 130px; height: 60px; padding: 12px 20px; font-size: 0.85rem; }
+  .credential-hero { padding: 24px 20px; }
+  .credential-shield { width: 56px; height: 56px; }
+  .spec-strip { gap: 16px 24px; margin-top: 32px; padding-top: 24px; }
+}
+
 /* --- SCROLL ANIMATIONS --- */
 .reveal {
   opacity: 0;

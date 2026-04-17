@@ -38,7 +38,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
   <!-- CSS -->
   <link rel="stylesheet" href="/css/style.css">
@@ -184,12 +184,13 @@
   <!-- HERO -->
   <section class="hero" id="inicio">
     <canvas id="heroParticles"></canvas>
+    <div class="hero-blueprint"></div>
     <div class="container">
       <div class="hero-grid">
         <div class="hero-text">
-          <span class="section-label">Engenharia de Infraestrutura Crítica</span>
+          <span class="section-label">SASC · TEPS · Engenharia de Infraestrutura Crítica</span>
           <h1>Construímos o que <span class="highlight">não pode falhar.</span></h1>
-          <p class="hero-desc">Especialistas em SASC, TEPS e postos de combustível com certificação INMETRO vigente até 2029. Mais de 15 anos entregando obras que resistem ao tempo e à fiscalização.</p>
+          <p class="hero-desc">Organismo de Inspeção Acreditado pelo INMETRO para <strong>SASC</strong> e <strong>TEPS</strong> com vigência até 2029. Projetamos, construímos e inspecionamos postos de combustível, terminais e infraestrutura de combustíveis há mais de 15 anos.</p>
           <div class="hero-buttons">
             <a href="https://wa.me/5521995740273?text=Olá! Gostaria de solicitar um orçamento." class="btn btn-whatsapp" target="_blank" rel="noopener">
               <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -207,19 +208,91 @@
           <img src="/images/equipamento-posto.jpg" alt="Equipamento de posto de combustível" class="hero-img" loading="eager" width="600" height="400">
         </div>
       </div>
-      <div class="hero-stats reveal">
+      <div class="hero-stats expanded reveal">
         <div class="stat-card">
           <div class="stat-number">+15</div>
           <div class="stat-label">Anos de Mercado</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">2029</div>
-          <div class="stat-label">Certificação Vigente</div>
+          <span class="stat-unit">desde 2009</span>
         </div>
         <div class="stat-card">
           <div class="stat-number">+200</div>
           <div class="stat-label">Projetos Entregues</div>
+          <span class="stat-unit">postos · terminais · obras</span>
         </div>
+        <div class="stat-card">
+          <div class="stat-number">2029</div>
+          <div class="stat-label">Vigência INMETRO</div>
+          <span class="stat-unit">SASC · TEPS</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">100<span style="font-size:1.6rem;">%</span></div>
+          <div class="stat-label">Aprovação em Auditoria</div>
+          <span class="stat-unit">ANP · IBAMA · INEA</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">27</div>
+          <div class="stat-label">Estados Atendidos</div>
+          <span class="stat-unit">mobilização nacional</span>
+        </div>
+      </div>
+
+      <!-- Technical spec strip -->
+      <div class="spec-strip reveal">
+        <div class="spec-item">
+          <span class="spec-label">Acreditação</span>
+          <span class="spec-value">INMETRO · ABNT NBR ISO/IEC 17020</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Escopo SASC</span>
+          <span class="spec-value">ABNT NBR 13786 · 13784 · 17505</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Escopo TEPS</span>
+          <span class="spec-value">NR-13 · NBR 17505 · API 653</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Compliance</span>
+          <span class="spec-value">ISO 37001 · NR-20 · LGPD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTES -->
+  <section class="clients-section" aria-label="Empresas que confiam na RR Engenharia">
+    <div class="container clients-title">
+      <p>Empresas que confiam em nossa engenharia</p>
+    </div>
+    <div class="clients-marquee">
+      <div class="clients-track">
+        <!-- Primeiro set -->
+        <div class="client-logo">Shell</div>
+        <div class="client-logo">BR Distribuidora</div>
+        <div class="client-logo">Ipiranga</div>
+        <div class="client-logo">Gulf Combustíveis</div>
+        <div class="client-logo">AirBP</div>
+        <div class="client-logo">Matte Leão</div>
+        <div class="client-logo">Marinha do Brasil</div>
+        <div class="client-logo">Atacadão</div>
+        <div class="client-logo">Gran Petro</div>
+        <div class="client-logo">Guanabara</div>
+        <div class="client-logo">ICTSI</div>
+        <div class="client-logo">Valorec</div>
+        <div class="client-logo">Le Canton Hotel</div>
+        <!-- Segundo set (duplicado para loop contínuo) -->
+        <div class="client-logo" aria-hidden="true">Shell</div>
+        <div class="client-logo" aria-hidden="true">BR Distribuidora</div>
+        <div class="client-logo" aria-hidden="true">Ipiranga</div>
+        <div class="client-logo" aria-hidden="true">Gulf Combustíveis</div>
+        <div class="client-logo" aria-hidden="true">AirBP</div>
+        <div class="client-logo" aria-hidden="true">Matte Leão</div>
+        <div class="client-logo" aria-hidden="true">Marinha do Brasil</div>
+        <div class="client-logo" aria-hidden="true">Atacadão</div>
+        <div class="client-logo" aria-hidden="true">Gran Petro</div>
+        <div class="client-logo" aria-hidden="true">Guanabara</div>
+        <div class="client-logo" aria-hidden="true">ICTSI</div>
+        <div class="client-logo" aria-hidden="true">Valorec</div>
+        <div class="client-logo" aria-hidden="true">Le Canton Hotel</div>
       </div>
     </div>
   </section>
@@ -286,48 +359,81 @@
           <div class="service-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
           </div>
-          <h3>SASC</h3>
+          <h3>SASC <span class="service-code">01</span></h3>
           <p>Sistemas de Armazenamento Subterrâneo de Combustíveis. Projeto, instalação, manutenção e descomissionamento conforme ABNT NBR 13786 e portarias ANP.</p>
+          <div class="norm-tags">
+            <span class="norm-tag">NBR 13786</span>
+            <span class="norm-tag">NBR 13784</span>
+            <span class="norm-tag">ANP 41/2013</span>
+            <span class="norm-tag">INMETRO</span>
+          </div>
           <a href="/servicos/sasc.html" class="service-cta">Conhecer inspeção SASC →</a>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M6 20V8l6-4 6 4v12"/><path d="M10 20v-4h4v4"/></svg>
           </div>
-          <h3>TEPS</h3>
+          <h3>TEPS <span class="service-code">02</span></h3>
           <p>Tanques de Estocagem de Petróleo e Subprodutos. Inspeção, reforma e adequação de tanques aéreos e subterrâneos com ensaios não destrutivos.</p>
+          <div class="norm-tags">
+            <span class="norm-tag">NR-13</span>
+            <span class="norm-tag">NBR 17505</span>
+            <span class="norm-tag">API 653</span>
+            <span class="norm-tag">INMETRO</span>
+          </div>
           <a href="/servicos/teps.html" class="service-cta">Conhecer inspeção TEPS →</a>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
           </div>
-          <h3>Postos de Combustível</h3>
+          <h3>Postos de Combustível <span class="service-code">03</span></h3>
           <p>Construção, reforma e adequação completa de postos. Desde a fundação até a automação, com projeto aprovado e licenciamento ambiental.</p>
+          <div class="norm-tags">
+            <span class="norm-tag">ANP 41/2013</span>
+            <span class="norm-tag">NBR 17505</span>
+            <span class="norm-tag">NR-20</span>
+            <span class="norm-tag">Licença ambiental</span>
+          </div>
           <a href="/servicos/postos-de-combustivel.html" class="service-cta">Construção de postos →</a>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8m8 4H8m2-8H8"/></svg>
           </div>
-          <h3>Laudos e Perícias</h3>
+          <h3>Laudos e Perícias <span class="service-code">04</span></h3>
           <p>Laudos periciais com fundamentação em NBR 13752 e NBR 16280. Avaliações, vistorias e pareceres técnicos para fins judiciais e extrajudiciais.</p>
+          <div class="norm-tags">
+            <span class="norm-tag">NBR 13752</span>
+            <span class="norm-tag">NBR 16280</span>
+            <span class="norm-tag">CONFEA/CREA</span>
+          </div>
           <a href="https://wa.me/5521995740273?text=Olá! Gostaria de solicitar um laudo técnico." class="service-cta" target="_blank" rel="noopener">Solicitar orçamento</a>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M5 20V10l7-5 7 5v10"/><rect x="9" y="14" width="6" height="6"/></svg>
           </div>
-          <h3>Obras Civis</h3>
+          <h3>Obras Civis <span class="service-code">05</span></h3>
           <p>Execução de obras residenciais, comerciais e industriais. Gerenciamento, acompanhamento técnico e controle de qualidade em todas as etapas.</p>
+          <div class="norm-tags">
+            <span class="norm-tag">NBR 6118</span>
+            <span class="norm-tag">NBR 8681</span>
+            <span class="norm-tag">NR-18</span>
+          </div>
           <a href="https://wa.me/5521995740273?text=Olá! Gostaria de um orçamento para obras civis." class="service-cta" target="_blank" rel="noopener">Solicitar orçamento</a>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
           </div>
-          <h3>Segurança e NR-20</h3>
+          <h3>Segurança e NR-20 <span class="service-code">06</span></h3>
           <p>Consultoria em segurança para operações com líquidos inflamáveis e combustíveis. Adequação à NR-20, treinamentos e planos de emergência.</p>
+          <div class="norm-tags">
+            <span class="norm-tag">NR-20</span>
+            <span class="norm-tag">NR-33</span>
+            <span class="norm-tag">NBR 17505</span>
+          </div>
           <a href="https://wa.me/5521995740273?text=Olá! Gostaria de consultoria em NR-20." class="service-cta" target="_blank" rel="noopener">Solicitar orçamento</a>
         </div>
       </div>
@@ -337,11 +443,27 @@
   <!-- CERTIFICAÇÕES -->
   <section class="section section-dark" id="certificacoes">
     <div class="container">
-      <div class="reveal" style="text-align: center; margin-bottom: 56px;">
+      <div class="reveal" style="text-align: center; margin-bottom: 40px;">
         <span class="section-label">Certificações</span>
         <h2 class="section-title">Credenciais que comprovam</h2>
         <p class="section-desc" style="margin: 0 auto; color: rgba(255,255,255,0.7);">Cada certificação representa milhares de horas de auditoria, conformidade e atualização técnica.</p>
       </div>
+
+      <!-- Destaque INMETRO -->
+      <div class="credential-hero reveal">
+        <div class="credential-shield">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <div class="credential-body">
+          <h3>Organismo de Inspeção Acreditado pelo INMETRO</h3>
+          <p class="credential-number">Escopo: <strong>SASC · TEPS</strong> · Acreditação conforme <strong>ABNT NBR ISO/IEC 17020</strong></p>
+        </div>
+        <div class="credential-validity">
+          <span class="validity-label">Vigência até</span>
+          <span class="validity-value">2029</span>
+        </div>
+      </div>
+
       <div class="cert-grid reveal-stagger">
         <div class="cert-card reveal">
           <div class="cert-icon">
