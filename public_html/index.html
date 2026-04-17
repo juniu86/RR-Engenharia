@@ -40,6 +40,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
+  <!-- Preload hero LCP image -->
+  <link rel="preload" as="image" href="/images/instalacao-tanques-subterraneos.jpg" fetchpriority="high">
+
   <!-- CSS -->
   <link rel="stylesheet" href="/css/style.css">
 
@@ -156,7 +159,7 @@
 <body>
 
   <!-- Skip to content -->
-  <a href="#inicio" class="skip-link">Pular para conteúdo</a>
+  <a href="#main" class="skip-link">Pular para conteúdo</a>
 
   <!-- HEADER -->
   <header class="header" id="header">
@@ -181,6 +184,8 @@
     </div>
   </header>
 
+  <main id="main">
+
   <!-- HERO -->
   <section class="hero" id="inicio">
     <canvas id="heroParticles"></canvas>
@@ -203,9 +208,7 @@
           </div>
         </div>
         <div class="hero-visual">
-          <img src="/images/instalacao-tanques-subterraneos.jpg" alt="Instalação de tanques subterrâneos SASC" class="hero-img" loading="eager" width="600" height="400">
-          <img src="/images/concretagem-posto.jpg" alt="Concretagem de pista em posto de combustível" class="hero-img" loading="eager" width="600" height="400">
-          <img src="/images/equipamento-posto.jpg" alt="Equipamento de posto de combustível" class="hero-img" loading="eager" width="600" height="400">
+          <img src="/images/instalacao-tanques-subterraneos.jpg" alt="Instalação de tanques subterrâneos SASC em posto de combustível" class="hero-img" fetchpriority="high" loading="eager" decoding="async" width="600" height="480">
         </div>
       </div>
       <div class="hero-stats expanded reveal">
@@ -266,33 +269,31 @@
     <div class="clients-marquee">
       <div class="clients-track">
         <!-- Primeiro set -->
-        <div class="client-logo">Shell</div>
-        <div class="client-logo">BR Distribuidora</div>
-        <div class="client-logo">Ipiranga</div>
-        <div class="client-logo">Gulf Combustíveis</div>
-        <div class="client-logo">AirBP</div>
-        <div class="client-logo">Matte Leão</div>
-        <div class="client-logo">Marinha do Brasil</div>
-        <div class="client-logo">Atacadão</div>
-        <div class="client-logo">Gran Petro</div>
-        <div class="client-logo">Guanabara</div>
-        <div class="client-logo">ICTSI</div>
-        <div class="client-logo">Valorec</div>
-        <div class="client-logo">Le Canton Hotel</div>
+        <div class="client-logo"><img src="/images/clients/shell.png" alt="Shell" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/br.png" alt="BR Distribuidora" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/gulf.png" alt="Gulf Combustíveis" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/airbp.png" alt="AirBP" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/matte-leao.png" alt="Matte Leão" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/marinha.png" alt="Marinha do Brasil" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/atacadao.jpg" alt="Atacadão" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/gran-petro.jpg" alt="Gran Petro" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/guanabara.png" alt="Guanabara" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/ictsi.png" alt="ICTSI" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/valorec.png" alt="Valorec" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/le-canton.png" alt="Le Canton Hotel" loading="lazy" width="120" height="40"></div>
         <!-- Segundo set (duplicado para loop contínuo) -->
-        <div class="client-logo" aria-hidden="true">Shell</div>
-        <div class="client-logo" aria-hidden="true">BR Distribuidora</div>
-        <div class="client-logo" aria-hidden="true">Ipiranga</div>
-        <div class="client-logo" aria-hidden="true">Gulf Combustíveis</div>
-        <div class="client-logo" aria-hidden="true">AirBP</div>
-        <div class="client-logo" aria-hidden="true">Matte Leão</div>
-        <div class="client-logo" aria-hidden="true">Marinha do Brasil</div>
-        <div class="client-logo" aria-hidden="true">Atacadão</div>
-        <div class="client-logo" aria-hidden="true">Gran Petro</div>
-        <div class="client-logo" aria-hidden="true">Guanabara</div>
-        <div class="client-logo" aria-hidden="true">ICTSI</div>
-        <div class="client-logo" aria-hidden="true">Valorec</div>
-        <div class="client-logo" aria-hidden="true">Le Canton Hotel</div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/shell.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/br.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/gulf.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/airbp.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/matte-leao.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/marinha.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/atacadao.jpg" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/gran-petro.jpg" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/guanabara.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/ictsi.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/valorec.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/le-canton.png" alt="" loading="lazy" width="120" height="40"></div>
       </div>
     </div>
   </section>
@@ -456,7 +457,7 @@
         </div>
         <div class="credential-body">
           <h3>Organismo de Inspeção Acreditado pelo INMETRO</h3>
-          <p class="credential-number">Escopo: <strong>SASC · TEPS</strong> · Acreditação conforme <strong>ABNT NBR ISO/IEC 17020</strong></p>
+          <p class="credential-number">Acreditação <strong>Nº CTBC OCP 0073</strong> · Escopo <strong>SASC · TEPS</strong> · ABNT NBR ISO/IEC 17020</p>
         </div>
         <div class="credential-validity">
           <span class="validity-label">Vigência até</span>
@@ -608,6 +609,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer">
