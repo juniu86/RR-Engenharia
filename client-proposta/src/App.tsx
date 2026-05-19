@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import LoginPage from './LoginPage';
+import { SignedIn, SignedOut, RedirectToSignIn, useAuth, useClerk } from '@clerk/clerk-react';
 import FormPage from './FormPage';
 import ProposalDocument from './ProposalDocument';
 import ProposalList from './ProposalList';
-import { apiLoadProposals, apiSaveProposal, apiDeleteProposal, apiPeekSeq, apiConsumeSeq } from './api';
+import { apiLoadProposals, apiSaveProposal, apiDeleteProposal, apiPeekSeq, apiConsumeSeq, setTokenGetter } from './api';
 import { downloadPDF, downloadWord } from './exportProposal';
 
 export interface LineItem {
@@ -54,43 +54,28 @@ export interface SavedProposal {
 
 type AppView = 'list' | 'form' | 'document';
 
-// Tipos jurídicos a ignorar
-const SUFFIXES = new Set([
-  'LTDA', 'LTDA.', 'SA', 'S/A', 'S.A', 'S.A.', 'EI', 'SLU', 'MEI', 'ME',
-  'EPP', 'SS', 'EIRELI', 'EIRL', 'LLC', 'INC', 'CORP', 'CIA', 'CIA.',
-]);
-// Preposições/artigos a ignorar
-const STOPWORDS = new Set([
-  'DE', 'DA', 'DO', 'DAS', 'DOS', 'E', 'EM', 'COM', 'A', 'O', 'AS', 'OS', 'NO', 'NA',
-]);
-
-function clientAbbr(razaoSocial: string): string {
-  const words = razaoSocial
-    .trim()
-    .toUpperCase()
-    .split(/\s+/)
-    .map(w => w.replace(/[^A-Z0-9]/g, ''))
-    .filter(w => w.length > 0 && !SUFFIXES.has(w) && !STOPWORDS.has(w));
-
-  if (words.length === 0) return 'CLI';
-  // Até 3 palavras relevantes, cada uma limitada a 8 chars
-  return words.slice(0, 3).map(w => w.slice(0, 8)).join('-');
+// Formato: RR-070/2026
+function formatNum(seq: number): string {
+  return `RR-${String(seq).padStart(3, '0')}/${new Date().getFullYear()}`;
 }
 
-export async function peekNextNumber(razaoSocial: string): Promise<string> {
-  const year = new Date().getFullYear();
-  const next = await apiPeekSeq(year);
-  return `${clientAbbr(razaoSocial)}-${year}-${String(next).padStart(3, '0')}`;
+export async function peekNextNumber(): Promise<string> {
+  return formatNum(await apiPeekSeq(new Date().getFullYear()));
 }
 
-export async function consumeNextNumber(razaoSocial: string): Promise<string> {
-  const year = new Date().getFullYear();
-  const consumed = await apiConsumeSeq(year);
-  return `${clientAbbr(razaoSocial)}-${year}-${String(consumed).padStart(3, '0')}`;
+export async function consumeNextNumber(): Promise<string> {
+  return formatNum(await apiConsumeSeq(new Date().getFullYear()));
 }
 
 function App() {
-  const [authed, setAuthed] = useState(() => sessionStorage.getItem('rr-auth') === '1');
+  const { getToken } = useAuth();
+  const { signOut } = useClerk();
+
+  // Wire Clerk token into the API module once on mount
+  useEffect(() => {
+    setTokenGetter(getToken);
+  }, [getToken]);
+
   const [view, setView] = useState<AppView>('list');
   const [proposals, setProposals] = useState<SavedProposal[]>([]);
   const [loading, setLoading] = useState(true);
@@ -98,6 +83,13 @@ function App() {
   const [viewingProposal, setViewingProposal] = useState<SavedProposal | null>(null);
   const [exporting, setExporting] = useState<'pdf' | 'word' | null>(null);
   const docRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    apiLoadProposals()
+      .then(setProposals)
+      .catch((e: unknown) => alert('Erro ao carregar propostas. Verifique a conexão.\n\n' + (e instanceof Error ? e.message : String(e))))
+      .finally(() => setLoading(false));
+  }, []);
 
   const handleExportPDF = useCallback(async () => {
     if (!docRef.current || !viewingProposal) return;
@@ -114,15 +106,6 @@ function App() {
     catch (e) { alert('Erro ao gerar Word: ' + (e instanceof Error ? e.message : String(e))); }
     finally { setExporting(null); }
   }, [viewingProposal]);
-
-  useEffect(() => {
-    if (authed) {
-      apiLoadProposals()
-        .then(setProposals)
-        .catch((e: unknown) => alert('Erro ao carregar propostas. Verifique a conexão.\n\n' + (e instanceof Error ? e.message : String(e))))
-        .finally(() => setLoading(false));
-    }
-  }, [authed]);
 
   async function handleSave(data: ProposalData, showLinePrices: boolean, existingId?: string): Promise<void> {
     const total = data.escopoTexto
@@ -222,10 +205,6 @@ function App() {
     apiLoadProposals().then(setProposals).catch(() => {});
   }
 
-  if (!authed) {
-    return <LoginPage onAuth={() => setAuthed(true)} />;
-  }
-
   return (
     <div className="min-h-screen" style={{ background: '#f3f5f8', fontFamily: "'Montserrat', sans-serif" }}>
       <header className="no-print" style={{
@@ -273,7 +252,7 @@ function App() {
             </>
           )}
           <button
-            onClick={() => { sessionStorage.removeItem('rr-auth'); setAuthed(false); setView('list'); }}
+            onClick={() => signOut()}
             style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, background: 'none', border: 'none', cursor: 'pointer', padding: '8px 12px' }}
           >
             Sair
@@ -346,9 +325,21 @@ function App() {
           transition: background 0.2s;
         }
         .btn-secondary-header:hover { background: rgba(255,255,255,0.14); }
+        .btn-secondary-header:disabled { opacity: 0.5; cursor: not-allowed; }
       `}</style>
     </div>
   );
 }
 
-export default App;
+export default function Root() {
+  return (
+    <>
+      <SignedIn>
+        <App />
+      </SignedIn>
+      <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
+    </>
+  );
+}

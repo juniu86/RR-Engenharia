@@ -1,10 +1,19 @@
 import type { SavedProposal } from './App';
 
 const API_BASE = (import.meta.env.VITE_PROPOSAL_API_URL as string | undefined) ?? 'https://api.rres.com.br';
-const API_KEY  = (import.meta.env.VITE_PROPOSAL_API_KEY  as string | undefined) ?? 'rr-proposal-2024';
 
-function h(): HeadersInit {
-  return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` };
+let _getToken: (() => Promise<string | null>) | null = null;
+
+export function setTokenGetter(fn: () => Promise<string | null>): void {
+  _getToken = fn;
+}
+
+async function h(): Promise<HeadersInit> {
+  const token = _getToken ? await _getToken() : null;
+  return {
+    'Content-Type': 'application/json',
+    ...(token && { Authorization: `Bearer ${token}` }),
+  };
 }
 
 async function ok(res: Response, action: string): Promise<void> {
@@ -66,7 +75,7 @@ function savedToRow(p: SavedProposal): ProposalRow {
 
 // ── public API ───────────────────────────────────────────────────────────────
 export async function apiLoadProposals(): Promise<SavedProposal[]> {
-  const res = await fetch(`${API_BASE}/proposta/proposals`, { headers: h() });
+  const res = await fetch(`${API_BASE}/proposta/proposals`, { headers: await h() });
   await ok(res, 'Falha ao carregar propostas');
   const rows: ProposalRow[] = await res.json();
   return rows.map(rowToSaved);
@@ -75,26 +84,26 @@ export async function apiLoadProposals(): Promise<SavedProposal[]> {
 export async function apiSaveProposal(proposal: SavedProposal): Promise<void> {
   const res = await fetch(`${API_BASE}/proposta/proposals/${proposal.id}`, {
     method: 'PUT',
-    headers: h(),
+    headers: await h(),
     body: JSON.stringify(savedToRow(proposal)),
   });
   await ok(res, 'Falha ao salvar proposta');
 }
 
 export async function apiDeleteProposal(id: string): Promise<void> {
-  const res = await fetch(`${API_BASE}/proposta/proposals/${id}`, { method: 'DELETE', headers: h() });
+  const res = await fetch(`${API_BASE}/proposta/proposals/${id}`, { method: 'DELETE', headers: await h() });
   await ok(res, 'Falha ao excluir proposta');
 }
 
 export async function apiPeekSeq(year: number): Promise<number> {
-  const res = await fetch(`${API_BASE}/proposta/seq/${year}/peek`, { headers: h() });
+  const res = await fetch(`${API_BASE}/proposta/seq/${year}/peek`, { headers: await h() });
   await ok(res, 'Falha ao consultar sequência');
   const { next }: { next: number } = await res.json();
   return next;
 }
 
 export async function apiConsumeSeq(year: number): Promise<number> {
-  const res = await fetch(`${API_BASE}/proposta/seq/${year}/consume`, { method: 'POST', headers: h() });
+  const res = await fetch(`${API_BASE}/proposta/seq/${year}/consume`, { method: 'POST', headers: await h() });
   await ok(res, 'Falha ao consumir sequência');
   const { value }: { value: number } = await res.json();
   return value;

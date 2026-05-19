@@ -112,15 +112,16 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
     return () => clearTimeout(t);
   }, [saveDraft]);
 
-  // Auto-update proposal number when razaoSocial changes (new proposals only)
+  // Fetch number preview once on mount for new proposals
   useEffect(() => {
-    if (!isEditing && numberAutoRef.current && razaoSocial.trim()) {
-      peekNextNumber(razaoSocial).then(num => {
+    if (!isEditing && !revisionMode && numberAutoRef.current) {
+      peekNextNumber().then(num => {
         setNumero(num);
         setSeqPreview(num);
       }).catch(() => {});
     }
-  }, [razaoSocial, isEditing]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function handleBuscarCNPJ() {
     setCnpjLoading(true);
@@ -166,10 +167,8 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
 
     // For new proposals (including revisions), consume the sequential number if auto-generated
     let finalNumero = numero.trim();
-    if (!isEditing && !revisionMode && numberAutoRef.current) {
-      finalNumero = await consumeNextNumber(razaoSocial);
-    } else if (!isEditing && !revisionMode && !finalNumero) {
-      finalNumero = await consumeNextNumber(razaoSocial);
+    if (!isEditing && !revisionMode && (numberAutoRef.current || !finalNumero)) {
+      finalNumero = await consumeNextNumber();
     } else if (revisionMode) {
       // Revision keeps the pre-set numero (with REV suffix), no counter consumed
       finalNumero = finalNumero || initialProposal!.numero;
@@ -253,7 +252,7 @@ export default function FormPage({ initialProposal, onSave, revisionMode }: Prop
             />
             {!isEditing && !revisionMode && (
               <p style={{ fontSize: 10, color: '#999', margin: '4px 0 0' }}>
-                Gerado automaticamente ao salvar. Formato: CLIENTE-ANO-SEQ (reinicia todo ano).
+                Gerado automaticamente ao salvar. Formato: RR-070/2026.
               </p>
             )}
           </Field>
