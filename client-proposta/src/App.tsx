@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import LoginPage from './LoginPage';
 import FormPage from './FormPage';
 import ProposalDocument from './ProposalDocument';
 import ProposalList from './ProposalList';
 import { apiLoadProposals, apiSaveProposal, apiDeleteProposal, apiPeekSeq, apiConsumeSeq } from './api';
+import { downloadPDF, downloadWord } from './exportProposal';
 
 export interface LineItem {
   id: number;
@@ -95,6 +96,24 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [editingProposal, setEditingProposal] = useState<SavedProposal | null>(null);
   const [viewingProposal, setViewingProposal] = useState<SavedProposal | null>(null);
+  const [exporting, setExporting] = useState<'pdf' | 'word' | null>(null);
+  const docRef = useRef<HTMLDivElement>(null);
+
+  const handleExportPDF = useCallback(async () => {
+    if (!docRef.current || !viewingProposal) return;
+    setExporting('pdf');
+    try { await downloadPDF(docRef.current, viewingProposal.numero); }
+    catch (e) { alert('Erro ao gerar PDF: ' + (e instanceof Error ? e.message : String(e))); }
+    finally { setExporting(null); }
+  }, [viewingProposal]);
+
+  const handleExportWord = useCallback(async () => {
+    if (!viewingProposal) return;
+    setExporting('word');
+    try { await downloadWord(viewingProposal.data, viewingProposal.showLinePrices, viewingProposal.numero); }
+    catch (e) { alert('Erro ao gerar Word: ' + (e instanceof Error ? e.message : String(e))); }
+    finally { setExporting(null); }
+  }, [viewingProposal]);
 
   useEffect(() => {
     if (authed) {
@@ -237,13 +256,19 @@ function App() {
               <button onClick={() => handleEdit(viewingProposal)} className="btn-secondary-header">
                 ✎ Editar
               </button>
+              <button onClick={handleExportWord} disabled={!!exporting} className="btn-secondary-header">
+                {exporting === 'word' ? '…' : '📄 Word'}
+              </button>
+              <button onClick={handleExportPDF} disabled={!!exporting} className="btn-secondary-header">
+                {exporting === 'pdf' ? '…' : '⬇ PDF'}
+              </button>
               <button onClick={() => window.print()} className="btn-primary-header">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline', marginRight: 6, verticalAlign: 'middle' }}>
                   <polyline points="6 9 6 2 18 2 18 9"/>
                   <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
                   <rect x="6" y="14" width="12" height="8"/>
                 </svg>
-                Imprimir / PDF
+                Imprimir
               </button>
             </>
           )}
@@ -282,6 +307,7 @@ function App() {
         )}
         {!loading && view === 'document' && viewingProposal && (
           <ProposalDocument
+            ref={docRef}
             data={viewingProposal.data}
             showLinePrices={viewingProposal.showLinePrices}
           />

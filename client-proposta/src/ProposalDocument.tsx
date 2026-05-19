@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { ProposalData } from './App';
 
 const RR = {
@@ -83,7 +84,7 @@ interface Props {
   showLinePrices: boolean;
 }
 
-export default function ProposalDocument({ data, showLinePrices }: Props) {
+const ProposalDocument = forwardRef<HTMLDivElement, Props>(function ProposalDocument({ data, showLinePrices }, ref) {
   const total = (data.escopoTexto || !showLinePrices) && data.valorGlobal !== undefined
     ? data.valorGlobal
     : data.itens.reduce((s, i) => s + i.quantidade * i.valorUnitario, 0);
@@ -91,7 +92,7 @@ export default function ProposalDocument({ data, showLinePrices }: Props) {
   validadeDate.setDate(validadeDate.getDate() + data.validadeDias);
 
   return (
-    <div className="proposta-wrapper">
+    <div ref={ref} className="proposta-wrapper">
       {/* Accent bar */}
       <div style={{ height: 6, background: 'linear-gradient(90deg, #001c3d 0%, #0963ed 100%)', borderRadius: '4px 4px 0 0' }} />
 
@@ -514,4 +515,6 @@ export default function ProposalDocument({ data, showLinePrices }: Props) {
       `}</style>
     </div>
   );
-}
+});
+
+export default ProposalDocument;
