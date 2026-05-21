@@ -16,27 +16,82 @@ function fmtCur(v: number) {
 }
 
 // ── PDF ──────────────────────────────────────────────────────────────────────
+// Corta a página em uma linha de fundo (espaço em branco), nunca no meio de um
+// texto ou tabela. O gerador antigo fatiava a imagem em altura fixa e partia o
+// conteúdo na emenda das páginas. Se o canvas estiver "tainted" (imagem cross-
+// origin), getImageData lança e caímos no corte por altura fixa (modo antigo).
 export async function downloadPDF(element: HTMLElement, numero: string): Promise<void> {
-  const canvas = await html2canvas(element, { scale: 2, useCORS: true, logging: false });
+  const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+    logging: false,
+    backgroundColor: '#ffffff',
+  });
 
   const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
   const pageW = pdf.internal.pageSize.getWidth();
   const pageH = pdf.internal.pageSize.getHeight();
-  const imgW  = pageW;
-  const imgH  = (canvas.height * pageW) / canvas.width;
-  const imgData = canvas.toDataURL('image/jpeg', 0.92);
 
-  let remaining = imgH;
-  let offset    = 0;
+  const pxPerMm = canvas.width / pageW;          // px do canvas por mm do A4
+  const pageHpx = Math.floor(pageH * pxPerMm);   // altura de 1 pagina em px
 
-  pdf.addImage(imgData, 'JPEG', 0, offset, imgW, imgH);
-  remaining -= pageH;
+  const ctx = canvas.getContext('2d');
+  let canScan = !!ctx;
 
-  while (remaining > 0) {
-    offset -= pageH;
-    pdf.addPage();
-    pdf.addImage(imgData, 'JPEG', 0, offset, imgW, imgH);
-    remaining -= pageH;
+  const isBlankRow = (y: number): boolean => {
+    if (!ctx) return false;
+    try {
+      const { data } = ctx.getImageData(0, y, canvas.width, 1);
+      for (let i = 0; i < data.length; i += 4) {
+        if (data[i + 3] === 0) continue;                 // pixel transparente = fundo
+        if (data[i] < 245 || data[i + 1] < 245 || data[i + 2] < 245) return false;
+      }
+      return true;
+    } catch {
+      canScan = false;                                   // canvas tainted: desliga scan
+      return false;
+    }
+  };
+
+  const minPagePx = Math.floor(pageHpx * 0.5);     // evita pagina curta demais
+  const searchWindow = Math.floor(pageHpx * 0.18); // procura corte ate 18% acima da emenda
+
+  let sy = 0;        // inicio do recorte (px no canvas)
+  let first = true;
+
+  while (sy < canvas.height) {
+    let sliceH = Math.min(pageHpx, canvas.height - sy);
+
+    // Nao sendo o ultimo pedaco, sobe procurando uma linha de fundo pra cortar.
+    if (canScan && sy + sliceH < canvas.height) {
+      const boundary = sy + sliceH;
+      const limit = Math.max(sy + minPagePx, boundary - searchWindow);
+      for (let y = boundary; y >= limit; y--) {
+        if (isBlankRow(y)) {
+          sliceH = y - sy;
+          break;
+        }
+      }
+    }
+
+    // Recorta o pedaco num canvas proprio e adiciona como pagina do PDF.
+    const slice = document.createElement('canvas');
+    slice.width = canvas.width;
+    slice.height = sliceH;
+    const sctx = slice.getContext('2d');
+    if (sctx) {
+      sctx.fillStyle = '#ffffff';
+      sctx.fillRect(0, 0, slice.width, slice.height);
+      sctx.drawImage(canvas, 0, sy, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+    }
+
+    const imgData = slice.toDataURL('image/jpeg', 0.92);
+    const imgHmm = sliceH / pxPerMm;
+    if (!first) pdf.addPage();
+    pdf.addImage(imgData, 'JPEG', 0, 0, pageW, imgHmm);
+    first = false;
+
+    sy += sliceH;
   }
 
   pdf.save(`Proposta-${numero}.pdf`);
