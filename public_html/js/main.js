@@ -3,6 +3,75 @@
    Premium UX with particles, stagger & parallax
    ============================================ */
 
+/* ============================================
+   GA4 + EVENTOS DE CONVERSÃO
+   Para ativar: troque GA4_ID pelo ID real (G-XXXXXXXXXX) do Google Analytics 4.
+   Enquanto for o placeholder, o gtag não carrega (nenhum dado é enviado).
+   Os eventos cobrem todas as páginas porque este arquivo é carregado em todas.
+   ============================================ */
+(function () {
+  var GA4_ID = 'G-03V1LQ8EK7'; // ID do GA4 da RR Engenharia
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  window.gtag = gtag;
+
+  var idOk = GA4_ID && GA4_ID.indexOf('G-XXXX') !== 0;
+  if (idOk) {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID;
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', GA4_ID);
+  }
+
+  function track(name, params) {
+    if (window.gtag) { gtag('event', name, params || {}); }
+  }
+  window.rrTrack = track;
+
+  // Cliques em WhatsApp / telefone / e-mail
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a') : null;
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) {
+      track('click_whatsapp', { link_url: href, page: location.pathname });
+    } else if (href.indexOf('tel:') === 0) {
+      track('click_phone', { link_url: href });
+    } else if (href.indexOf('mailto:') === 0) {
+      track('click_email', { link_url: href });
+    }
+  }, true);
+
+  // Envio do formulário de lead
+  document.addEventListener('submit', function (e) {
+    var f = e.target;
+    if (f && f.classList && f.classList.contains('lead-form')) {
+      var origemEl = f.querySelector('[name="origem"]');
+      track('form_submit', { form_origem: origemEl ? origemEl.value : '' });
+    }
+  }, true);
+
+  // Conversão confirmada na página de obrigado
+  if (location.pathname.indexOf('obrigado') > -1) {
+    track('generate_lead', { page: location.pathname });
+  }
+
+  // Scroll a 75% da página
+  var scrolled75 = false;
+  window.addEventListener('scroll', function () {
+    if (scrolled75) return;
+    var doc = document.documentElement;
+    var reach = (doc.scrollTop + window.innerHeight) / doc.scrollHeight;
+    if (reach > 0.75) {
+      scrolled75 = true;
+      track('scroll_75', { page: location.pathname });
+    }
+  }, { passive: true });
+})();
+
 (function () {
   'use strict';
 

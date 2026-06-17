@@ -28,7 +28,9 @@ ErrorDocument 404 /index.html
 # Browser Caching
 <IfModule mod_expires.c>
   ExpiresActive On
-  ExpiresByType text/html "access plus 1 hour"
+  # HTML não é cacheado: o navegador sempre revalida, então mudanças no
+  # conteúdo aparecem na hora. Imagens/CSS/JS mantêm cache longo (têm ?v=).
+  ExpiresByType text/html "access plus 0 seconds"
   ExpiresByType text/css "access plus 1 month"
   ExpiresByType application/javascript "access plus 1 month"
   ExpiresByType image/svg+xml "access plus 1 year"
@@ -36,6 +38,13 @@ ErrorDocument 404 /index.html
   ExpiresByType image/png "access plus 1 year"
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType application/json "access plus 1 day"
+</IfModule>
+
+# HTML sempre revalidado (evita servir página desatualizada após deploy)
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
 </IfModule>
 
 # Security Headers

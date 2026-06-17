@@ -1693,3 +1693,22 @@ p { font-weight: 400; color: var(--gray-700); }
   .section-label { padding-left: 0; }
   .section-label::before { display: none; }
 }
+
+/* --- LEAD FORM (formulário de captação) --- */
+.btn-primary { background: var(--blue); color: var(--white); }
+.btn-primary:hover { background: var(--blue-dark); }
+.lead-form { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-md); }
+.lead-form h3 { color: var(--navy); margin-bottom: 6px; }
+.lead-form .form-sub { color: var(--gray-500); font-size: 0.95rem; margin-bottom: 22px; }
+.form-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+.form-field { flex: 1 1 100%; display: flex; flex-direction: column; }
+.form-field.half { flex: 1 1 calc(50% - 7px); }
+.lead-form label { font-size: 0.82rem; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; }
+.lead-form input, .lead-form select, .lead-form textarea { font-family: var(--font); font-size: 1rem; padding: 12px 14px; border: 1px solid var(--gray-300); border-radius: 10px; background: var(--gray-50); color: var(--gray-900); transition: var(--transition); width: 100%; }
+.lead-form input:focus, .lead-form select:focus, .lead-form textarea:focus { outline: none; border-color: var(--blue); background: var(--white); box-shadow: 0 0 0 3px rgba(9,99,237,0.12); }
+.lead-form textarea { resize: vertical; min-height: 110px; }
+.lead-form .hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; }
+.form-submit { width: 100%; justify-content: center; margin-top: 6px; }
+.form-note { font-size: 0.8rem; color: var(--gray-500); margin-top: 14px; text-align: center; }
+.form-note a { color: var(--blue); font-weight: 600; }
+@media (max-width: 600px) { .form-field.half { flex: 1 1 100%; } }
