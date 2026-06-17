@@ -55,12 +55,20 @@ $corpo .= "Origem:   $origem\n";
 $corpo .= "----------------------------------------\n";
 $corpo .= "Mensagem:\n$mensagem\n";
 
-$headers  = "From: Site RR Engenharia <no-reply@rres.com.br>\r\n";
+// Remetente = caixa REAL no mesmo domínio (evita rejeição por sender inexistente).
+// 5o parametro (-f) define o envelope sender, importante para SPF/entrega.
+$headers  = "From: RR Engenharia <contato@rres.com.br>\r\n";
 $headers .= "Reply-To: $email\r\n";
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 $headers .= "X-Mailer: PHP/" . phpversion();
 
-@mail($DESTINO, '=?UTF-8?B?' . base64_encode($assunto) . '?=', $corpo, $headers);
+$assuntoEnc = '=?UTF-8?B?' . base64_encode($assunto) . '?=';
+$enviado = @mail($DESTINO, $assuntoEnc, $corpo, $headers, '-f contato@rres.com.br');
+
+if (!$enviado) {
+    // Se o mail() falhar, registra para diagnóstico (visível em /erros-form.log no servidor).
+    @error_log(date('c') . " | FALHA mail() | $email | $servico\n", 3, __DIR__ . '/erros-form.log');
+}
 
 header('Location: /obrigado.html');
 exit;
