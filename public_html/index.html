@@ -44,7 +44,7 @@
   <link rel="preload" as="image" href="/images/instalacao-tanques-subterraneos.jpg" fetchpriority="high">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/css/style.css?v=20260417b">
+  <link rel="stylesheet" href="/css/style.css?v=20260612">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -614,7 +614,7 @@
       <div class="reveal" style="text-align: center; margin-bottom: 56px;">
         <span class="section-label">Contato</span>
         <h2 class="section-title">Fale com a RR Engenharia</h2>
-        <p class="section-desc" style="margin: 0 auto;">Estamos prontos para atender seu projeto. Entre em contato por WhatsApp, e-mail ou visite nosso escritório.</p>
+        <p class="section-desc" style="margin: 0 auto;">Preencha o formulário e receba uma proposta técnica em até 24 horas — ou fale agora pelo WhatsApp.</p>
       </div>
       <div class="contact-grid reveal">
         <div>
@@ -647,8 +647,45 @@
           </div>
         </div>
         <div class="map-container">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3673.5!2d-43.3556!3d-22.9994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9bda2c17dc3d13%3A0x3b1b3baebd0bba9b!2sCentro+Empresarial+Barra+Shopping!5e0!3m2!1spt-BR!2sbr!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Localização RR Engenharia — Centro Empresarial Barra Shopping" width="600" height="380"></iframe>
+          <form class="lead-form" action="/form-handler.php" method="POST">
+            <h3>Receba uma proposta em até 24h</h3>
+            <p class="form-sub">Preencha os dados e nossa equipe técnica retorna com um orçamento.</p>
+            <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <input type="hidden" name="origem" value="home">
+            <div class="form-row">
+              <div class="form-field half"><label for="nome">Nome*</label><input id="nome" name="nome" type="text" required></div>
+              <div class="form-field half"><label for="empresa">Empresa</label><input id="empresa" name="empresa" type="text"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-field half"><label for="email">E-mail*</label><input id="email" name="email" type="email" required></div>
+              <div class="form-field half"><label for="telefone">WhatsApp / Telefone</label><input id="telefone" name="telefone" type="tel"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-field"><label for="servico">Serviço de interesse</label>
+                <select id="servico" name="servico">
+                  <option value="">Selecione…</option>
+                  <option>SASC — Inspeção</option>
+                  <option>TEPS — Teste de estanqueidade</option>
+                  <option>Construção / reforma de posto</option>
+                  <option>Manutenção predial</option>
+                  <option>Facilities</option>
+                  <option>Obras corporativas / retrofit</option>
+                  <option>Laudos e perícias</option>
+                  <option>Segurança / NR-20</option>
+                  <option>Outro</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field"><label for="mensagem">Mensagem</label><textarea id="mensagem" name="mensagem" placeholder="Conte brevemente o que você precisa…"></textarea></div>
+            </div>
+            <button type="submit" class="btn btn-primary form-submit">Solicitar proposta</button>
+            <p class="form-note">Resposta em até 24h úteis · ou fale agora no <a href="https://wa.me/5521995740273" target="_blank" rel="noopener">WhatsApp</a></p>
+          </form>
         </div>
+      </div>
+      <div class="map-container reveal" style="margin-top: 40px;">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3673.5!2d-43.3556!3d-22.9994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9bda2c17dc3d13%3A0x3b1b3baebd0bba9b!2sCentro+Empresarial+Barra+Shopping!5e0!3m2!1spt-BR!2sbr!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Localização RR Engenharia — Centro Empresarial Barra Shopping" width="600" height="380"></iframe>
       </div>
     </div>
   </section>
@@ -709,6 +746,6 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script src="/js/main.js?v=20260417b"></script>
+  <script src="/js/main.js?v=20260612"></script>
 </body>
 </html>
