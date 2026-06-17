@@ -1,12 +1,13 @@
-name: 🚀 Deploy to GoDaddy
+name: 🚀 Deploy app React (client/) — DESATIVADO
+
+# ATENÇÃO: o site publicado em rres.com.br é o estático em public_html/,
+# enviado pelo workflow deploy-site.yml. Este workflow constrói o app React
+# em client/ e o publicaria na MESMA raiz FTP, sobrescrevendo o site no ar.
+# Por isso o gatilho automático foi removido — só roda manualmente, de
+# propósito, via "Run workflow".
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'client/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
