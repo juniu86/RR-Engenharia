@@ -10,7 +10,7 @@
    Os eventos cobrem todas as páginas porque este arquivo é carregado em todas.
    ============================================ */
 (function () {
-  var GA4_ID = 'G-XXXXXXXXXX'; // <<< SUBSTITUIR pelo ID do GA4
+  var GA4_ID = 'G-03V1LQ8EK7'; // ID do GA4 da RR Engenharia
 
   window.dataLayer = window.dataLayer || [];
   function gtag() { dataLayer.push(arguments); }
