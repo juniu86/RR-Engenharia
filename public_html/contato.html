@@ -132,10 +132,14 @@
           </div>
 
           <div>
-            <form class="lead-form" action="/form-handler.php" method="POST">
+            <form class="lead-form" action="https://api.web3forms.com/submit" method="POST">
               <h3>Receba uma proposta em até 24h</h3>
               <p class="form-sub">Preencha os dados e nossa equipe técnica retorna com um orçamento.</p>
-              <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+              <input type="hidden" name="access_key" value="73961e2b-c424-417e-b196-3625f60363f2">
+              <input type="hidden" name="subject" value="Novo lead do site — RR Engenharia">
+              <input type="hidden" name="from_name" value="Site RR Engenharia">
+              <input type="hidden" name="redirect" value="https://rres.com.br/obrigado.html">
+              <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none !important;">
               <input type="hidden" name="origem" value="contato">
               <div class="form-row">
                 <div class="form-field half"><label for="nome">Nome*</label><input id="nome" name="nome" type="text" required></div>
