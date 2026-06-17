@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RR Engenharia | SASC, TEPS e Postos de Combustível Certificados</title>
-  <meta name="description" content="RR Engenharia — especialista em SASC, TEPS e construção de postos de combustível. Certificação INMETRO vigente até 2029. Obras, manutenção e engenharia de infraestrutura crítica no Rio de Janeiro.">
+  <meta name="description" content="RR Engenharia — especialistas em SASC, TEPS e postos de combustível. Organismo de Inspeção Acreditado INMETRO nº CTBC OCP 0073, vigência 2029.">
   <meta name="keywords" content="SASC, TEPS, postos de combustível, engenharia civil, certificação INMETRO, Rio de Janeiro, obras civis, infraestrutura crítica, tanques subterrâneos">
   <meta name="author" content="RR Engenharia">
   <meta name="robots" content="index, follow">
@@ -38,10 +38,13 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Preload hero LCP image -->
+  <link rel="preload" as="image" href="/images/instalacao-tanques-subterraneos.jpg" fetchpriority="high">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css?v=20260417b">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -78,10 +81,12 @@
       "@type": "OfferCatalog",
       "name": "Serviços de Engenharia",
       "itemListElement": [
-        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "SASC - Sistemas de Armazenamento Subterrâneo de Combustíveis"}},
-        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "TEPS - Tanques de Estocagem de Petróleo e Subprodutos"}},
-        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Construção de Postos de Combustível"}},
-        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Laudos e Perícias Técnicas"}}
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "SASC - Sistemas de Armazenamento Subterrâneo de Combustíveis", "url": "https://rres.com.br/servicos/sasc.html"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "TEPS - Tanques de Estocagem de Petróleo e Subprodutos", "url": "https://rres.com.br/servicos/teps.html"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Construção de Postos de Combustível", "url": "https://rres.com.br/servicos/postos-de-combustivel.html"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Laudos e Perícias Técnicas", "url": "https://rres.com.br/servicos/laudos-e-pericias.html"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Obras Civis", "url": "https://rres.com.br/servicos/obras-civis.html"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Segurança e Adequação à NR-20", "url": "https://rres.com.br/servicos/seguranca-nr-20.html"}}
       ]
     }
   }
@@ -122,7 +127,7 @@
         "name": "Qual a diferença entre SASC e TEPS?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "SASC refere-se especificamente a tanques subterrâneos de postos de combustível, regulados pela ANP. TEPS (Tanques de Estocagem de Petróleo e Subprodutos) abrange tanques aéreos e subterrâneos de maior porte, usados em terminais e indústrias. Ambos exigem inspeção por organismo acreditado pelo INMETRO."
+          "text": "SASC refere-se especificamente a tanques subterrâneos de postos de combustível, regulados pela ANP. TEPS (Tanques de Estocagem de Petróleo e Subprodutos) abrange tanques aéreos e subterrâneos de maior porte, usados em terminais e indústrias. Ambos exigem inspeção por organismo acreditado pelo INMETRO — e a RR Engenharia é certificada para os dois."
         }
       },
       {
@@ -138,7 +143,7 @@
         "name": "Quanto custa uma inspeção SASC ou TEPS?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "O valor depende do porte da instalação, do número de tanques e dos ensaios necessários. Uma inspeção SASC completa para um posto de médio porte geralmente varia entre R$ 15.000 e R$ 30.000."
+          "text": "O valor depende do porte da instalação, do número de tanques e dos ensaios necessários. Uma inspeção SASC completa para um posto de médio porte geralmente varia entre R$ 15.000 e R$ 30.000. Entre em contato pelo WhatsApp para receber um orçamento personalizado em até 24 horas."
         }
       },
       {
@@ -156,7 +161,7 @@
 <body>
 
   <!-- Skip to content -->
-  <a href="#inicio" class="skip-link">Pular para conteúdo</a>
+  <a href="#main" class="skip-link">Pular para conteúdo</a>
 
   <!-- HEADER -->
   <header class="header" id="header">
@@ -181,15 +186,19 @@
     </div>
   </header>
 
+  <main id="main">
+
   <!-- HERO -->
   <section class="hero" id="inicio">
     <canvas id="heroParticles"></canvas>
+    <div class="hero-blueprint"></div>
     <div class="container">
       <div class="hero-grid">
         <div class="hero-text">
-          <span class="section-label">Engenharia de Infraestrutura Crítica</span>
+          <span class="section-label">SASC · TEPS · Engenharia de Infraestrutura Crítica</span>
           <h1>Construímos o que <span class="highlight">não pode falhar.</span></h1>
-          <p class="hero-desc">Especialistas em SASC, TEPS e postos de combustível com certificação INMETRO vigente até 2029. Mais de 15 anos entregando obras que resistem ao tempo e à fiscalização.</p>
+          <h2 style="font-size: 1.05rem; font-weight: 600; line-height: 1.6; color: rgba(255,255,255,0.85); letter-spacing: 0; margin-bottom: 16px;">Engenharia, inspeção e construção de postos de combustível, SASC e TEPS com acreditação INMETRO — Rio de Janeiro e todo o Brasil</h2>
+          <p class="hero-desc">Organismo de Inspeção Acreditado pelo INMETRO para <strong>SASC</strong> e <strong>TEPS</strong> com vigência até 2029. Projetamos, construímos e inspecionamos postos de combustível, terminais e infraestrutura de combustíveis há mais de 15 anos.</p>
           <div class="hero-buttons">
             <a href="https://wa.me/5521995740273?text=Olá! Gostaria de solicitar um orçamento." class="btn btn-whatsapp" target="_blank" rel="noopener">
               <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -202,24 +211,92 @@
           </div>
         </div>
         <div class="hero-visual">
-          <img src="/images/instalacao-tanques-subterraneos.jpg" alt="Instalação de tanques subterrâneos SASC" class="hero-img" loading="eager" width="600" height="400">
-          <img src="/images/concretagem-posto.jpg" alt="Concretagem de pista em posto de combustível" class="hero-img" loading="eager" width="600" height="400">
-          <img src="/images/equipamento-posto.jpg" alt="Equipamento de posto de combustível" class="hero-img" loading="eager" width="600" height="400">
+          <img src="/images/instalacao-tanques-subterraneos.jpg" alt="Instalação de tanques subterrâneos SASC em posto de combustível" class="hero-img" fetchpriority="high" loading="eager" decoding="async" width="600" height="480">
         </div>
       </div>
-      <div class="hero-stats reveal">
+      <div class="hero-stats expanded reveal">
         <div class="stat-card">
           <div class="stat-number">+15</div>
           <div class="stat-label">Anos de Mercado</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">2029</div>
-          <div class="stat-label">Certificação Vigente</div>
+          <span class="stat-unit">desde 2009</span>
         </div>
         <div class="stat-card">
           <div class="stat-number">+200</div>
           <div class="stat-label">Projetos Entregues</div>
+          <span class="stat-unit">postos · terminais · obras</span>
         </div>
+        <div class="stat-card">
+          <div class="stat-number">2029</div>
+          <div class="stat-label">Vigência INMETRO</div>
+          <span class="stat-unit">SASC · TEPS</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">100<span style="font-size:1.6rem;">%</span></div>
+          <div class="stat-label">Aprovação em Auditoria</div>
+          <span class="stat-unit">ANP · IBAMA · INEA</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">27</div>
+          <div class="stat-label">Estados Atendidos</div>
+          <span class="stat-unit">mobilização nacional</span>
+        </div>
+      </div>
+
+      <!-- Technical spec strip -->
+      <div class="spec-strip reveal">
+        <div class="spec-item">
+          <span class="spec-label">Acreditação</span>
+          <span class="spec-value">INMETRO · ABNT NBR ISO/IEC 17020</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Escopo SASC</span>
+          <span class="spec-value">ABNT NBR 13786 · 13784 · 17505</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Escopo TEPS</span>
+          <span class="spec-value">NR-13 · NBR 17505 · API 653</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Compliance</span>
+          <span class="spec-value">ISO 37001 · NR-20 · LGPD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTES -->
+  <section class="clients-section" aria-label="Empresas que confiam na RR Engenharia">
+    <div class="container clients-title">
+      <p>Empresas que confiam em nossa engenharia</p>
+    </div>
+    <div class="clients-marquee">
+      <div class="clients-track">
+        <!-- Primeiro set -->
+        <div class="client-logo"><img src="/images/clients/shell.png" alt="Shell" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/br.png" alt="BR Distribuidora" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/gulf.png" alt="Gulf Combustíveis" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/airbp.png" alt="AirBP" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/matte-leao.png" alt="Matte Leão" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/marinha.png" alt="Marinha do Brasil" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/atacadao.jpg" alt="Atacadão" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/gran-petro.jpg" alt="Gran Petro" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/guanabara.png" alt="Guanabara" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/ictsi.png" alt="ICTSI" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/valorec.png" alt="Valorec" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo"><img src="/images/clients/le-canton.png" alt="Le Canton Hotel" loading="lazy" width="120" height="40"></div>
+        <!-- Segundo set (duplicado para loop contínuo) -->
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/shell.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/br.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/gulf.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/airbp.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/matte-leao.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/marinha.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/atacadao.jpg" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/gran-petro.jpg" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/guanabara.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/ictsi.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/valorec.png" alt="" loading="lazy" width="120" height="40"></div>
+        <div class="client-logo" aria-hidden="true"><img src="/images/clients/le-canton.png" alt="" loading="lazy" width="120" height="40"></div>
       </div>
     </div>
   </section>
@@ -286,49 +363,82 @@
           <div class="service-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
           </div>
-          <h3>SASC</h3>
+          <h3>SASC <span class="service-code">01</span></h3>
           <p>Sistemas de Armazenamento Subterrâneo de Combustíveis. Projeto, instalação, manutenção e descomissionamento conforme ABNT NBR 13786 e portarias ANP.</p>
-          <a href="https://wa.me/5521995740273?text=Olá! Gostaria de um orçamento para serviços SASC." class="service-cta" target="_blank" rel="noopener">Solicitar orçamento</a>
+          <div class="norm-tags">
+            <span class="norm-tag">NBR 13786</span>
+            <span class="norm-tag">NBR 13784</span>
+            <span class="norm-tag">ANP 41/2013</span>
+            <span class="norm-tag">INMETRO</span>
+          </div>
+          <a href="/servicos/sasc.html" class="service-cta">Conhecer inspeção SASC →</a>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M6 20V8l6-4 6 4v12"/><path d="M10 20v-4h4v4"/></svg>
           </div>
-          <h3>TEPS</h3>
+          <h3>TEPS <span class="service-code">02</span></h3>
           <p>Tanques de Estocagem de Petróleo e Subprodutos. Inspeção, reforma e adequação de tanques aéreos e subterrâneos com ensaios não destrutivos.</p>
-          <a href="https://wa.me/5521995740273?text=Olá! Gostaria de um orçamento para inspeção TEPS." class="service-cta" target="_blank" rel="noopener">Solicitar orçamento</a>
+          <div class="norm-tags">
+            <span class="norm-tag">NR-13</span>
+            <span class="norm-tag">NBR 17505</span>
+            <span class="norm-tag">API 653</span>
+            <span class="norm-tag">INMETRO</span>
+          </div>
+          <a href="/servicos/teps.html" class="service-cta">Conhecer inspeção TEPS →</a>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
           </div>
-          <h3>Postos de Combustível</h3>
+          <h3>Postos de Combustível <span class="service-code">03</span></h3>
           <p>Construção, reforma e adequação completa de postos. Desde a fundação até a automação, com projeto aprovado e licenciamento ambiental.</p>
-          <a href="https://wa.me/5521995740273?text=Olá! Gostaria de um orçamento para construção/reforma de posto." class="service-cta" target="_blank" rel="noopener">Solicitar orçamento</a>
+          <div class="norm-tags">
+            <span class="norm-tag">ANP 41/2013</span>
+            <span class="norm-tag">NBR 17505</span>
+            <span class="norm-tag">NR-20</span>
+            <span class="norm-tag">Licença ambiental</span>
+          </div>
+          <a href="/servicos/postos-de-combustivel.html" class="service-cta">Construção de postos →</a>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8m8 4H8m2-8H8"/></svg>
           </div>
-          <h3>Laudos e Perícias</h3>
+          <h3>Laudos e Perícias <span class="service-code">04</span></h3>
           <p>Laudos periciais com fundamentação em NBR 13752 e NBR 16280. Avaliações, vistorias e pareceres técnicos para fins judiciais e extrajudiciais.</p>
-          <a href="https://wa.me/5521995740273?text=Olá! Gostaria de solicitar um laudo técnico." class="service-cta" target="_blank" rel="noopener">Solicitar orçamento</a>
+          <div class="norm-tags">
+            <span class="norm-tag">NBR 13752</span>
+            <span class="norm-tag">NBR 16280</span>
+            <span class="norm-tag">CONFEA/CREA</span>
+          </div>
+          <a href="/servicos/laudos-e-pericias.html" class="service-cta">Conhecer laudos e perícias →</a>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M5 20V10l7-5 7 5v10"/><rect x="9" y="14" width="6" height="6"/></svg>
           </div>
-          <h3>Obras Civis</h3>
+          <h3>Obras Civis <span class="service-code">05</span></h3>
           <p>Execução de obras residenciais, comerciais e industriais. Gerenciamento, acompanhamento técnico e controle de qualidade em todas as etapas.</p>
-          <a href="https://wa.me/5521995740273?text=Olá! Gostaria de um orçamento para obras civis." class="service-cta" target="_blank" rel="noopener">Solicitar orçamento</a>
+          <div class="norm-tags">
+            <span class="norm-tag">NBR 6118</span>
+            <span class="norm-tag">NBR 8681</span>
+            <span class="norm-tag">NR-18</span>
+          </div>
+          <a href="/servicos/obras-civis.html" class="service-cta">Conhecer obras civis →</a>
         </div>
         <div class="service-card reveal">
           <div class="service-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
           </div>
-          <h3>Segurança e NR-20</h3>
+          <h3>Segurança e NR-20 <span class="service-code">06</span></h3>
           <p>Consultoria em segurança para operações com líquidos inflamáveis e combustíveis. Adequação à NR-20, treinamentos e planos de emergência.</p>
-          <a href="https://wa.me/5521995740273?text=Olá! Gostaria de consultoria em NR-20." class="service-cta" target="_blank" rel="noopener">Solicitar orçamento</a>
+          <div class="norm-tags">
+            <span class="norm-tag">NR-20</span>
+            <span class="norm-tag">NR-33</span>
+            <span class="norm-tag">NBR 17505</span>
+          </div>
+          <a href="/servicos/seguranca-nr-20.html" class="service-cta">Conhecer segurança e NR-20 →</a>
         </div>
       </div>
     </div>
@@ -337,11 +447,27 @@
   <!-- CERTIFICAÇÕES -->
   <section class="section section-dark" id="certificacoes">
     <div class="container">
-      <div class="reveal" style="text-align: center; margin-bottom: 56px;">
+      <div class="reveal" style="text-align: center; margin-bottom: 40px;">
         <span class="section-label">Certificações</span>
         <h2 class="section-title">Credenciais que comprovam</h2>
         <p class="section-desc" style="margin: 0 auto; color: rgba(255,255,255,0.7);">Cada certificação representa milhares de horas de auditoria, conformidade e atualização técnica.</p>
       </div>
+
+      <!-- Destaque INMETRO -->
+      <div class="credential-hero reveal">
+        <div class="credential-shield">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <div class="credential-body">
+          <h3>Organismo de Inspeção Acreditado pelo INMETRO</h3>
+          <p class="credential-number">Acreditação <strong>Nº CTBC OCP 0073</strong> · Escopo <strong>SASC · TEPS</strong> · ABNT NBR ISO/IEC 17020</p>
+        </div>
+        <div class="credential-validity">
+          <span class="validity-label">Vigência até</span>
+          <span class="validity-value">2029</span>
+        </div>
+      </div>
+
       <div class="cert-grid reveal-stagger">
         <div class="cert-card reveal">
           <div class="cert-icon">
@@ -430,6 +556,46 @@
     </div>
   </section>
 
+  <!-- BLOG -->
+  <section class="section section-gray" id="blog">
+    <div class="container">
+      <div class="reveal" style="text-align: center; margin-bottom: 56px;">
+        <span class="section-label">Conteúdo Técnico</span>
+        <h2 class="section-title">Artigos do nosso blog</h2>
+        <p class="section-desc" style="margin: 0 auto;">Guias práticos sobre SASC, TEPS e NR-20 escritos pela nossa equipe de engenharia.</p>
+      </div>
+      <div class="services-grid reveal-stagger">
+        <article class="service-card reveal">
+          <div class="service-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          </div>
+          <h3>O que é SASC? Guia completo</h3>
+          <p>Entenda o que compõe um Sistema de Armazenamento Subterrâneo de Combustíveis, quando a inspeção é obrigatória e como funciona a certificação.</p>
+          <a href="/blog/o-que-e-sasc-guia-completo.html" class="service-cta">Ler o artigo →</a>
+        </article>
+        <article class="service-card reveal">
+          <div class="service-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M6 20V8l6-4 6 4v12"/><path d="M10 20v-4h4v4"/></svg>
+          </div>
+          <h3>Inspeção TEPS: o que sua empresa precisa saber</h3>
+          <p>Prazos, normas e responsabilidades na inspeção de tanques de estocagem de petróleo e subprodutos em terminais e indústrias.</p>
+          <a href="/blog/inspecao-teps-o-que-sua-empresa-precisa-saber.html" class="service-cta">Ler o artigo →</a>
+        </article>
+        <article class="service-card reveal">
+          <div class="service-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <h3>NR-20 na prática para postos de combustível</h3>
+          <p>O que a Norma Regulamentadora 20 exige de postos revendedores: treinamentos, prontuário e plano de resposta a emergências.</p>
+          <a href="/blog/nr-20-seguranca-postos-combustivel.html" class="service-cta">Ler o artigo →</a>
+        </article>
+      </div>
+      <div class="reveal" style="text-align: center; margin-top: 40px;">
+        <a href="/blog/" class="btn btn-outline" style="border-color: var(--blue); color: var(--blue);">Ver todos os artigos</a>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA BANNER -->
   <section class="cta-banner">
     <div class="container">
@@ -487,6 +653,8 @@
     </div>
   </section>
 
+  </main>
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
@@ -496,13 +664,14 @@
           <p class="footer-desc">Engenharia de infraestrutura crítica. Especialistas em SASC, TEPS e postos de combustível com certificação INMETRO vigente.</p>
         </div>
         <div>
-          <h4>Navegação</h4>
+          <h4>Serviços</h4>
           <div class="footer-links">
-            <a href="#inicio">Início</a>
-            <a href="#sobre">Sobre</a>
-            <a href="#servicos">Serviços</a>
-            <a href="#certificacoes">Certificações</a>
-            <a href="#contato">Contato</a>
+            <a href="/servicos/sasc.html">SASC</a>
+            <a href="/servicos/teps.html">TEPS</a>
+            <a href="/servicos/postos-de-combustivel.html">Postos de Combustível</a>
+            <a href="/servicos/laudos-e-pericias.html">Laudos e Perícias</a>
+            <a href="/servicos/obras-civis.html">Obras Civis</a>
+            <a href="/servicos/seguranca-nr-20.html">Segurança e NR-20</a>
           </div>
         </div>
         <div>
@@ -540,6 +709,6 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script src="/js/main.js"></script>
+  <script src="/js/main.js?v=20260417b"></script>
 </body>
 </html>
