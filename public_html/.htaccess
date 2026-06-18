@@ -11,6 +11,17 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
+# 301 Redirects — URLs antigas (estrutura anterior do site) para as novas.
+# Recupera o histórico de SEO e elimina os erros 404 no Search Console.
+RewriteRule ^servicos/instalacao-sasc/?$        /servicos/sasc.html [R=301,L]
+RewriteRule ^servicos/teste-estanqueidade/?$    /servicos/teps.html [R=301,L]
+RewriteRule ^blog/o-que-e-sasc/?$               /blog/o-que-e-sasc-guia-completo.html [R=301,L]
+RewriteRule ^blog/teps-ensaios-estanqueidade/?$ /blog/inspecao-teps-o-que-sua-empresa-precisa-saber.html [R=301,L]
+RewriteRule ^blog/manutencao-preventiva-sla/?$  /servicos/manutencao-predial.html [R=301,L]
+RewriteRule ^blog/obras-postos-combustivel/?$   /servicos/postos-de-combustivel.html [R=301,L]
+RewriteRule ^blog/rr-engine-automacao-propostas/?$ /blog/ [R=301,L]
+RewriteRule ^contato/?$                          /contato.html [R=301,L]
+
 # Custom Error Pages
 ErrorDocument 404 /index.html
 
