@@ -24,7 +24,7 @@ RewriteRule ^contato/?$                          /contato.html [R=301,L]
 
 # A pasta /servicos não tem index e a listagem é desativada (403). Redireciona
 # para a seção de serviços da home, que lista todos os serviços.
-RewriteRule ^servicos/?$                         /#servicos [R=301,L]
+RewriteRule ^servicos/?$                         /#servicos [R=301,L,NE]
 
 # Custom Error Pages
 ErrorDocument 404 /index.html
