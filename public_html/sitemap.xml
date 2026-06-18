@@ -98,9 +98,27 @@
   </url>
   <url>
     <loc>https://rres.com.br/blog/</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://rres.com.br/blog/laudo-spda-para-raios-quando-e-obrigatorio.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://rres.com.br/blog/pmoc-climatizacao-quando-e-obrigatorio.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://rres.com.br/blog/avcb-o-que-e-e-como-obter.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
   </url>
   <url>
     <loc>https://rres.com.br/blog/o-que-e-sasc-guia-completo.html</loc>
