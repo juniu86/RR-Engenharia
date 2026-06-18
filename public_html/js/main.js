@@ -27,9 +27,23 @@
   }
 
   function track(name, params) {
-    if (window.gtag) { gtag('event', name, params || {}); }
+    var base = { page_path: location.pathname };
+    if (window.gtag) { gtag('event', name, Object.assign(base, params || {})); }
   }
   window.rrTrack = track;
+
+  // Identifica de onde, na página, o CTA foi clicado
+  function ctaLocation(a) {
+    if (a.classList && a.classList.contains('whatsapp-float')) return 'floating';
+    if (a.closest('header')) return 'header';
+    if (a.closest('footer')) return 'footer';
+    if (a.closest('.cta-banner')) return 'cta_banner';
+    if (a.closest('.lead-form')) return 'lead_form';
+    if (a.closest('.hero')) return 'hero';
+    var s = a.closest('section[id]');
+    if (s) return s.id;
+    return 'body';
+  }
 
   // Cliques em WhatsApp / telefone / e-mail
   document.addEventListener('click', function (e) {
@@ -37,11 +51,11 @@
     if (!a) return;
     var href = a.getAttribute('href') || '';
     if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) {
-      track('click_whatsapp', { link_url: href, page: location.pathname });
+      track('click_whatsapp', { link_url: href, cta_location: ctaLocation(a) });
     } else if (href.indexOf('tel:') === 0) {
-      track('click_phone', { link_url: href });
+      track('click_phone', { link_url: href, cta_location: ctaLocation(a) });
     } else if (href.indexOf('mailto:') === 0) {
-      track('click_email', { link_url: href });
+      track('click_email', { link_url: href, cta_location: ctaLocation(a) });
     }
   }, true);
 
@@ -50,13 +64,18 @@
     var f = e.target;
     if (f && f.classList && f.classList.contains('lead-form')) {
       var origemEl = f.querySelector('[name="origem"]');
-      track('form_submit', { form_origem: origemEl ? origemEl.value : '' });
+      var servicoEl = f.querySelector('[name="servico"]');
+      var origem = origemEl ? origemEl.value : '';
+      track('form_submit', {
+        service_origin: (servicoEl && servicoEl.value) || origem || '',
+        form_id: f.id || origem || 'lead-form'
+      });
     }
   }, true);
 
   // Conversão confirmada na página de obrigado
   if (location.pathname.indexOf('obrigado') > -1) {
-    track('generate_lead', { page: location.pathname });
+    track('generate_lead', {});
   }
 
   // Scroll a 75% da página
@@ -67,7 +86,7 @@
     var reach = (doc.scrollTop + window.innerHeight) / doc.scrollHeight;
     if (reach > 0.75) {
       scrolled75 = true;
-      track('scroll_75', { page: location.pathname });
+      track('scroll_75', {});
     }
   }, { passive: true });
 })();
