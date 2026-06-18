@@ -27,7 +27,7 @@ RewriteRule ^contato/?$                          /contato.html [R=301,L]
 RewriteRule ^servicos/?$                         /#servicos [R=301,L,NE]
 
 # Custom Error Pages
-ErrorDocument 404 /index.html
+ErrorDocument 404 /404.html
 
 # GZIP Compression
 <IfModule mod_deflate.c>
