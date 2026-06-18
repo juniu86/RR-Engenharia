@@ -22,6 +22,10 @@ RewriteRule ^blog/obras-postos-combustivel/?$   /servicos/postos-de-combustivel.
 RewriteRule ^blog/rr-engine-automacao-propostas/?$ /blog/ [R=301,L]
 RewriteRule ^contato/?$                          /contato.html [R=301,L]
 
+# A pasta /servicos não tem index e a listagem é desativada (403). Redireciona
+# para a seção de serviços da home, que lista todos os serviços.
+RewriteRule ^servicos/?$                         /#servicos [R=301,L]
+
 # Custom Error Pages
 ErrorDocument 404 /index.html
 
