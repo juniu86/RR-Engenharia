@@ -186,7 +186,7 @@
       <div class="container">
         <h2>Seu imóvel ou empreendimento está regular?</h2>
         <p>Diagnóstico da situação e proposta de regularização em até 24 horas.</p>
-        <a href="/contato.html" class="btn btn-white">Solicitar regularização</a>
+        <a href="#orcamento" class="btn btn-white">Solicitar regularização</a>
       </div>
     </section>
 
@@ -225,6 +225,37 @@
             <a href="/servicos/postos-de-combustivel.html" style="color: var(--blue); font-weight: 700;">Postos de combustível</a> ·
             <a href="/servicos/obras-civis.html" style="color: var(--blue); font-weight: 700;">Obras civis</a>
           </p>
+        </div>
+      </div>
+    </section>
+  
+    <section class="section section-gray" id="orcamento">
+      <div class="container">
+        <div class="reveal" style="max-width: 680px; margin: 0 auto;">
+          <form class="lead-form" action="https://api.web3forms.com/submit" method="POST">
+            <h3>Solicite uma proposta de Regularização e legalização</h3>
+            <p class="form-sub">Preencha os dados e nossa equipe técnica retorna em até 24h úteis.</p>
+            <input type="hidden" name="access_key" value="73961e2b-c424-417e-b196-3625f60363f2">
+            <input type="hidden" name="subject" value="Novo lead (Regularização e legalização) — RR Engenharia">
+            <input type="hidden" name="from_name" value="Site RR Engenharia">
+            <input type="hidden" name="redirect" value="https://rres.com.br/obrigado.html">
+            <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none !important;">
+            <input type="hidden" name="origem" value="regularizacao-legalizacao">
+            <input type="hidden" name="servico" value="Regularização e legalização">
+            <div class="form-row">
+              <div class="form-field half"><label for="nome">Nome*</label><input id="nome" name="nome" type="text" required></div>
+              <div class="form-field half"><label for="empresa">Empresa</label><input id="empresa" name="empresa" type="text"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-field half"><label for="email">E-mail*</label><input id="email" name="email" type="email" required></div>
+              <div class="form-field half"><label for="telefone">WhatsApp / Telefone</label><input id="telefone" name="telefone" type="tel"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-field"><label for="mensagem">Mensagem</label><textarea id="mensagem" name="mensagem" placeholder="Conte brevemente o que você precisa…"></textarea></div>
+            </div>
+            <button type="submit" class="btn btn-primary form-submit">Solicitar proposta</button>
+            <p class="form-note">Resposta em até 24h úteis · ou fale agora no <a href="https://wa.me/5521995740273" target="_blank" rel="noopener">WhatsApp</a></p>
+          </form>
         </div>
       </div>
     </section>
