@@ -26,6 +26,9 @@ RewriteRule ^contato/?$                          /contato.html [R=301,L]
 # para a seção de serviços da home, que lista todos os serviços.
 RewriteRule ^servicos/?$                         /#servicos [R=301,L,NE]
 
+# URL limpa da política de privacidade (serve o HTML sem a extensão).
+RewriteRule ^privacidade/?$                       /privacidade.html [L]
+
 # Custom Error Pages
 ErrorDocument 404 /404.html
 
