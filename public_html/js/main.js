@@ -91,6 +91,26 @@
   }, { passive: true });
 })();
 
+/* ============================================
+   LinkedIn Insight Tag (retargeting / conversões)
+   Partner ID da RR Engenharia. Carrega em todas as páginas.
+   ============================================ */
+(function () {
+  window._linkedin_partner_id = '10522105';
+  window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+  window._linkedin_data_partner_ids.push(window._linkedin_partner_id);
+  if (!window.lintrk) {
+    window.lintrk = function (a, b) { window.lintrk.q.push([a, b]); };
+    window.lintrk.q = [];
+  }
+  var s = document.getElementsByTagName('script')[0];
+  var b = document.createElement('script');
+  b.type = 'text/javascript';
+  b.async = true;
+  b.src = 'https://snap.licdn.com/li.lms-analytics/insight.min.js';
+  s.parentNode.insertBefore(b, s);
+})();
+
 (function () {
   'use strict';
 
