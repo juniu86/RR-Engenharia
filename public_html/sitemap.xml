@@ -193,6 +193,12 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://rres.com.br/en/</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://rres.com.br/compliance.html</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
