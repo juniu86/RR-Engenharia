@@ -111,3 +111,5 @@ AddDefaultCharset UTF-8
 AddType image/svg+xml .svg .svgz
 AddType application/json .json
 AddType text/xml .xml
+
+# deploy: reexecução após timeout FTPS em 19/08/2026
