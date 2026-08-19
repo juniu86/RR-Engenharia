@@ -31,6 +31,14 @@ RewriteRule ^privacidade/?$                       /privacidade.html [L]
 # Custom Error Pages
 ErrorDocument 404 /404.html
 
+# Fallback de 404 real: o host ignora o ErrorDocument acima, então qualquer
+# caminho que não corresponda a arquivo/diretório existente é servido pelo
+# 404.php, que devolve a página personalizada COM status HTTP 404.
+RewriteCond %{REQUEST_URI} !^/404\.php$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /404.php [L]
+
 # GZIP Compression
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html
