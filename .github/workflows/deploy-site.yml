@@ -30,5 +30,4 @@ jobs:
           exclude: |
             **/.git*
             **/.gitkeep
-            **/proposta/**
             **/proposta.zip
