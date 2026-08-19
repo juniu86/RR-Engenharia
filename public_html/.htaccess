@@ -22,11 +22,10 @@ RewriteRule ^blog/obras-postos-combustivel/?$   /servicos/postos-de-combustivel.
 RewriteRule ^blog/rr-engine-automacao-propostas/?$ /blog/ [R=301,L]
 RewriteRule ^contato/?$                          /contato.html [R=301,L]
 
-# A pasta /servicos não tem index e a listagem é desativada (403). Redireciona
-# para a seção de serviços da home, que lista todos os serviços.
-RewriteRule ^servicos/?$                         /#servicos [R=301,L,NE]
-
-# URL limpa da política de privacidade (serve o HTML sem a extensão).
+# Política de privacidade: /privacidade.html redireciona para a URL canônica
+# /privacidade, que é servida internamente pelo HTML.
+RewriteCond %{THE_REQUEST} \s/privacidade\.html [NC]
+RewriteRule ^privacidade\.html$ /privacidade [R=301,L]
 RewriteRule ^privacidade/?$                       /privacidade.html [L]
 
 # Custom Error Pages
@@ -56,6 +55,17 @@ ErrorDocument 404 /404.html
   ExpiresByType image/png "access plus 1 year"
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType application/json "access plus 1 day"
+  ExpiresByType video/mp4 "access plus 1 year"
+  ExpiresByType video/webm "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+</IfModule>
+
+# Cache-Control explícito para estáticos versionados por ?v= (GoDaddy nem sempre
+# aplica mod_expires; este bloco garante o cabeçalho)
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|jpe?g|png|webp|svg|mp4|webm|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000"
+  </FilesMatch>
 </IfModule>
 
 # HTML sempre revalidado (evita servir página desatualizada após deploy)
@@ -69,10 +79,19 @@ ErrorDocument 404 /404.html
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "SAMEORIGIN"
-  Header always set X-XSS-Protection "1; mode=block"
+  Header always unset X-XSS-Protection
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  # HSTS: 1 ano, sem includeSubDomains até auditar todos os subdomínios
+  Header always set Strict-Transport-Security "max-age=31536000"
+  # CSP em Report-Only: observar por 2 semanas antes de migrar para enforce
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://snap.licdn.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://px.ads.linkedin.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://px.ads.linkedin.com https://api.web3forms.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-ancestors 'self'"
 </IfModule>
+
+# Bloqueia arquivos sensíveis (logs, backups, configs) em toda a árvore
+<FilesMatch "\.(log|env|ini|bak|sql|sh|zip|tar|gz)$">
+  Require all denied
+</FilesMatch>
 
 # Prevent directory listing
 Options -Indexes
