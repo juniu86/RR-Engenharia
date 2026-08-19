@@ -1,0 +1,4 @@
+# Ferramenta descontinuada em 19/08/2026. Este arquivo sobrepõe o rewrite
+# antigo do app e devolve o 404 personalizado para qualquer caminho.
+RewriteEngine On
+RewriteRule ^ /404.php [L]
