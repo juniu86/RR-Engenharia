@@ -1,15 +1,12 @@
 User-agent: *
 Allow: /
-Disallow: /proposta/
 
 Sitemap: https://rres.com.br/sitemap.xml
 
 User-agent: Googlebot
 Allow: /
-Disallow: /proposta/
 
 User-agent: Bingbot
 Allow: /
-Disallow: /proposta/
 
 Crawl-delay: 1
