@@ -48,7 +48,7 @@
   <link rel="preload" as="image" href="/images/icamento-poster.jpg?v=2" fetchpriority="high">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/css/style.css?v=20260617">
+  <link rel="stylesheet" href="/css/style.css?v=20260819">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -216,9 +216,7 @@
           </div>
         </div>
         <div class="hero-visual" style="height: clamp(500px, 64vh, 720px);">
-          <video class="hero-img" id="heroVideo" autoplay muted loop playsinline preload="auto" poster="/images/icamento-poster.jpg?v=2" width="478" height="850" style="height:100%; width:auto; max-width:100%; margin:0 auto; display:block; object-fit:contain;" aria-label="Içamento de um tanque por guindaste em obra da RR Engenharia">
-            <source src="/videos/icamento-tanque.webm?v=2" type="video/webm">
-            <source src="/videos/icamento-tanque.mp4?v=2" type="video/mp4">
+          <video class="hero-img" id="heroVideo" muted loop playsinline preload="none" data-webm="/videos/icamento-tanque.webm?v=2" data-mp4="/videos/icamento-tanque.mp4?v=2" poster="/images/icamento-poster.jpg?v=2" width="478" height="850" style="height:100%; width:auto; max-width:100%; margin:0 auto; display:block; object-fit:contain;" aria-label="Içamento de um tanque por guindaste em obra da RR Engenharia">
           </video>
           <script>(function(){var v=document.getElementById('heroVideo');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');try{v.pause();}catch(e){}}})();</script>
         </div>
@@ -375,7 +373,7 @@
           <div class="norm-tags">
             <span class="norm-tag">NBR 13786</span>
             <span class="norm-tag">NBR 13784</span>
-            <span class="norm-tag">ANP 41/2013</span>
+            <span class="norm-tag">ANP 948/2023</span>
             <span class="norm-tag">INMETRO</span>
           </div>
           <a href="/servicos/sasc.html" class="service-cta">Conhecer inspeção SASC →</a>
@@ -401,7 +399,7 @@
           <h3>Postos de Combustível <span class="service-code">03</span></h3>
           <p>Construção, reforma e adequação completa de postos. Desde a fundação até a automação, com projeto aprovado e licenciamento ambiental.</p>
           <div class="norm-tags">
-            <span class="norm-tag">ANP 41/2013</span>
+            <span class="norm-tag">ANP 948/2023</span>
             <span class="norm-tag">NBR 17505</span>
             <span class="norm-tag">NR-20</span>
             <span class="norm-tag">Licença ambiental</span>
@@ -706,12 +704,12 @@
             <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none !important;">
             <input type="hidden" name="origem" value="home">
             <div class="form-row">
-              <div class="form-field half"><label for="nome">Nome*</label><input id="nome" name="nome" type="text" required></div>
-              <div class="form-field half"><label for="empresa">Empresa</label><input id="empresa" name="empresa" type="text"></div>
+              <div class="form-field half"><label for="nome">Nome*</label><input id="nome" name="nome" type="text" autocomplete="name" required></div>
+              <div class="form-field half"><label for="empresa">Empresa</label><input id="empresa" name="empresa" type="text" autocomplete="organization"></div>
             </div>
             <div class="form-row">
-              <div class="form-field half"><label for="email">E-mail*</label><input id="email" name="email" type="email" required></div>
-              <div class="form-field half"><label for="telefone">WhatsApp / Telefone</label><input id="telefone" name="telefone" type="tel"></div>
+              <div class="form-field half"><label for="email">E-mail*</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+              <div class="form-field half"><label for="telefone">WhatsApp / Telefone</label><input id="telefone" name="telefone" type="tel" autocomplete="tel"></div>
             </div>
             <div class="form-row">
               <div class="form-field"><label for="servico">Serviço de interesse</label>
@@ -734,6 +732,7 @@
             </div>
             <button type="submit" class="btn btn-primary form-submit">Solicitar proposta</button>
             <p class="form-note">Resposta em até 24h úteis · ou fale agora no <a href="https://wa.me/5521997795500" target="_blank" rel="noopener">WhatsApp</a></p>
+            <p class="form-privacy">Usaremos seus dados apenas para responder à sua solicitação e preparar o atendimento comercial. O envio é processado pelo Web3Forms (fornecedor de tecnologia). Não inclua senhas ou dados sensíveis. Veja a <a href="/privacidade">Política de Privacidade</a>.</p>
           </form>
         </div>
       </div>
@@ -800,6 +799,6 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script src="/js/main.js?v=20260620"></script>
+  <script src="/js/main.js?v=20260819"></script>
 </body>
 </html>

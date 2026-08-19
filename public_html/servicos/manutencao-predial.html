@@ -33,7 +33,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css?v=20260617">
+  <link rel="stylesheet" href="/css/style.css?v=20260819">
 
   <script type="application/ld+json">
   {
@@ -124,7 +124,7 @@
         <h1 style="color: var(--white); margin-bottom: 24px; max-width: 900px;">Manutenção predial preventiva e corretiva no <span class="highlight" style="color: var(--blue);">Rio de Janeiro</span></h1>
         <p class="hero-desc" style="max-width: 720px;">Mantenha suas unidades operando, com responsável técnico (ART/CREA) e SLA definido em contrato. Civil, elétrica, hidráulica, climatização e SPDA — um fornecedor técnico único para reduzir falhas, paradas e custo de emergência.</p>
         <div class="hero-buttons">
-          <a href="/contato.html" class="btn btn-whatsapp">Solicitar proposta de manutenção</a>
+          <a href="#orcamento" class="btn btn-whatsapp">Solicitar proposta de manutenção</a>
           <a href="#orcamento" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: var(--white);">Pedir orçamento pelo formulário</a>
         </div>
       </div>
@@ -144,18 +144,19 @@
             <input type="hidden" name="origem" value="manutencao-predial">
             <input type="hidden" name="servico" value="Manutenção predial">
             <div class="form-row">
-              <div class="form-field half"><label for="nome">Nome*</label><input id="nome" name="nome" type="text" required></div>
-              <div class="form-field half"><label for="empresa">Empresa</label><input id="empresa" name="empresa" type="text"></div>
+              <div class="form-field half"><label for="nome">Nome*</label><input id="nome" name="nome" type="text" autocomplete="name" required></div>
+              <div class="form-field half"><label for="empresa">Empresa</label><input id="empresa" name="empresa" type="text" autocomplete="organization"></div>
             </div>
             <div class="form-row">
-              <div class="form-field half"><label for="email">E-mail*</label><input id="email" name="email" type="email" required></div>
-              <div class="form-field half"><label for="telefone">WhatsApp / Telefone</label><input id="telefone" name="telefone" type="tel"></div>
+              <div class="form-field half"><label for="email">E-mail*</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+              <div class="form-field half"><label for="telefone">WhatsApp / Telefone</label><input id="telefone" name="telefone" type="tel" autocomplete="tel"></div>
             </div>
             <div class="form-row">
               <div class="form-field"><label for="mensagem">Mensagem</label><textarea id="mensagem" name="mensagem" placeholder="Conte brevemente o que você precisa…"></textarea></div>
             </div>
             <button type="submit" class="btn btn-primary form-submit">Solicitar proposta</button>
             <p class="form-note">Resposta em até 24h úteis · ou fale agora no <a href="https://wa.me/5521997795500" target="_blank" rel="noopener">WhatsApp</a></p>
+            <p class="form-privacy">Usaremos seus dados apenas para responder à sua solicitação e preparar o atendimento comercial. O envio é processado pelo Web3Forms (fornecedor de tecnologia). Não inclua senhas ou dados sensíveis. Veja a <a href="/privacidade">Política de Privacidade</a>.</p>
           </form>
         </div>
       </div>
@@ -305,7 +306,7 @@
             <a href="/servicos/teps.html">TEPS</a>
             <a href="/servicos/manutencao-predial.html">Manutenção Predial</a>
             <a href="/servicos/obras-civis.html">Obras Civis</a>
-            <a href="/#servicos">Todos os serviços</a>
+            <a href="/servicos/">Todos os serviços</a>
           </div>
         </div>
         <div>
@@ -343,6 +344,6 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
-  <script src="/js/main.js?v=20260620"></script>
+  <script src="/js/main.js?v=20260819"></script>
 </body>
 </html>
