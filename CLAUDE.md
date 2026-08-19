@@ -31,9 +31,9 @@ Site estático (HTML/CSS/JS puro) em `public_html/`, deploy automático GoDaddy 
 | Dívida | Risco | Gatilho de revisão |
 |---|---|---|
 | Deploy direto em produção, sem staging/rollback | Regressão atinge as ~40 páginas | Quando houver 2+ editores ou releases semanais |
-| Web3Forms como ponto único de falha, só honeypot | Perda silenciosa de leads / spam | Confirmar no painel: restrição de domínio, alertas, DPA |
+| Web3Forms plano FREE (verificado 19/08/2026): restrição de domínio é recurso Pro (indisponível), sem DPA formal (docs dizem "GDPR-compliant, sem declaração legal"), dados processados em US-East, logs apagados a cada 2 meses, envios não armazenados. Advanced Spam Filter ativo, 1/250 envios-mês | Spam / perda silenciosa de leads / transferência internacional | Se spam ou envios estranhos crescerem, avaliar plano Pro (traz restrição de domínio + captcha + webhooks) |
 | Header/footer duplicados em ~40 HTMLs (sem template) | Mudança global = script em massa | Se o site passar de ~50 páginas, avaliar SSG |
-| `/proposta/` público e quebrado (JS 404) | Superfície interna exposta | Decisão do Reginaldo: remover, consertar ou autenticar |
+| `/proposta/` NEUTRALIZADA em 19/08/2026 (.htaccess interno → 404; api.php inerte). Arquivos físicos ainda no servidor (deploy excluía a pasta) | Resíduo inofensivo | Apagar a pasta no gerenciador de arquivos do GoDaddy quando houver acesso |
 | Política de privacidade: seção de cookies adicionada em 19/08/2026 SEM revisão jurídica | Conformidade LGPD | Validar com advogado |
 | Canal de compliance é mailto interno (copy corrigida para "interno e confidencial") | Promessa institucional | Contratar canal terceirizado |
 | Jornada EN incompleta (política só em PT, sem case/RFP) | Due diligence estrangeira | Quando prospecção internacional ativar |
