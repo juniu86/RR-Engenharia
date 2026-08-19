@@ -31,6 +31,11 @@ RewriteRule ^privacidade/?$                       /privacidade.html [L]
 # Custom Error Pages
 ErrorDocument 404 /404.html
 
+# /proposta/ foi descontinuada (decisão de 19/08/2026). Os arquivos ainda
+# existem no servidor (o deploy sempre excluiu essa pasta), então o acesso é
+# bloqueado aqui — inclusive ao api.php — devolvendo o 404 personalizado.
+RewriteRule ^proposta(/.*)?$ /404.php [L]
+
 # Fallback de 404 real: o host ignora o ErrorDocument acima, então qualquer
 # caminho que não corresponda a arquivo/diretório existente é servido pelo
 # 404.php, que devolve a página personalizada COM status HTTP 404.
