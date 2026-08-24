@@ -41,4 +41,9 @@ Site estático (HTML/CSS/JS puro) em `public_html/`, deploy automático GoDaddy 
 
 ## Contexto comercial
 
-Leads chegam ~75% mobile e majoritariamente por WhatsApp. Campanhas: Google Ads (TEPS Brasil R$30/dia, SASC Brasil R$20, Predial/Laudos RJ+SP R$20 com grupos Manutenção/Laudos/Autovistoria/Hidráulica-Elétrica) + LinkedIn Lead Gen. Checkpoints quinzenais com exports de CSV do Ads + contagem de etiquetas do WhatsApp. Expansão São Paulo em planejamento (escritório físico).
+Leads chegam ~75% mobile e majoritariamente por WhatsApp. Campanhas: Google Ads (TEPS Brasil R$30/dia, SASC Brasil R$20, Predial/Laudos RJ+SP R$20 com grupos Manutenção/Laudos/Autovistoria/Hidráulica-Elétrica). Checkpoints quinzenais com exports de CSV do Ads + contagem de etiquetas do WhatsApp. Expansão São Paulo: página /sao-paulo/ no ar (origem=sao-paulo); SP já é a cidade nº 1 em usuários do site.
+
+## Aprendizados de canal (não repetir erros)
+
+- **LinkedIn Lead Gen frio: NUNCA MAIS.** Campanha ago/2026: US$ 450, 56k impressões, CTR 0,77% (bom), 435 "cliques" (~99% eram interações no feed — só 5 sessões chegaram ao site), 0 leads. LinkedIn na RR = ABM manual (lista de 28 empresas engajadas entregue em 19/08) + orgânico semanal + retargeting futuro quando o público do Insight Tag amadurecer. Google Ads = captura de demanda, onde vai todo real de mídia.
+- **Linha de base do GA4 recomeça em 20/08/2026** (Consent Mode implantado em 19/08): o GA4 pós-banner mede só a fração que aceita cookies (~30-60% típico). NUNCA comparar GA4 pré vs pós-19/08. Demanda/mídia se leem no Google Ads e GSC (imunes ao banner); comportamento no GA4 (amostra consentida). Proxy da taxa de aceite: sessões google/cpc no GA4 ÷ cliques no Ads no mesmo período.
