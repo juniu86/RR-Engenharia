@@ -28,8 +28,12 @@ RewriteCond %{THE_REQUEST} \s/privacidade\.html [NC]
 RewriteRule ^privacidade\.html$ /privacidade [R=301,L]
 RewriteRule ^privacidade/?$                       /privacidade.html [L]
 
-# Landing ExpoPostos: /expopostos é a URL canônica (QR do stand aponta para ela)
-RewriteRule ^expopostos/?$ /expopostos/index.html [L]
+# Landing ExpoPostos: /expopostos é a URL canônica (QR do stand aponta para ela).
+# Padrão do /privacidade: arquivo + rewrite — diretório real faz o host responder
+# com o 301 do mod_dir antes da regra (verificado em produção em 25/08).
+RewriteCond %{THE_REQUEST} \s/expopostos\.html [NC]
+RewriteRule ^expopostos\.html$ /expopostos [R=301,L]
+RewriteRule ^expopostos/?$ /expopostos.html [L]
 
 # Custom Error Pages
 ErrorDocument 404 /404.html
