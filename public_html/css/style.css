@@ -1554,7 +1554,7 @@ p { font-weight: 400; color: var(--gray-700); }
   right: 28px;
   width: 64px;
   height: 64px;
-  background: #128C7E; /* teal: ícone branco com contraste >= 3:1 */
+  background: #25d366; /* mesmo verde do .btn-whatsapp (consistência visual) */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1575,7 +1575,7 @@ p { font-weight: 400; color: var(--gray-700); }
   box-shadow: 0 6px 28px rgba(37,211,102,0.5);
   animation: none;
 }
-.whatsapp-float svg { width: 32px; height: 32px; fill: white; }
+.whatsapp-float svg { width: 32px; height: 32px; fill: #06301c; /* mesmo tom do texto do .btn-whatsapp (contraste AA) */ }
 
 .whatsapp-tooltip {
   position: absolute;
@@ -1805,6 +1805,43 @@ textarea:focus-visible,
 .rr-consent-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .rr-consent-actions .btn { padding: 10px 22px; font-size: 0.85rem; }
 .rr-consent-actions .btn-outline { border: 1.5px solid #c3cedd; color: #1a2433; }
+
+/* Aviso ExpoPostos no hero da home (remover em 11/09/2026 — ver CLAUDE.md) */
+.expo-strip {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  background: rgba(9, 99, 237, 0.14);
+  border: 1px solid rgba(96, 165, 250, 0.45);
+  border-radius: 999px;
+  padding: 8px 18px 8px 8px;
+  margin-top: 10px;
+  margin-bottom: 26px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.88rem;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.expo-strip:hover { background: rgba(9, 99, 237, 0.28); border-color: #60A5FA; }
+.expo-strip strong { color: #60A5FA; }
+.expo-strip-tag {
+  background: var(--blue);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .expo-strip { border-radius: 14px; padding: 10px 14px; }
+}
 
 /* Preferência por movimento reduzido (WCAG 2.3.3 / 2.2.2) */
 @media (prefers-reduced-motion: reduce) {
