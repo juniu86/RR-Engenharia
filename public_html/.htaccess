@@ -28,6 +28,9 @@ RewriteCond %{THE_REQUEST} \s/privacidade\.html [NC]
 RewriteRule ^privacidade\.html$ /privacidade [R=301,L]
 RewriteRule ^privacidade/?$                       /privacidade.html [L]
 
+# Landing ExpoPostos: /expopostos é a URL canônica (QR do stand aponta para ela)
+RewriteRule ^expopostos/?$ /expopostos/index.html [L]
+
 # Custom Error Pages
 ErrorDocument 404 /404.html
 

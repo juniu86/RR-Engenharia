@@ -223,6 +223,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://rres.com.br/expopostos</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://rres.com.br/compliance.html</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>monthly</changefreq>
