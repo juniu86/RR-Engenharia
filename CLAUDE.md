@@ -38,6 +38,7 @@ Site estático (HTML/CSS/JS puro) em `public_html/`, deploy automático GoDaddy 
 | Canal de compliance é mailto interno (copy corrigida para "interno e confidencial") | Promessa institucional | Contratar canal terceirizado |
 | Jornada EN incompleta (política só em PT, sem case/RFP) | Due diligence estrangeira | Quando prospecção internacional ativar |
 | CSP em Report-Only | Sem enforcement | Após 2 semanas sem violações legítimas, migrar para enforce |
+| Campanha ExpoPostos 2026 (8-10/09, stand M65): landing /expopostos + faixa no hero da home | Conteúdo datado | Remover a faixa da home em 11/09/2026; revisar a landing após a feira (histórico ou remoção + 301) |
 
 ## Contexto comercial
 
