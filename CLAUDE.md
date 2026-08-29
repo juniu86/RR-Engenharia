@@ -18,6 +18,7 @@ Site estático (HTML/CSS/JS puro) em `public_html/`, deploy automático GoDaddy 
 - **Simplificação de MVP = dívida registrada.** Toda simplificação consciente entra na seção "Dívidas técnicas" abaixo, com gatilho de revisão ("revisitar quando X").
 - **Todo release tem um passo de defesa**: LGPD/consentimento, acessibilidade, headers, dados estruturados e alegações públicas são escopo de TODA entrega, não projetos separados.
 - **Fluxo git**: branch de trabalho `claude/great-maxwell-5qhfcu` → PR → squash-merge na main (via MCP GitHub) → rebase da branch sobre origin/main ANTES do próximo trabalho (senão o PR seguinte conflita) → verificação em produção com cache-bust `?cb=$(date +%s%N)`.
+- **URL sem extensão no GoDaddy = arquivo + rewrite, nunca diretório.** Diretório real faz o host responder o 301 do mod_dir antes da regra de rewrite (verificado em produção em 25/08). Padrão comprovado: `pagina.html` + `RewriteRule ^pagina/?$ /pagina.html [L]` (casos /privacidade e /expopostos).
 
 ## Medição
 
@@ -25,6 +26,7 @@ Site estático (HTML/CSS/JS puro) em `public_html/`, deploy automático GoDaddy 
 - Consent Mode v2: default DENIED para analytics/ads até escolha no banner; LinkedIn Insight Tag (ID 10522105) só carrega após consentimento.
 - Web3Forms access_key `73961e2b-c424-417e-b196-3625f60363f2` (pública por design), campos ocultos `origem`/`servico` por página, redirect /obrigado.html.
 - Google Ads 940-937-6278: conversões importadas do GA4 (click_whatsapp e generate_lead = principais; form_submit = secundária).
+- **Pipeline automático de dados do Ads (desde 25/08/2026)**: script "AUTO RR Export Semanal" no Google Ads (Ferramentas → Scripts, roda segunda entre 07h e 08h) grava últimos 7 dias nas abas Campanhas/Palavras/Termos/Meta da planilha "AUTO RR — Dados Google Ads (semanal)" (ID `1jTNV0uHFlN9Q-2f9K2LeSv1uVn03nT769vHo41tzB3M`, dona reginaldo.carmojr@gmail.com, contato@ editora). O checkpoint semanal é gerado a partir da planilha (leitura via Drive). Os 3 relatórios agendados do Editor (AUTO Campanhas/Palavras/Termos RR, segunda 08h para contato@) chegam como LINK que exige login — servem só de backup manual, não de fonte automatizável. Primeiro dado inédito do pipeline: conversões por palavra-chave.
 
 ## Dívidas técnicas registradas (revisar a cada ciclo)
 
@@ -38,7 +40,7 @@ Site estático (HTML/CSS/JS puro) em `public_html/`, deploy automático GoDaddy 
 | Canal de compliance é mailto interno (copy corrigida para "interno e confidencial") | Promessa institucional | Contratar canal terceirizado |
 | Jornada EN incompleta (política só em PT, sem case/RFP) | Due diligence estrangeira | Quando prospecção internacional ativar |
 | CSP em Report-Only | Sem enforcement | Após 2 semanas sem violações legítimas, migrar para enforce |
-| Campanha ExpoPostos 2026 (8-10/09, stand M65): landing /expopostos + faixa no hero da home | Conteúdo datado | Remover a faixa da home em 11/09/2026; revisar a landing após a feira (histórico ou remoção + 301) |
+| Campanha ExpoPostos 2026 (8-10/09, stand M65): landing `/expopostos` (arquivo expopostos.html + rewrite, form origem=expopostos) + strip `.expo-strip` no hero da home. RR Engine FORA do site por decisão do Reginaldo em 25/08 (feira é de combustíveis; foco em obras e serviços) | Conteúdo datado | Remover a strip da home em 11/09/2026; revisar a landing após a feira (histórico ou remoção + 301) |
 
 ## Contexto comercial
 
