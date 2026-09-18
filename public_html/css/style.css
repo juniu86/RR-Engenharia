@@ -1861,8 +1861,6 @@ textarea:focus-visible,
 
 /* Eletromobilidade: destaque institucional e navegação sem sobreposição. */
 .nav-link{display:block}
-.nav-link.nav-feature{color:#bde5ff;background:#0963ed26;box-shadow:inset 0 0 0 1px #69bbff80}
-.nav-link.nav-feature:hover,.nav-link.nav-feature[aria-current="page"]{color:#fff;background:#0963ed66}
 .nav-link:focus-visible,.nav-cta:focus-visible{outline:3px solid #a4dcff;outline-offset:4px}
 .ev-home-feature{background:linear-gradient(120deg,#e8f0fe,#f5faff);border-block:1px solid #c8dcf7;position:relative}
 .ev-home-feature .section-label{color:#0752c9}.ev-home-feature .section-desc{max-width:780px}
