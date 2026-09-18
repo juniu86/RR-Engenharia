@@ -35,6 +35,14 @@ RewriteCond %{THE_REQUEST} \s/expopostos\.html [NC]
 RewriteRule ^expopostos\.html$ /expopostos [R=301,L]
 RewriteRule ^expopostos/?$ /expopostos.html [L]
 
+# Eletromobilidade: endereço canônico sem diretório e migração dos links antigos.
+# Preserva parâmetros de campanha (gclid/UTM) nos redirecionamentos.
+RewriteRule ^servicos/instalacao-carregadores-eletricos\.html$ /eletromobilidade [R=301,L]
+RewriteCond %{THE_REQUEST} \s/eletromobilidade\.html [NC]
+RewriteRule ^eletromobilidade\.html$ /eletromobilidade [R=301,L]
+RewriteRule ^eletromobilidade/$ /eletromobilidade [R=301,L]
+RewriteRule ^eletromobilidade$ /eletromobilidade.html [L]
+
 # Custom Error Pages
 ErrorDocument 404 /404.html
 
