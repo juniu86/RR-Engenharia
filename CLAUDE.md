@@ -11,6 +11,7 @@ Site estático (HTML/CSS/JS puro) em `public_html/`, deploy automático GoDaddy 
 5. **Conteúdo normativo só com fonte primária**: artigos e páginas citam normas (ABNT, ANP, CONAMA, leis) — TODA referência de vigência deve ser verificada em fonte primária ANTES de publicar. Nunca escrever norma de memória. RANP 41/2013 foi revogada pela RANP 948/2023 (verificado 19/08/2026).
 6. **WhatsApp oficial**: (21) 99779-5500 / wa.me/5521997795500 — em links, texto e schema.
 7. **Data de fundação**: a RR Engenharia e Soluções Ltda iniciou atividade em **23/06/2022** (CNPJ 46.887.631/0001-75, consulta pública). `foundingDate` = 2022 e rodapé "© 2022–2026". "2009" e "+15 anos" referem-se SEMPRE à experiência da EQUIPE ("nossa equipe atua desde 2009"), nunca à empresa. Decisão do Reginaldo em 23/09/2026.
+8. **Dados da empresa iguais em todo lugar** (site, schema, Google Meu Negócio, LinkedIn, diretórios, cadastros de feiras): razão social **RR Engenharia e Soluções Ltda**; endereço canônico **Av. das Américas, 4200, Bloco 8, Sala 106A, Barra da Tijuca, Rio de Janeiro, RJ, 22640-907** (confirmado pelo Reginaldo em 23/09/2026). Atenção: em 23/09/2026 a consulta pública do CNPJ ainda mostrava Bloco 1, Sala 305, cadastro desatualizado que deve ser corrigido na Receita. As respostas de IA cruzam o site com fontes externas; divergência custa credibilidade.
 
 ## Forma de trabalhar (aprendida com a auditoria de 19/08/2026)
 
@@ -19,6 +20,9 @@ Site estático (HTML/CSS/JS puro) em `public_html/`, deploy automático GoDaddy 
 - **Simplificação de MVP = dívida registrada.** Toda simplificação consciente entra na seção "Dívidas técnicas" abaixo, com gatilho de revisão ("revisitar quando X").
 - **Todo release tem um passo de defesa**: LGPD/consentimento, acessibilidade, headers, dados estruturados e alegações públicas são escopo de TODA entrega, não projetos separados.
 - **Fluxo git**: branch de trabalho `claude/great-maxwell-5qhfcu` → PR → squash-merge na main (via MCP GitHub) → rebase da branch sobre origin/main ANTES do próximo trabalho (senão o PR seguinte conflita) → verificação em produção com cache-bust `?cb=$(date +%s%N)`.
+- **Entrega em lote, em horas** (decisão do Reginaldo em 23/09/2026): mudanças aprovadas sobem juntas e no mesmo dia, sem fatiar em semanas. O registro do que mudou fica no PR (lista objetiva de alterações por página), para permitir leitura posterior dos resultados.
+- **Escrita para busca e respostas de IA**: nos títulos de conteúdo (H2), usar a pergunta que o cliente faz; a primeira frase abaixo responde direto. Títulos de chamada para ação e de FAQ seguem livres. Schema é para resultado rico, não atalho para IA.
+- **Intenção de busca**: priorizar quem está pronto para contratar ("empresa de", "instalação de", "construção de") e não quem pesquisa para fazer sozinho ("como instalar", "manual", "kit"). Não criar conteúdo para o público "faça você mesmo".
 - **URL sem extensão no GoDaddy = arquivo + rewrite, nunca diretório.** Diretório real faz o host responder o 301 do mod_dir antes da regra de rewrite (verificado em produção em 25/08). Padrão comprovado: `pagina.html` + `RewriteRule ^pagina/?$ /pagina.html [L]` (casos /privacidade e /expopostos).
 
 ## Medição
@@ -41,11 +45,12 @@ Site estático (HTML/CSS/JS puro) em `public_html/`, deploy automático GoDaddy 
 | Canal de compliance é mailto interno (copy corrigida para "interno e confidencial") | Promessa institucional | Contratar canal terceirizado |
 | Jornada EN incompleta (política só em PT, sem case/RFP) | Due diligence estrangeira | Quando prospecção internacional ativar |
 | CSP em Report-Only | Sem enforcement | Após 2 semanas sem violações legítimas, migrar para enforce |
-| Campanha ExpoPostos 2026 (8-10/09, stand M65): landing `/expopostos` (arquivo expopostos.html + rewrite, form origem=expopostos) + strip `.expo-strip` no hero da home. RR Engine FORA do site por decisão do Reginaldo em 25/08 (feira é de combustíveis; foco em obras e serviços) | Conteúdo datado | Remover a strip da home em 11/09/2026; revisar a landing após a feira (histórico ou remoção + 301) |
+| Campanha ExpoPostos 2026 (8-10/09, stand M65): landing `/expopostos` (arquivo expopostos.html + rewrite, form origem=expopostos) . Strip da home REMOVIDA em 17/09. RR Engine FORA do site por decisão do Reginaldo em 25/08 | Conteúdo datado | Decidir destino da landing pós-feira (histórico ou remoção + 301) |
+| `servicos/instalacao-carregadores-eletricos.html` continua no repositório, mas redireciona (301) para /eletromobilidade e não recebe as atualizações | Confusão em edições futuras | Apagar o arquivo quando confirmado que nenhum link externo depende dele |
 
 ## Contexto comercial
 
-Leads chegam ~75% mobile e majoritariamente por WhatsApp. Campanhas: Google Ads (TEPS Brasil R$30/dia, SASC Brasil R$20, Predial/Laudos RJ+SP R$20 com grupos Manutenção/Laudos/Autovistoria/Hidráulica-Elétrica). Checkpoints quinzenais com exports de CSV do Ads + contagem de etiquetas do WhatsApp. Expansão São Paulo: página /sao-paulo/ no ar (origem=sao-paulo); SP já é a cidade nº 1 em usuários do site.
+**Motores comerciais (decisão do Reginaldo em 23/09/2026): SASC (construção, reforma e tanques de postos) e Instalação de carregadores elétricos (/eletromobilidade).** Priorizar esses dois em mídia, conteúdo, links internos e escolha de "página que paga". TEPS segue no portfólio, mas não é o foco estratégico. Leads chegam ~75% mobile e majoritariamente por WhatsApp. Campanhas Google Ads: TEPS Brasil, SASC Brasil, Predial/Laudos RJ+SP (grupos Manutenção/Laudos/Autovistoria/Hidráulica-Elétrica) e Instalação Carregadores Elétricos RJ (desde set/2026). Checkpoints quinzenais com exports de CSV do Ads + contagem de etiquetas do WhatsApp. Expansão São Paulo: página /sao-paulo/ no ar (origem=sao-paulo); SP já é a cidade nº 1 em usuários do site.
 
 ## Aprendizados de canal (não repetir erros)
 
