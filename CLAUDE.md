@@ -10,6 +10,7 @@ Site estático (HTML/CSS/JS puro) em `public_html/`, deploy automático GoDaddy 
 4. **Sem promessas novas**: nenhum prazo, número ou garantia que não exista hoje no site ou não tenha sido aprovado pelo Reginaldo ("estamos seguros destes números" cobre os indicadores atuais da home).
 5. **Conteúdo normativo só com fonte primária**: artigos e páginas citam normas (ABNT, ANP, CONAMA, leis) — TODA referência de vigência deve ser verificada em fonte primária ANTES de publicar. Nunca escrever norma de memória. RANP 41/2013 foi revogada pela RANP 948/2023 (verificado 19/08/2026).
 6. **WhatsApp oficial**: (21) 99779-5500 / wa.me/5521997795500 — em links, texto e schema.
+7. **Data de fundação**: a RR Engenharia e Soluções Ltda iniciou atividade em **23/06/2022** (CNPJ 46.887.631/0001-75, consulta pública). `foundingDate` = 2022 e rodapé "© 2022–2026". "2009" e "+15 anos" referem-se SEMPRE à experiência da EQUIPE ("nossa equipe atua desde 2009"), nunca à empresa. Decisão do Reginaldo em 23/09/2026.
 
 ## Forma de trabalhar (aprendida com a auditoria de 19/08/2026)
 
