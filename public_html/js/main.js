@@ -151,11 +151,119 @@
     return 'body';
   }
 
+  /* ---------- MONTADOR DE MENSAGEM DO WHATSAPP ----------
+     Em páginas com <script type="application/json" id="rrWaConfig">, os botões
+     de WhatsApp (exceto o do rodapé) abrem um seletor de múltipla escolha que
+     monta a mensagem. O click_whatsapp só é registrado no envio de fato. */
+  var waCfg = null;
+  try {
+    var waCfgEl = document.getElementById('rrWaConfig');
+    if (waCfgEl) waCfg = JSON.parse(waCfgEl.textContent);
+  } catch (errCfg) { waCfg = null; }
+
+  function waNumber(href) {
+    var m = href.match(/wa\.me\/(\d+)/);
+    return m ? m[1] : '5521997795500';
+  }
+
+  function openWaBuilder(originHref, origin, preset) {
+    var existing = document.getElementById('rrWaBuilder');
+    if (existing) existing.remove();
+    var number = waNumber(originHref);
+    var opener = document.activeElement;
+    var overlay = document.createElement('div');
+    overlay.id = 'rrWaBuilder';
+    overlay.className = 'wa-builder';
+    var html = '<div class="wa-builder-box" role="dialog" aria-modal="true" aria-labelledby="rrWaTitle">' +
+      '<div class="wa-builder-head"><h2 id="rrWaTitle">' + waCfg.title + '</h2>' +
+      '<button type="button" class="wa-builder-close" aria-label="Fechar">&times;</button></div>' +
+      '<form class="wa-builder-body" novalidate>' +
+      '<p class="wa-builder-sub">' + waCfg.subtitle + '</p>';
+    waCfg.questions.forEach(function (q, qi) {
+      html += '<fieldset><legend>' + q.label + '</legend>';
+      q.options.forEach(function (opt, oi) {
+        var id = 'rrWaQ' + qi + '_' + oi;
+        html += '<label class="wa-builder-opt" for="' + id + '"><input type="radio" id="' + id + '" name="q' + qi + '" value="' + opt + '"><span>' + opt + '</span></label>';
+      });
+      html += '</fieldset>';
+    });
+    html += '<fieldset><legend><label for="rrWaDetails">Algo mais que queira contar? <span class="wa-builder-opt-tag">(opcional)</span></label></legend>' +
+      '<textarea id="rrWaDetails" rows="2" maxlength="300" placeholder="' + (waCfg.detailsPlaceholder || '') + '"></textarea></fieldset>' +
+      '</form>' +
+      '<div class="wa-builder-foot"><p class="wa-builder-preview-label">Mensagem que será enviada:</p>' +
+      '<p class="wa-builder-preview" aria-live="polite"></p>' +
+      '<button type="button" class="btn btn-whatsapp wa-builder-send">Enviar pelo WhatsApp</button>' +
+      '<button type="button" class="wa-builder-skip">Prefiro escrever do meu jeito</button></div></div>';
+    overlay.innerHTML = html;
+    document.body.appendChild(overlay);
+    document.body.classList.add('wa-builder-open');
+
+    var box = overlay.querySelector('.wa-builder-box');
+    var preview = overlay.querySelector('.wa-builder-preview');
+
+    function message() {
+      var lines = [waCfg.intro];
+      waCfg.questions.forEach(function (q, qi) {
+        var sel = overlay.querySelector('input[name="q' + qi + '"]:checked');
+        if (sel) lines.push(q.summary + ': ' + sel.value);
+      });
+      var det = overlay.querySelector('#rrWaDetails').value.trim();
+      if (det) lines.push('Detalhes: ' + det);
+      return lines.join('\n');
+    }
+    function answered() {
+      return overlay.querySelectorAll('input[type="radio"]:checked').length;
+    }
+    function refresh() { preview.textContent = message(); }
+    refresh();
+    overlay.addEventListener('input', refresh);
+    overlay.addEventListener('change', refresh);
+
+    function close() {
+      overlay.remove();
+      document.body.classList.remove('wa-builder-open');
+      document.removeEventListener('keydown', onKey, true);
+      if (opener && opener.focus) opener.focus();
+    }
+    function send(text, formId) {
+      var url = 'https://wa.me/' + number + '?text=' + encodeURIComponent(text);
+      track('click_whatsapp', { link_url: url, cta_location: origin, form_id: formId, service_origin: waCfg.service, answers: answered() });
+      window.open(url, '_blank', 'noopener');
+      close();
+    }
+    function onKey(ev) {
+      if (ev.key === 'Escape') { ev.preventDefault(); close(); return; }
+      if (ev.key === 'Tab') {
+        var f = box.querySelectorAll('button, input, textarea');
+        var first = f[0], last = f[f.length - 1];
+        if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+        else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+      }
+    }
+    document.addEventListener('keydown', onKey, true);
+    overlay.addEventListener('click', function (ev) { if (ev.target === overlay) close(); });
+    overlay.querySelector('.wa-builder-close').addEventListener('click', close);
+    overlay.querySelector('.wa-builder-send').addEventListener('click', function () { send(message(), 'wa_builder'); });
+    overlay.querySelector('.wa-builder-skip').addEventListener('click', function () { send(waCfg.intro, 'wa_builder_skip'); });
+    if (preset) {
+      var pr = preset.split(':'), pre = overlay.querySelector('#rrWaQ' + pr[0] + '_' + pr[1]);
+      if (pre) { pre.checked = true; refresh(); }
+    }
+    var firstInput = overlay.querySelector('input[type="radio"]');
+    if (firstInput) firstInput.focus();
+    track('wa_builder_open', { cta_location: origin, service_origin: waCfg.service });
+  }
+
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a') : null;
     if (!a) return;
     var href = a.getAttribute('href') || '';
     if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) {
+      if (waCfg && !a.closest('footer')) {
+        e.preventDefault();
+        openWaBuilder(href, ctaLocation(a), a.getAttribute('data-wa-preset'));
+        return;
+      }
       track('click_whatsapp', { link_url: href, cta_location: ctaLocation(a) });
     } else if (href.indexOf('tel:') === 0) {
       track('click_phone', { link_url: href, cta_location: ctaLocation(a) });
