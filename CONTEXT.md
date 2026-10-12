@@ -43,7 +43,7 @@ O roadmap que estava aqui era do Gerador de Propostas, descontinuado em 12/10/20
 ## 4. Questões em aberto e problemas conhecidos
 
 ### Questões em aberto
-- [ ] **Deploy automático:** Processo de build + upload para GoDaddy ainda é manual (ZIP via cPanel). Avaliar CI/CD
+- [x] **Deploy automático:** feito (GitHub Actions FTPS a cada merge na main)
 - [ ] **Tema escuro:** `ThemeContext` existe mas o toggle não está na UI do site principal
 
 ---
@@ -98,7 +98,6 @@ RR-Engenharia/
 | Roteamento | wouter | 3.3.5 |
 | Forms | react-hook-form | 7.64.0 |
 | Validação | zod | 4.1.12 |
-| Banco de dados | Supabase (PostgreSQL) | — |
 | Gráficos | recharts | 2.15.2 |
 | Animações | framer-motion | 12.23.22 |
 | Toasts | sonner | 2.0.7 |
