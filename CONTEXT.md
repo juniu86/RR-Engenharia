@@ -1,6 +1,8 @@
 # CONTEXT.md — RR Engenharia
 
 > Última atualização: 2026-03-20
+>
+> Documento histórico de março/2026. A fonte de verdade sobre o site é o CLAUDE.md.
 
 ---
 
@@ -17,57 +19,12 @@ Site institucional React/Vite com múltiplas páginas de serviço:
 - **Automação** — RR Engine (destaque: proposta em 24h vs 7 dias, 70% mais rápido)
 - **Blog** — Listagem + post individual (2 posts de exemplo: SASC e TEPS)
 
-### Gerador de Propostas (`/client-proposta`)
-SPA separada, protegida por senha, com backend Supabase.
-
-**Decisões-chave tomadas:**
-- Migração de SQLite/PHP para **Supabase** (PostgreSQL na nuvem) — sem dependência de servidor PHP
-- Dois modos de escopo: **linha a linha** (com preços unitários) ou **texto livre** (valor global)
-- Numeração automática inteligente: remove sufixos jurídicos (LTDA, S/A, ME, EPP, preposições) e gera ex: `PETRO-2026-001`
-- Sistema de **revisões** (REV01, REV02…) com proposta filha vinculada à proposta-pai via `parent_id`
-- **Senha de acesso:** `rr2024`
-
-**Funcionalidades implementadas:**
-| Funcionalidade | Status |
-|---|---|
-| Login por senha | ✅ Feito |
-| Criar / editar / excluir propostas | ✅ Feito |
-| Numeração automática (abreviação cliente + ano + sequência) | ✅ Feito |
-| Escopo linha a linha com preços | ✅ Feito |
-| Escopo texto livre com valor global | ✅ Feito |
-| Revisões com histórico | ✅ Feito |
-| Documento formatado para impressão/PDF | ✅ Feito |
-| Autosave em localStorage (rascunho) | ✅ Feito |
-| Sincronização Supabase | ✅ Feito |
-| **Pipeline de status + KPIs (Fase 1.1)** | ✅ Feito |
-
-**Pipeline de Status (Fase 1.1):**
-- Status: `rascunho` → `enviada` → `em_negociacao` → `ganha` / `perdida` / `cancelada`
-- Campo `motivo_perda` quando status = perdida
-- KPIs na tela de lista: total de propostas, valor total, taxa de conversão, alertas de vencimento
-
----
-
-## 2. Estado atual de cada módulo
+### Gerador de Propostas — REMOVIDO em 12/10/2026
+Ferramenta descontinuada (decisão do Reginaldo). Subdomínio proposta.rres.com.br e projeto da Vercel apagados; o projeto Supabase de backend já não existia (DNS sem resposta em 12/10/2026). Código removido do repositório (client-proposta/, vite.config.proposta.ts, supabase/, zips); continua no histórico do git.
 
 ### `client/` — Site institucional
 - **Estado:** Estável, em produção no GoDaddy
 - **Pendências:** Nenhuma crítica; tema escuro existe no ThemeContext mas não está exposto na UI
-
-### `client-proposta/` — Gerador de propostas
-- **Estado:** Funcional, Fase 1.1 concluída e testada
-- **Arquivos principais:**
-  - `App.tsx` — Estado global, roteamento entre views
-  - `api.ts` — Todas as chamadas ao Supabase
-  - `supabase.ts` — Cliente Supabase configurado
-  - `LoginPage.tsx` — Tela de login
-  - `FormPage.tsx` — Formulário de criação/edição
-  - `ProposalList.tsx` — Lista + KPIs + pipeline
-  - `ProposalDocument.tsx` — Documento para impressão
-
-### `supabase/migrations/`
-- `002_add_status.sql` — Adiciona `status` e `motivo_perda` à tabela `proposals`
-- **Obs:** A migration precisa ser aplicada manualmente no painel Supabase (ainda não há CLI configurada)
 
 ### `server/`
 - Express.js simples para servir arquivos estáticos em produção
@@ -79,36 +36,15 @@ SPA separada, protegida por senha, com backend Supabase.
 
 ## 3. Próxima etapa planejada
 
-### Fase 1.2 — Dashboard com funil visual
-- Gráfico de funil: quantidade de propostas por status
-- Gráfico de barras: valor total por mês
-- Filtros por período e por status
-- Usar `recharts` (já instalado)
-
-### Roadmap completo
-| Fase | Descrição |
-|---|---|
-| **1.2** | Dashboard com funil visual e gráfico mensal |
-| **2** | Cadastro de clientes independente das propostas |
-| **3** | Follow-up — data de retorno e log de interações por proposta |
-| **4** | Dashboard gerencial completo |
-| **5** | Ordem de Serviço pós-aprovação |
+O roadmap que estava aqui era do Gerador de Propostas, descontinuado em 12/10/2026. As decisões e pendências atuais do site estão no CLAUDE.md.
 
 ---
 
 ## 4. Questões em aberto e problemas conhecidos
 
 ### Questões em aberto
-- [ ] **Autenticação real:** Senha hardcoded `rr2024` em `LoginPage.tsx`. Considerar Supabase Auth ou variável de ambiente
-- [ ] **Migration CLI:** Migrations Supabase aplicadas manualmente. Avaliar `supabase` CLI para automação
 - [ ] **Deploy automático:** Processo de build + upload para GoDaddy ainda é manual (ZIP via cPanel). Avaliar CI/CD
 - [ ] **Tema escuro:** `ThemeContext` existe mas o toggle não está na UI do site principal
-- [ ] **Variáveis de ambiente:** URL e key do Supabase estão hardcoded em `supabase.ts` (risco menor pois é chave pública, mas vale mover para `.env`)
-
-### Problemas conhecidos
-- Não há paginação na lista de propostas — pode ficar lento com volume alto
-- O campo de busca/filtro na lista de propostas ainda não existe
-- Impressão PDF depende do `@media print` CSS do browser (não há geração server-side)
 
 ---
 
@@ -134,33 +70,18 @@ RR-Engenharia/
 │           ├── useMobile.tsx
 │           └── useComposition.ts
 │
-├── client-proposta/               # Gerador de propostas
-│   └── src/
-│       ├── App.tsx                # Estado global + navegação
-│       ├── api.ts                 # CRUD Supabase
-│       ├── supabase.ts            # Config Supabase
-│       ├── LoginPage.tsx
-│       ├── FormPage.tsx           # Criação/edição de proposta
-│       ├── ProposalList.tsx       # Lista + KPIs + pipeline
-│       └── ProposalDocument.tsx   # Documento imprimível
-│
-├── supabase/
-│   └── migrations/
-│       └── 002_add_status.sql
-│
 ├── server/
 │   └── index.ts                   # Express estático
 │
 ├── public_html/                   # Build de produção (GoDaddy)
 │   ├── index.html
-│   ├── proposta/                  # Build do client-proposta
+│   ├── proposta/                  # Resíduo neutralizado (404), ver dívidas no CLAUDE.md
 │   └── assets/ css/ js/ blog/
 │
 ├── DEPLOYMENT_PROTOCOL_FINAL.md   # Guia de deploy GoDaddy
 ├── CONTEXT.md                     # Este arquivo
 ├── package.json
 ├── vite.config.ts                 # Config site principal
-├── vite.config.proposta.ts        # Config proposta
 └── pnpm-lock.yaml
 ```
 
