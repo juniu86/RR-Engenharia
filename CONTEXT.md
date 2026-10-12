@@ -108,58 +108,18 @@ RR-Engenharia/
 
 ---
 
-## 7. Banco de dados Supabase
+## 7. Banco de dados
 
-**URL:** `https://sowoslejxuesltgmpruh.supabase.co`
-
-### Tabela `proposals`
-| Coluna | Tipo | Descrição |
-|---|---|---|
-| `id` | UUID | PK |
-| `numero` | TEXT | Ex: `PETRO-2026-001` |
-| `cliente_nome` | TEXT | Razão social |
-| `total` | NUMERIC | Valor total |
-| `data` | JSONB | Todos os dados da proposta |
-| `show_line_prices` | BOOLEAN | Modo linha a linha |
-| `status` | TEXT | rascunho / enviada / em_negociacao / ganha / perdida / cancelada |
-| `motivo_perda` | TEXT | Preenchido quando perdida |
-| `revisao` | INTEGER | Número da revisão |
-| `parent_id` | UUID | FK para proposta original (revisões) |
-| `created_at` | TIMESTAMP | — |
-| `updated_at` | TIMESTAMP | — |
-
-### Tabela `seq_counters`
-| Coluna | Tipo | Descrição |
-|---|---|---|
-| `year` | INTEGER | Ano |
-| `value` | INTEGER | Sequência atual |
-
-### Função RPC
-- `consume_seq(p_year)` — Incrementa e retorna próximo número da sequência (atômico)
+O banco Supabase do Gerador de Propostas não existe mais (verificado em 12/10/2026). O site não usa banco: os formulários vão pelo Web3Forms (ver CLAUDE.md).
 
 ---
 
 ## 8. Deploy
 
-**Ambiente:** GoDaddy cPanel (hospedagem compartilhada)
-**Método:** Build local → ZIP → upload e extração via File Manager
-
-```bash
-# Build site principal
-pnpm build
-
-# Build proposta
-pnpm build:proposta
-
-# Resultado em public_html/ — fazer upload manual para GoDaddy
-```
-
-Ver `DEPLOYMENT_PROTOCOL_FINAL.md` para o passo a passo completo.
+Automático: cada merge na `main` publica `public_html/` na GoDaddy via GitHub Actions (FTPS, workflow `deploy-site.yml`). Não há build: o site é HTML/CSS/JS estático. O procedimento antigo (build local, ZIP e upload pelo cPanel) foi aposentado. Ver CLAUDE.md.
 
 ---
 
 ## 9. Branch de desenvolvimento
 
-**Branch ativo:** `claude/build-proposal-page-BiswJ`
-
-Último commit: `Fase 1.1 – Pipeline de propostas com status e KPIs`
+Ver o fluxo git no CLAUDE.md.
