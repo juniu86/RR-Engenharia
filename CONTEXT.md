@@ -78,7 +78,7 @@ RR-Engenharia/
 │   ├── proposta/                  # Resíduo neutralizado (404), ver dívidas no CLAUDE.md
 │   └── assets/ css/ js/ blog/
 │
-├── DEPLOYMENT_PROTOCOL_FINAL.md   # Guia de deploy GoDaddy
+├── DEPLOYMENT_PROTOCOL_FINAL.md   # OBSOLETO (deploy antigo, não seguir)
 ├── CONTEXT.md                     # Este arquivo
 ├── package.json
 ├── vite.config.ts                 # Config site principal
@@ -115,7 +115,7 @@ O banco Supabase do Gerador de Propostas não existe mais (verificado em 12/10/2
 
 ## 8. Deploy
 
-Automático: cada merge na `main` publica `public_html/` na GoDaddy via GitHub Actions (FTPS, workflow `deploy-site.yml`). Não há build: o site é HTML/CSS/JS estático. O procedimento antigo (build local, ZIP e upload pelo cPanel) foi aposentado. Ver CLAUDE.md.
+Automático: cada merge na `main` que altera `public_html/` publica essa pasta na GoDaddy via GitHub Actions (FTPS, workflow `deploy-site.yml`, filtrado por `paths: public_html/**`). Mudanças em `client/`, docs ou configuração não disparam deploy, porque o app React em `client/` não está em produção. Não há build: o site é HTML/CSS/JS estático. O procedimento antigo (build local, ZIP e upload pelo cPanel) foi aposentado; `DEPLOYMENT_PROTOCOL_FINAL.md` e `README_DEPLOY.md` ficam só como histórico, marcados como obsoletos. Ver CLAUDE.md.
 
 ---
 
