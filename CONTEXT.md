@@ -43,7 +43,7 @@ O roadmap que estava aqui era do Gerador de Propostas, descontinuado em 12/10/20
 ## 4. Questões em aberto e problemas conhecidos
 
 ### Questões em aberto
-- [ ] **Deploy automático:** Processo de build + upload para GoDaddy ainda é manual (ZIP via cPanel). Avaliar CI/CD
+- [x] **Deploy automático:** feito (GitHub Actions FTPS a cada merge na main)
 - [ ] **Tema escuro:** `ThemeContext` existe mas o toggle não está na UI do site principal
 
 ---
@@ -78,7 +78,7 @@ RR-Engenharia/
 │   ├── proposta/                  # Resíduo neutralizado (404), ver dívidas no CLAUDE.md
 │   └── assets/ css/ js/ blog/
 │
-├── DEPLOYMENT_PROTOCOL_FINAL.md   # Guia de deploy GoDaddy
+├── DEPLOYMENT_PROTOCOL_FINAL.md   # OBSOLETO (deploy antigo, não seguir)
 ├── CONTEXT.md                     # Este arquivo
 ├── package.json
 ├── vite.config.ts                 # Config site principal
@@ -98,7 +98,6 @@ RR-Engenharia/
 | Roteamento | wouter | 3.3.5 |
 | Forms | react-hook-form | 7.64.0 |
 | Validação | zod | 4.1.12 |
-| Banco de dados | Supabase (PostgreSQL) | — |
 | Gráficos | recharts | 2.15.2 |
 | Animações | framer-motion | 12.23.22 |
 | Toasts | sonner | 2.0.7 |
@@ -108,58 +107,18 @@ RR-Engenharia/
 
 ---
 
-## 7. Banco de dados Supabase
+## 7. Banco de dados
 
-**URL:** `https://sowoslejxuesltgmpruh.supabase.co`
-
-### Tabela `proposals`
-| Coluna | Tipo | Descrição |
-|---|---|---|
-| `id` | UUID | PK |
-| `numero` | TEXT | Ex: `PETRO-2026-001` |
-| `cliente_nome` | TEXT | Razão social |
-| `total` | NUMERIC | Valor total |
-| `data` | JSONB | Todos os dados da proposta |
-| `show_line_prices` | BOOLEAN | Modo linha a linha |
-| `status` | TEXT | rascunho / enviada / em_negociacao / ganha / perdida / cancelada |
-| `motivo_perda` | TEXT | Preenchido quando perdida |
-| `revisao` | INTEGER | Número da revisão |
-| `parent_id` | UUID | FK para proposta original (revisões) |
-| `created_at` | TIMESTAMP | — |
-| `updated_at` | TIMESTAMP | — |
-
-### Tabela `seq_counters`
-| Coluna | Tipo | Descrição |
-|---|---|---|
-| `year` | INTEGER | Ano |
-| `value` | INTEGER | Sequência atual |
-
-### Função RPC
-- `consume_seq(p_year)` — Incrementa e retorna próximo número da sequência (atômico)
+O banco Supabase do Gerador de Propostas não existe mais (verificado em 12/10/2026). O site não usa banco: os formulários vão pelo Web3Forms (ver CLAUDE.md).
 
 ---
 
 ## 8. Deploy
 
-**Ambiente:** GoDaddy cPanel (hospedagem compartilhada)
-**Método:** Build local → ZIP → upload e extração via File Manager
-
-```bash
-# Build site principal
-pnpm build
-
-# Build proposta
-pnpm build:proposta
-
-# Resultado em public_html/ — fazer upload manual para GoDaddy
-```
-
-Ver `DEPLOYMENT_PROTOCOL_FINAL.md` para o passo a passo completo.
+Automático: cada merge na `main` que altera `public_html/` publica essa pasta na GoDaddy via GitHub Actions (FTPS, workflow `deploy-site.yml`, filtrado por `paths: public_html/**`). Mudanças em `client/`, docs ou configuração não disparam deploy, porque o app React em `client/` não está em produção. Não há build: o site é HTML/CSS/JS estático. O procedimento antigo (build local, ZIP e upload pelo cPanel) foi aposentado; `DEPLOYMENT_PROTOCOL_FINAL.md` e `README_DEPLOY.md` ficam só como histórico, marcados como obsoletos. Ver CLAUDE.md.
 
 ---
 
 ## 9. Branch de desenvolvimento
 
-**Branch ativo:** `claude/build-proposal-page-BiswJ`
-
-Último commit: `Fase 1.1 – Pipeline de propostas com status e KPIs`
+Ver o fluxo git no CLAUDE.md.
