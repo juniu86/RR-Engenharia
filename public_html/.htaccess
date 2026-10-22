@@ -47,17 +47,17 @@ RewriteRule ^eletromobilidade$ /eletromobilidade.html [L]
 ErrorDocument 404 /404.html
 
 # /proposta/ foi descontinuada (decisão de 19/08/2026). Os arquivos ainda
-# existem no servidor (o deploy sempre excluiu essa pasta), então o acesso é
-# bloqueado aqui — inclusive ao api.php — devolvendo o 404 personalizado.
-RewriteRule ^proposta(/.*)?$ /404.php [L]
+# existem no servidor (o deploy sempre excluiu essa pasta): devolve 404.
+RewriteRule ^proposta(/.*)?$ - [R=404,L]
 
-# Fallback de 404 real: o host ignora o ErrorDocument acima, então qualquer
-# caminho que não corresponda a arquivo/diretório existente é servido pelo
-# 404.php, que devolve a página personalizada COM status HTTP 404.
-RewriteCond %{REQUEST_URI} !^/404\.php$
+# Fallback de 404 SEM PHP (22/10/2026, falha PHP2Shell CVE-2026-109618/109619):
+# antes todo caminho inexistente era servido pelo 404.php, o que fazia o PHP
+# rodar em qualquer URL que um atacante enviasse. Agora o próprio Apache
+# devolve 404. Se o host ignorar o ErrorDocument, aparece a página 404 padrão
+# do host (status continua 404).
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /404.php [L]
+RewriteRule . - [R=404,L]
 
 # GZIP Compression
 <IfModule mod_deflate.c>
@@ -108,6 +108,8 @@ RewriteRule . /404.php [L]
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always unset X-XSS-Protection
+  Header always unset X-Powered-By
+  Header unset X-Powered-By
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
   # HSTS: 1 ano, sem includeSubDomains até auditar todos os subdomínios
@@ -118,6 +120,18 @@ RewriteRule . /404.php [L]
 
 # Bloqueia arquivos sensíveis (logs, backups, configs) em toda a árvore
 <FilesMatch "\.(log|env|ini|bak|sql|sh|zip|tar|gz)$">
+  Require all denied
+</FilesMatch>
+
+# O site é 100% estático: nenhum script PHP pode ser executado (22/10/2026,
+# PHP2Shell). Bloqueia antes de o pedido chegar ao interpretador.
+<FilesMatch "\.(php[0-9]?|phtml|phar)$">
+  Require all denied
+</FilesMatch>
+
+# Arquivos ocultos (ex.: .ftp-deploy-sync-state-site.json do deploy, que
+# listava toda a árvore publicamente) não são servidos por HTTP.
+<FilesMatch "^\.">
   Require all denied
 </FilesMatch>
 
