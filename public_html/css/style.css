@@ -1734,6 +1734,25 @@ textarea:focus-visible,
   border-radius: 4px;
 }
 
+/* Links dentro de texto corrido precisam se distinguir do texto (WCAG 1.4.1).
+   O reset global (a { color: inherit; text-decoration: none }) deixava todos
+   invisíveis. Sublinhado herda a cor, então funciona em fundo claro e escuro;
+   botões, menus e cartões têm classe e não são afetados. (26/10/2026) */
+p a:not([class]),
+li a:not([class]),
+blockquote a:not([class]),
+td a:not([class]) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+p a:not([class]):hover,
+li a:not([class]):hover,
+blockquote a:not([class]):hover,
+td a:not([class]):hover {
+  text-decoration-thickness: 2px;
+}
+
 /* Labels azuis sobre fundos escuros: variante clara (6,7:1) */
 .hero .section-label,
 .section-dark .section-label,
